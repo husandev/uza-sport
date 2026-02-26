@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
 import HeroSlider from "@/components/HeroSlider";
 import NewsFeed from "@/components/NewsFeed";
-import PhotoArticles from "@/components/PhotoArticles";
+
 import GroupStandings from "@/components/GroupStandings";
 
 import VideoPosts from "@/components/VideoPosts";
@@ -34,7 +34,7 @@ const Index = () => {
           {/* Center: Articles carousel + Video + Stadiums */}
           <div className="lg:col-span-6 space-y-4">
             <SidebarArticles />
-            <PhotoArticles />
+            
             <VideoPosts />
             <StadiumsSection />
           </div>

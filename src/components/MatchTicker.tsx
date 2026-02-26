@@ -78,9 +78,9 @@ const MatchTicker = () => {
 
   return (
     <div className="ticker-wrapper relative">
-      <div className="container relative">
+      <div className="container relative flex items-stretch">
         {/* Static label */}
-        <div className="absolute left-0 top-0 bottom-0 z-10 flex items-center">
+        <div className="z-10 flex items-center shrink-0">
           <div className="flex items-center px-4 py-2.5 text-[11px] font-heading font-bold text-primary-foreground uppercase tracking-wider shrink-0 bg-primary/50 backdrop-blur-sm rounded-r-lg">
             <span className="live-dot mr-2" />
             Жонли
@@ -90,14 +90,14 @@ const MatchTicker = () => {
         {/* Scrolling area with edge masks */}
         <div
           ref={scrollRef}
-          className="overflow-hidden pl-[90px]"
+          className="overflow-hidden flex-1 min-w-0"
           style={{
             maskImage: atEnd
-              ? "linear-gradient(to right, transparent 0px, black 100px, black 100%)"
-              : "linear-gradient(to right, transparent 0px, black 100px, black calc(100% - 50px), transparent 100%)",
+              ? "none"
+              : "linear-gradient(to right, black 0%, black calc(100% - 50px), transparent 100%)",
             WebkitMaskImage: atEnd
-              ? "linear-gradient(to right, transparent 0px, black 100px, black 100%)"
-              : "linear-gradient(to right, transparent 0px, black 100px, black calc(100% - 50px), transparent 100%)",
+              ? "none"
+              : "linear-gradient(to right, black 0%, black calc(100% - 50px), transparent 100%)",
           }}
         >
           <div ref={innerRef} className="flex items-stretch gap-0 w-max">

@@ -1,20 +1,13 @@
 export const matchTickerData = [
   {
-    league: "Жаҳон чемпионати 2026. Гуруҳ босқичи. 2-тур",
+    league: "ЖЧ-2026. 2-тур",
     matches: [
-      { id: 1, time: "2-тайм", home: "Ўзбекистон", away: "Аргентина", hFlag: "🇺🇿", aFlag: "🇦🇷", hScore: 1, aScore: 2, live: true, minute: "67'" },
-      { id: 2, time: "23:00", home: "Мексика", away: "Камерун", hFlag: "🇲🇽", aFlag: "🇨🇲", hScore: null, aScore: null, live: false },
-      { id: 3, time: "тугади", home: "Франция", away: "Испания", hFlag: "🇫🇷", aFlag: "🇪🇸", hScore: 3, aScore: 1, live: false },
-      { id: 4, time: "тугади", home: "Англия", away: "Италия", hFlag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", aFlag: "🇮🇹", hScore: 2, aScore: 2, live: false },
-      { id: 5, time: "1-тайм", home: "Бельгия", away: "Хорватия", hFlag: "🇧🇪", aFlag: "🇭🇷", hScore: 1, aScore: 0, live: true, minute: "34'" },
-      { id: 6, time: "20:00", home: "Бразилия", away: "Германия", hFlag: "🇧🇷", aFlag: "🇩🇪", hScore: null, aScore: null, live: false },
-    ],
-  },
-  {
-    league: "Жаҳон чемпионати 2026. Гуруҳ босқичи. 1-тур натижалари",
-    matches: [
-      { id: 7, time: "тугади", home: "Португалия", away: "Нидерландия", hFlag: "🇵🇹", aFlag: "🇳🇱", hScore: 2, aScore: 2, live: false },
-      { id: 8, time: "тугади", home: "Ўзбекистон", away: "Мексика", hFlag: "🇺🇿", aFlag: "🇲🇽", hScore: 2, aScore: 1, live: false },
+      { id: 1, time: "2-тайм", home: "ЎЗБ", away: "АРГ", hFlag: "🇺🇿", aFlag: "🇦🇷", hScore: 1, aScore: 2, live: true, minute: "67'" },
+      { id: 5, time: "1-тайм", home: "БЕЛ", away: "ХОР", hFlag: "🇧🇪", aFlag: "🇭🇷", hScore: 1, aScore: 0, live: true, minute: "34'" },
+      { id: 3, time: "тугади", home: "ФРА", away: "ИСП", hFlag: "🇫🇷", aFlag: "🇪🇸", hScore: 3, aScore: 1, live: false },
+      { id: 4, time: "тугади", home: "АНГ", away: "ИТА", hFlag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", aFlag: "🇮🇹", hScore: 2, aScore: 2, live: false },
+      { id: 2, time: "23:00", home: "МЕК", away: "КАМ", hFlag: "🇲🇽", aFlag: "🇨🇲", hScore: null, aScore: null, live: false },
+      { id: 6, time: "20:00", home: "БРА", away: "ГЕР", hFlag: "🇧🇷", aFlag: "🇩🇪", hScore: null, aScore: null, live: false },
     ],
   },
 ];
@@ -56,7 +49,23 @@ export const newsFeed = [
   { id: 9, time: "09:00", title: "MetLife Stadium – Жаҳон чемпионати финалининг мезбони", comments: 15, fires: 9 },
   { id: 10, time: "08:30", title: "Мексика стадионлари тайёр – FIFA делегацияси ташриф буюрди", comments: 11, fires: 3 },
   { id: 11, time: "08:00", title: "Ўзбекистон терма жамоаси Тошкентда очиқ машғулот ўтказди", comments: 42, fires: 19 },
-  { id: 12, time: "вчера", title: "Абдуқодир Хусанов Манчестер Сити сафида янги мавсум бошламоқда", comments: 203, fires: 78 },
+  { id: 12, time: "кеча", title: "Абдуқодир Хусанов Манчестер Сити сафида янги мавсум бошламоқда", comments: 203, fires: 78 },
+  { id: 13, time: "кеча", title: "Роналду акциялари «Алмерия»да кўтарилди", comments: 25, fires: 0 },
+  { id: 14, time: "кеча", title: "«Реал» «Бенфика»ни мағлуб этиб Чемпионлар лигаси 1/8 финалига чиқди", comments: 46, fires: 0 },
+  { id: 15, time: "кеча", title: "Газзаев: «Локомотив»да Бариновни алмаштириш жуда қийин", comments: 4, fires: 0 },
+  { id: 16, time: "кеча", title: "Кафанов Хайкин ва Сафонов ЧЛ финалида бир-бирига қарши ўйнашини хоҳлайди", comments: 9, fires: 0 },
+];
+
+export const photoArticles = [
+  { id: 1, time: "Бугун, 21:16", title: "РФС бир нечта ҳакам ва инспекторни четлатди", comments: 3 },
+  { id: 2, time: "Бугун, 20:55", title: "Кафанов Хайкин «Будё-Глимт»да яримжамоа деб ҳисоблайди", comments: 4 },
+  { id: 3, time: "Бугун, 19:44", title: "Кафанов Хайкин ва Сафонов ЧЛ финалида ўйнашини хоҳлайди", comments: 9 },
+  { id: 4, time: "Бугун, 18:52", title: "Газзаев «Локомотив»да Бариновни алмаштириш қийин деб ҳисоблайди", comments: 4 },
+  { id: 5, time: "Бугун, 17:59", title: "Адриано: «Мен «Олтин тўп»ни ютишим мумкин эди»", comments: 12 },
+  { id: 6, time: "Бугун, 17:56", title: "Точилин «Динамо» баҳорда Кубокда ғалабага тайёрлик кўради деб ҳисоблайди", comments: 6 },
+  { id: 7, time: "Бугун, 16:39", title: "Непомнящий Дзюбани РПЛ нинг энг яхши бомбардирлари рўйхатида кўрмайди", comments: 8 },
+  { id: 8, time: "Бугун, 16:35", title: "Мостовой «Спартак»га ишонади", comments: 10 },
+  { id: 9, time: "Бугун, 16:31", title: "Булыкин «Локомотива»нинг РПЛда чемпион бўлиш имкониятларини баҳолади", comments: 3 },
 ];
 
 export const sidebarArticles = [

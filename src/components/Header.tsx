@@ -13,8 +13,11 @@ const navItems = [
   { label: "Фото", href: "#" },
 ];
 
+type Script = "cyrillic" | "latin";
+
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [script, setScript] = useState<Script>("cyrillic");
 
   return (
     <header className="sticky top-0 z-50">
@@ -29,15 +32,49 @@ const Header = () => {
             </span>
           </a>
 
-          <div className="hidden md:flex items-center bg-muted rounded-xl overflow-hidden">
-            <input
-              type="text"
-              placeholder="Қидириш..."
-              className="px-4 py-2 text-sm w-52 bg-transparent outline-none font-body"
-            />
-            <button className="px-3 py-2 hover:bg-border transition-colors">
-              <Search size={16} className="text-muted-foreground" />
-            </button>
+          <div className="flex items-center gap-3">
+            {/* Script switcher */}
+            <div className="relative flex items-center bg-muted rounded-full p-0.5 h-8">
+              <div
+                className="absolute top-0.5 bottom-0.5 rounded-full bg-primary shadow-md transition-all duration-300 ease-out"
+                style={{
+                  width: "calc(50% - 2px)",
+                  left: script === "cyrillic" ? "2px" : "calc(50%)",
+                }}
+              />
+              <button
+                onClick={() => setScript("cyrillic")}
+                className={`relative z-10 px-3 h-full text-[11px] font-heading font-bold uppercase tracking-wide rounded-full transition-colors duration-300 ${
+                  script === "cyrillic"
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Кир
+              </button>
+              <button
+                onClick={() => setScript("latin")}
+                className={`relative z-10 px-3 h-full text-[11px] font-heading font-bold uppercase tracking-wide rounded-full transition-colors duration-300 ${
+                  script === "latin"
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Lot
+              </button>
+            </div>
+
+            {/* Search */}
+            <div className="hidden md:flex items-center bg-muted rounded-xl overflow-hidden">
+              <input
+                type="text"
+                placeholder={script === "cyrillic" ? "Қидириш..." : "Qidirish..."}
+                className="px-4 py-2 text-sm w-52 bg-transparent outline-none font-body"
+              />
+              <button className="px-3 py-2 hover:bg-border transition-colors">
+                <Search size={16} className="text-muted-foreground" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

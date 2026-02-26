@@ -7,6 +7,7 @@ const MatchTicker = () => {
   const innerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [atEnd, setAtEnd] = useState(false);
+  const pauseAutoScrollRef = useRef(false);
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -35,10 +36,9 @@ const MatchTicker = () => {
     if (!el) return;
 
     let animationId: number;
-    let paused = false;
 
     const step = () => {
-      if (!paused) {
+      if (!pauseAutoScrollRef.current) {
         const maxScroll = el.scrollWidth - el.clientWidth;
         if (el.scrollLeft < maxScroll) {
           el.scrollLeft += 0.4;
@@ -47,8 +47,8 @@ const MatchTicker = () => {
       animationId = requestAnimationFrame(step);
     };
 
-    const pause = () => { paused = true; };
-    const resume = () => { paused = false; };
+    const pause = () => { pauseAutoScrollRef.current = true; };
+    const resume = () => { pauseAutoScrollRef.current = false; };
 
     el.addEventListener("mouseenter", pause);
     el.addEventListener("mouseleave", resume);
@@ -64,7 +64,10 @@ const MatchTicker = () => {
   const scrollRight = () => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: 300, behavior: "smooth" });
+    pauseAutoScrollRef.current = true;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const nextLeft = Math.min(el.scrollLeft + 300, maxScroll);
+    el.scrollTo({ left: nextLeft, behavior: "smooth" });
   };
 
   return (
@@ -136,6 +139,7 @@ const MatchTicker = () => {
           <button
             onClick={scrollRight}
             className="absolute right-0 top-0 bottom-0 z-10 flex items-center px-2 transition-opacity duration-300"
+            aria-label="O'ngga scroll qilish"
           >
             <div className="w-8 h-8 rounded-lg bg-primary-foreground/15 hover:bg-primary-foreground/25 flex items-center justify-center transition-colors backdrop-blur-sm">
               <ChevronRight size={16} className="text-primary-foreground" />

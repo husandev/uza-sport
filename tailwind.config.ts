@@ -7,15 +7,15 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "1rem",
+      padding: "0.75rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1200px",
       },
     },
     extend: {
       fontFamily: {
-        heading: ['Montserrat', 'sans-serif'],
-        body: ['Noto Sans', 'sans-serif'],
+        heading: ['Roboto Condensed', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -52,8 +52,12 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         live: "hsl(var(--live))",
-        "score-bg": "hsl(var(--score-bg))",
+        score: "hsl(var(--score))",
         highlight: "hsl(var(--highlight))",
+        link: "hsl(var(--link))",
+        "ticker-bg": "hsl(var(--ticker-bg))",
+        "ticker-row": "hsl(var(--ticker-row))",
+        "ticker-header": "hsl(var(--ticker-header))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

@@ -2,38 +2,38 @@ import { topScorers } from "@/data/mockData";
 
 const TopScorers = () => {
   return (
-    <div className="compact-card">
-      <div className="section-header px-3 pt-3 mx-3">
-        <h2 className="section-title">Bombardirlar</h2>
-        <a href="#" className="section-link">Barchasi →</a>
+    <div>
+      <div className="section-bar">
+        <span className="section-label">Бомбардирлар</span>
+        <a href="#" className="meta-link">Барчаси →</a>
       </div>
 
-      <table className="w-full text-xs">
+      <table className="w-full text-[12px]">
         <thead>
           <tr className="text-muted-foreground border-b border-border">
-            <th className="text-left pl-3 pr-1 py-1.5 font-medium w-6">#</th>
-            <th className="text-left px-1 py-1.5 font-medium">Futbolchi</th>
-            <th className="text-center px-1 py-1.5 font-medium w-8">G</th>
-            <th className="text-center pr-3 pl-1 py-1.5 font-medium w-8">A</th>
+            <th className="text-left pl-2 pr-1 py-1 font-medium w-5">#</th>
+            <th className="text-left px-1 py-1 font-medium">Футболчи</th>
+            <th className="text-center px-1 py-1 font-medium w-7">Г</th>
+            <th className="text-center pr-2 pl-1 py-1 font-medium w-7">А</th>
           </tr>
         </thead>
         <tbody>
-          {topScorers.map((player) => (
+          {topScorers.map((p) => (
             <tr
-              key={player.pos}
-              className={`border-b border-border last:border-0 hover:bg-muted/50 cursor-pointer ${
-                player.name === "E. Shomurodov" ? "bg-highlight/8 font-semibold" : ""
+              key={p.pos}
+              className={`border-b border-border last:border-0 hover:bg-muted/60 cursor-pointer ${
+                p.flag === "🇺🇿" ? "bg-highlight/10 font-semibold" : ""
               }`}
             >
-              <td className="pl-3 pr-1 py-1.5 font-medium text-muted-foreground">{player.pos}</td>
+              <td className="pl-2 pr-1 py-1.5 text-muted-foreground">{p.pos}</td>
               <td className="px-1 py-1.5">
                 <span className="flex items-center gap-1.5">
-                  <span className="text-sm">{player.flag}</span>
-                  <span className="text-foreground">{player.name}</span>
+                  <span className="text-sm">{p.flag}</span>
+                  <span>{p.name}</span>
                 </span>
               </td>
-              <td className="text-center px-1 py-1.5 font-bold">{player.goals}</td>
-              <td className="text-center pr-3 pl-1 py-1.5">{player.assists}</td>
+              <td className="text-center px-1 py-1.5 font-bold">{p.goals}</td>
+              <td className="text-center pr-2 pl-1 py-1.5">{p.assists}</td>
             </tr>
           ))}
         </tbody>

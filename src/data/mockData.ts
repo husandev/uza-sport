@@ -4,10 +4,14 @@ export const matchTickerData = [
     matches: [
       { id: 1, time: "2-тайм", home: "Ўзбекистон", away: "Аргентина", hFlag: "🇺🇿", aFlag: "🇦🇷", hScore: 1, aScore: 2, live: true, minute: "67'" },
       { id: 5, time: "1-тайм", home: "Бельгия", away: "Хорватия", hFlag: "🇧🇪", aFlag: "🇭🇷", hScore: 1, aScore: 0, live: true, minute: "34'" },
+      { id: 7, time: "1-тайм", home: "Португалия", away: "Уругвай", hFlag: "🇵🇹", aFlag: "🇺🇾", hScore: 0, aScore: 0, live: true, minute: "12'" },
       { id: 3, time: "тугади", home: "Франция", away: "Испания", hFlag: "🇫🇷", aFlag: "🇪🇸", hScore: 3, aScore: 1, live: false },
       { id: 4, time: "тугади", home: "Англия", away: "Италия", hFlag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", aFlag: "🇮🇹", hScore: 2, aScore: 2, live: false },
+      { id: 8, time: "тугади", home: "Голландия", away: "Сенегал", hFlag: "🇳🇱", aFlag: "🇸🇳", hScore: 2, aScore: 0, live: false },
+      { id: 9, time: "тугади", home: "Япония", away: "Корея", hFlag: "🇯🇵", aFlag: "🇰🇷", hScore: 1, aScore: 1, live: false },
       { id: 2, time: "23:00", home: "Мексика", away: "Камерун", hFlag: "🇲🇽", aFlag: "🇨🇲", hScore: null, aScore: null, live: false },
       { id: 6, time: "20:00", home: "Бразилия", away: "Германия", hFlag: "🇧🇷", aFlag: "🇩🇪", hScore: null, aScore: null, live: false },
+      { id: 10, time: "02:00", home: "АҚШ", away: "Канада", hFlag: "🇺🇸", aFlag: "🇨🇦", hScore: null, aScore: null, live: false },
     ],
   },
 ];

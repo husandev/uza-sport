@@ -1,58 +1,71 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { ChevronRight } from "lucide-react";
 import { matchTickerData } from "@/data/mockData";
 
 const MatchTicker = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const [shouldScroll, setShouldScroll] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [atEnd, setAtEnd] = useState(false);
 
-  useEffect(() => {
-    const container = scrollRef.current;
-    const inner = innerRef.current;
-    if (!container || !inner) return;
-
-    // Check if content overflows
-    if (inner.scrollWidth > container.clientWidth) {
-      setShouldScroll(true);
-    }
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const hasOverflow = el.scrollWidth > el.clientWidth + 2;
+    const isAtEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+    setCanScrollRight(hasOverflow && !isAtEnd);
+    setAtEnd(isAtEnd);
   }, []);
 
   useEffect(() => {
-    if (!shouldScroll || !scrollRef.current) return;
+    checkScroll();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [checkScroll]);
 
-    const container = scrollRef.current;
+  // Auto-scroll until end
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
     let animationId: number;
-    let scrollPos = 0;
-    const speed = 0.5; // px per frame
     let paused = false;
 
     const step = () => {
       if (!paused) {
-        scrollPos += speed;
-        if (scrollPos >= container.scrollWidth - container.clientWidth) {
-          scrollPos = 0;
+        const maxScroll = el.scrollWidth - el.clientWidth;
+        if (el.scrollLeft < maxScroll) {
+          el.scrollLeft += 0.4;
         }
-        container.scrollLeft = scrollPos;
       }
       animationId = requestAnimationFrame(step);
     };
 
     const pause = () => { paused = true; };
-    const resume = () => {
-      paused = false;
-      scrollPos = container.scrollLeft;
-    };
+    const resume = () => { paused = false; };
 
-    container.addEventListener("mouseenter", pause);
-    container.addEventListener("mouseleave", resume);
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
     animationId = requestAnimationFrame(step);
 
     return () => {
       cancelAnimationFrame(animationId);
-      container.removeEventListener("mouseenter", pause);
-      container.removeEventListener("mouseleave", resume);
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", resume);
     };
-  }, [shouldScroll]);
+  }, []);
+
+  const scrollRight = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: 300, behavior: "smooth" });
+  };
 
   return (
     <div className="ticker-wrapper relative">
@@ -70,8 +83,12 @@ const MatchTicker = () => {
           ref={scrollRef}
           className="overflow-hidden pl-[90px]"
           style={{
-            maskImage: "linear-gradient(to right, transparent 0px, black 100px, black calc(100% - 40px), transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to right, transparent 0px, black 100px, black calc(100% - 40px), transparent 100%)",
+            maskImage: atEnd
+              ? "linear-gradient(to right, transparent 0px, black 100px, black 100%)"
+              : "linear-gradient(to right, transparent 0px, black 100px, black calc(100% - 50px), transparent 100%)",
+            WebkitMaskImage: atEnd
+              ? "linear-gradient(to right, transparent 0px, black 100px, black 100%)"
+              : "linear-gradient(to right, transparent 0px, black 100px, black calc(100% - 50px), transparent 100%)",
           }}
         >
           <div ref={innerRef} className="flex items-stretch gap-0 w-max">
@@ -113,6 +130,18 @@ const MatchTicker = () => {
             ))}
           </div>
         </div>
+
+        {/* Right arrow — only when more content exists */}
+        {canScrollRight && (
+          <button
+            onClick={scrollRight}
+            className="absolute right-0 top-0 bottom-0 z-10 flex items-center px-2 transition-opacity duration-300"
+          >
+            <div className="w-8 h-8 rounded-lg bg-primary-foreground/15 hover:bg-primary-foreground/25 flex items-center justify-center transition-colors backdrop-blur-sm">
+              <ChevronRight size={16} className="text-primary-foreground" />
+            </div>
+          </button>
+        )}
       </div>
     </div>
   );

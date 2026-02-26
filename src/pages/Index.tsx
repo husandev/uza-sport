@@ -40,8 +40,21 @@ const Index = () => {
           </div>
 
           {/* Right: Standings + Scorers + Players + Articles */}
-          <div className="lg:col-span-3 lg:self-stretch">
+          <div className="lg:col-span-3 space-y-4">
             <GroupStandings />
+            {/* Banner */}
+            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-5 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Реклама</div>
+              <h3 className="font-heading font-extrabold text-base leading-tight mb-2">
+                ⚽ FIFA 2026 чипталари сотувда!
+              </h3>
+              <p className="text-[12px] font-body opacity-80 mb-3">
+                Ўзбекистон терма жамоаси ўйинларига чипта олинг
+              </p>
+              <div className="bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground text-[12px] font-bold font-heading text-center py-2 rounded-lg">
+                Чипта олиш →
+              </div>
+            </div>
           </div>
         </div>
 

@@ -19,7 +19,6 @@ const HeroFootballers = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Ўзбек қаҳрамонлари</span>
-        <a href="#" className="more-link">Барчаси →</a>
       </div>
 
       {/* Featured player - large card */}
@@ -89,6 +88,14 @@ const HeroFootballers = () => {
           </div>
         ))}
       </div>
+
+      {/* Button */}
+      <a
+        href="#"
+        className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-background border border-border text-foreground text-[13px] font-heading font-bold hover:bg-muted transition-colors"
+      >
+        Барчаси <ArrowRight size={14} />
+      </a>
     </div>
   );
 };

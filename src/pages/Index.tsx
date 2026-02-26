@@ -31,8 +31,9 @@ const Index = () => {
             <HeroFootballers />
           </div>
 
-          {/* Center: Photo articles + Video + Photo feed */}
+          {/* Center: Articles carousel + Video + Stadiums */}
           <div className="lg:col-span-6 space-y-4">
+            <SidebarArticles />
             <PhotoArticles />
             <VideoPosts />
             <StadiumsSection />
@@ -41,7 +42,6 @@ const Index = () => {
           {/* Right: Standings + Scorers + Players + Articles */}
           <div className="lg:col-span-3 space-y-4">
             <GroupStandings />
-            <SidebarArticles />
           </div>
         </div>
 

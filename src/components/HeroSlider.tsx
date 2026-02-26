@@ -63,7 +63,7 @@ const HeroSlider = () => {
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-2xl shadow-2xl"
+      className="relative w-full overflow-hidden rounded-b-2xl shadow-2xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

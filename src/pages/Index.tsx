@@ -19,7 +19,7 @@ const Index = () => {
       <Header />
       <MatchTicker />
 
-      <div className="container py-4 space-y-4">
+      <div className="container pt-0 pb-4 space-y-4">
         {/* Hero Slider */}
         <HeroSlider />
 

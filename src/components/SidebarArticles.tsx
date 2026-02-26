@@ -29,7 +29,16 @@ const SidebarArticles = () => {
             key={article.id}
             className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group"
           >
-            {/* Left: text */}
+            {/* Left: image */}
+            <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
+              <img
+                src={images[i % images.length]}
+                alt={article.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            {/* Right: text */}
             <div className="flex-1 min-w-0 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-1.5 font-body">
@@ -53,15 +62,6 @@ const SidebarArticles = () => {
                   </span>
                 )}
               </div>
-            </div>
-
-            {/* Right: image */}
-            <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
-              <img
-                src={images[i % images.length]}
-                alt={article.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
             </div>
           </div>
         ))}

@@ -13,8 +13,8 @@ const StadiumsSection = () => {
         <a href="#" className="more-link">Барчаси →</a>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {stadiums.slice(0, 3).map((stadium, i) => (
+      <div className="grid grid-cols-2 gap-4">
+        {stadiums.slice(0, 6).map((stadium, i) => (
           <div key={stadium.id} className="cursor-pointer group">
             <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-muted">
               <img

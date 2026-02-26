@@ -40,7 +40,7 @@ const Index = () => {
           </div>
 
           {/* Right: Standings + Scorers + Players + Articles */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="lg:col-span-3 lg:self-stretch">
             <GroupStandings />
           </div>
         </div>

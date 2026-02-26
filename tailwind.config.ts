@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Play', 'sans-serif'],
-        body: ['Inter', 'Segoe UI', 'sans-serif'],
+        heading: ['Host Grotesk', 'sans-serif'],
+        body: ['Host Grotesk', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

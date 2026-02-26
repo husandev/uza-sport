@@ -8,7 +8,7 @@ const avatars = [hero1, hero2, hero3, hero4];
 
 const HeroFootballers = () => {
   return (
-    <div className="bg-card rounded-lg p-4">
+    <div className="bg-card rounded-2xl p-4 shadow-sm">
       <div className="section-title">
         <span>Ўзбек қаҳрамонлари</span>
       </div>
@@ -17,7 +17,7 @@ const HeroFootballers = () => {
         {heroFootballers.map((player, i) => (
           <div
             key={player.id}
-            className="relative rounded-md overflow-hidden cursor-pointer group h-40"
+            className="relative rounded-xl overflow-hidden cursor-pointer group h-40"
           >
             <img
               src={avatars[i]}
@@ -26,17 +26,17 @@ const HeroFootballers = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-3">
-              <div className="text-primary-foreground font-heading font-bold text-[14px] leading-tight">
+              <div className="text-primary-foreground font-heading font-bold text-sm leading-tight">
                 {player.name}
               </div>
-              <div className="text-primary-foreground/60 text-[11px] mt-0.5">
-                {player.position} · <span className="text-highlight font-medium">{player.club}</span>
+              <div className="text-primary-foreground/60 text-[11px] mt-0.5 font-body">
+                {player.position} · <span className="text-highlight font-semibold">{player.club}</span>
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-primary-foreground/80 text-[11px] font-medium">
+                <span className="text-primary-foreground/80 text-[11px] font-medium font-body">
                   #{player.number}
                 </span>
-                <span className="text-highlight text-[11px] font-bold">
+                <span className="text-highlight text-[11px] font-bold font-body">
                   {player.goals} гол
                 </span>
               </div>

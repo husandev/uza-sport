@@ -19,31 +19,28 @@ const Header = () => {
     <header className="sticky top-0 z-50">
       {/* Top white bar */}
       <div className="bg-card border-b border-border">
-        <div className="container flex items-center justify-between h-12">
-          <a href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
+        <div className="container flex items-center justify-between h-14">
+          <a href="/" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
               <span className="text-primary-foreground font-heading font-bold text-sm">WC</span>
             </div>
             <div className="flex flex-col leading-none">
-              <span className="text-lg font-heading font-bold text-foreground tracking-tight leading-none">
+              <span className="text-xl font-heading font-extrabold text-foreground tracking-tight leading-none">
                 WC2026
               </span>
-              <span className="text-[9px] text-muted-foreground tracking-wider">UZA.UZ</span>
+              <span className="text-[10px] text-muted-foreground tracking-widest font-body font-medium">UZA.UZ</span>
             </div>
           </a>
 
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center bg-muted rounded-md overflow-hidden">
-              <input
-                type="text"
-                placeholder="Қидириш..."
-                className="px-3 py-1.5 text-[13px] w-48 bg-transparent outline-none"
-              />
-              <button className="px-3 py-1.5 hover:bg-border transition-colors">
-                <Search size={15} className="text-muted-foreground" />
-              </button>
-            </div>
-            <button className="text-[13px] text-link hover:underline font-medium">Кириш</button>
+          <div className="hidden md:flex items-center bg-muted rounded-xl overflow-hidden">
+            <input
+              type="text"
+              placeholder="Қидириш..."
+              className="px-4 py-2 text-sm w-52 bg-transparent outline-none font-body"
+            />
+            <button className="px-3 py-2 hover:bg-border transition-colors">
+              <Search size={16} className="text-muted-foreground" />
+            </button>
           </div>
         </div>
       </div>

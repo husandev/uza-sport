@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 220 15% 97%;
+    --background: 220 15% 96%;
     --foreground: 220 25% 12%;
 
     --card: 0 0% 100%;
@@ -22,7 +22,7 @@
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 12% 93%;
-    --muted-foreground: 220 10% 50%;
+    --muted-foreground: 220 10% 46%;
 
     --accent: 210 65% 22%;
     --accent-foreground: 0 0% 100%;
@@ -30,17 +30,17 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 12% 90%;
+    --border: 220 12% 91%;
     --input: 220 12% 90%;
     --ring: 210 65% 22%;
 
-    --radius: 0.375rem;
+    --radius: 0.75rem;
 
     --live: 0 75% 50%;
     --highlight: 45 100% 51%;
     --link: 210 65% 40%;
     --nav-bg: 210 65% 22%;
-    --ticker-bg: 210 55% 18%;
+    --ticker-bg: 210 55% 16%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -60,15 +60,17 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
-    letter-spacing: -0.01em;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -87,8 +89,8 @@
 
   /* Section styling */
   .section-title {
-    @apply text-base font-bold uppercase tracking-wide py-2 mb-3;
-    font-family: 'Oswald', sans-serif;
+    @apply text-sm font-bold uppercase tracking-wide py-2.5 mb-3;
+    font-family: 'Montserrat', sans-serif;
     border-bottom: 3px solid hsl(var(--primary));
     display: flex;
     align-items: center;
@@ -96,8 +98,8 @@
   }
 
   .section-title .more-link {
-    @apply text-xs font-normal normal-case tracking-normal;
-    font-family: 'Noto Sans', sans-serif;
+    @apply text-xs font-medium normal-case tracking-normal;
+    font-family: 'Source Sans 3', sans-serif;
     color: hsl(var(--link));
   }
 
@@ -107,7 +109,7 @@
 
   /* News item */
   .news-item {
-    @apply py-2.5 border-b border-border cursor-pointer transition-colors;
+    @apply py-3 border-b border-border cursor-pointer transition-colors;
   }
 
   .news-item:hover {
@@ -119,8 +121,8 @@
   }
 
   .news-item h3 {
-    font-family: 'Noto Sans', sans-serif;
-    @apply text-[13px] font-semibold leading-snug;
+    font-family: 'Source Sans 3', sans-serif;
+    @apply text-sm font-semibold leading-snug;
     color: hsl(var(--foreground));
   }
 
@@ -144,8 +146,8 @@
   }
 
   .nav-link {
-    @apply px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide;
-    font-family: 'Oswald', sans-serif;
+    @apply px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide;
+    font-family: 'Montserrat', sans-serif;
     color: hsl(var(--primary-foreground) / 0.85);
     transition: all 0.2s;
   }

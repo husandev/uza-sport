@@ -19,7 +19,7 @@ const PhotoArticles = () => {
   }
 
   return (
-    <div className="bg-card rounded-lg p-4">
+    <div className="bg-card rounded-2xl p-4 shadow-sm">
       <div className="section-title">
         <span>Фото янгиликлар</span>
         <a href="#" className="more-link">Барчаси →</a>
@@ -30,19 +30,19 @@ const PhotoArticles = () => {
           <div key={ri} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {row.map((article, ci) => (
               <div key={article.id} className="cursor-pointer group">
-                <div className="aspect-[4/3] overflow-hidden rounded-md mb-2 bg-muted">
+                <div className="aspect-[4/3] overflow-hidden rounded-xl mb-2.5 bg-muted">
                   <img
                     src={images[(ri * 3 + ci) % images.length]}
                     alt=""
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                <span className="text-[11px] text-muted-foreground">{article.time}</span>
-                <h3 className="text-[13px] font-bold leading-snug mt-0.5 text-foreground group-hover:text-link transition-colors font-heading">
+                <span className="text-[11px] text-muted-foreground font-body">{article.time}</span>
+                <h3 className="text-sm font-bold leading-snug mt-1 text-foreground group-hover:text-link transition-colors font-heading">
                   {article.title}
                 </h3>
                 {article.comments > 0 && (
-                  <span className="flex items-center gap-1 text-[11px] text-muted-foreground mt-1">
+                  <span className="flex items-center gap-1 text-[11px] text-muted-foreground mt-1.5 font-body">
                     <MessageSquare size={10} /> {article.comments}
                   </span>
                 )}

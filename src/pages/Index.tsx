@@ -1,43 +1,34 @@
 import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
-import HeroSection from "@/components/HeroSection";
 import NewsFeed from "@/components/NewsFeed";
+import PhotoArticles from "@/components/PhotoArticles";
 import GroupStandings from "@/components/GroupStandings";
 import TopScorers from "@/components/TopScorers";
-import SidebarArticles from "@/components/SidebarArticles";
-import VideoPosts from "@/components/VideoPosts";
-import PhotoFeed from "@/components/PhotoFeed";
-import HeroFootballers from "@/components/HeroFootballers";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
-      {/* Match Ticker - full width dark bar */}
       <MatchTicker />
 
-      {/* Main content */}
+      {/* Main 3-column layout like soccer.ru */}
       <div className="container py-3">
-        {/* Hero articles */}
-        <HeroSection />
-
-        {/* Main grid: content + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-4">
-          {/* Main column */}
-          <div className="lg:col-span-2 space-y-5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          {/* Left column - news list */}
+          <div className="lg:col-span-2 border-r border-border pr-3">
             <NewsFeed />
-            <VideoPosts />
-            <PhotoFeed />
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-5">
+          {/* Center column - photo articles grid */}
+          <div className="lg:col-span-7">
+            <PhotoArticles />
+          </div>
+
+          {/* Right column - standings */}
+          <div className="lg:col-span-3 border-l border-border pl-3">
             <GroupStandings />
             <TopScorers />
-            <HeroFootballers />
-            <SidebarArticles />
           </div>
         </div>
       </div>

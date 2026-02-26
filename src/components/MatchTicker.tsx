@@ -2,68 +2,49 @@ import { matchTickerData } from "@/data/mockData";
 
 const MatchTicker = () => {
   return (
-    <div className="w-full">
-      {matchTickerData.map((league, li) => (
-        <div key={li}>
-          {/* League header */}
-          <div className="ticker-league-header flex items-center justify-between px-3 py-1.5 text-[11px] font-semibold">
-            <span className="flex items-center gap-1.5">
-              <span>⚽</span>
-              {league.league}
-            </span>
-            <div className="flex items-center gap-3 text-primary-foreground/70 text-[10px]">
-              <a href="#" className="hover:text-primary-foreground">жадвал</a>
-              <a href="#" className="hover:text-primary-foreground">тақвим</a>
-              <a href="#" className="hover:text-primary-foreground">статистика</a>
-            </div>
-          </div>
+    <div className="bg-muted border-b border-border overflow-x-auto">
+      <div className="container">
+        <div className="flex items-center gap-0 min-w-max">
+          {matchTickerData[0].matches.map((match) => (
+            <div
+              key={match.id}
+              className="flex items-center gap-2 px-3 py-1.5 border-r border-border cursor-pointer hover:bg-border/50 transition-colors text-[11px]"
+            >
+              {/* Status */}
+              <div className="flex flex-col items-center w-10">
+                {match.live ? (
+                  <span className="text-live font-bold flex items-center gap-1">
+                    <span className="live-dot" />
+                    {match.minute}
+                  </span>
+                ) : match.hScore !== null ? (
+                  <span className="text-muted-foreground">тугади</span>
+                ) : (
+                  <span className="text-muted-foreground">{match.time}</span>
+                )}
+              </div>
 
-          {/* Matches grid - 2 columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            {league.matches.map((match) => (
-              <div
-                key={match.id}
-                className="ticker-row flex items-center px-3 py-1.5 cursor-pointer text-[12px] gap-1"
-              >
-                {/* Time/status */}
-                <div className="w-16 shrink-0 text-primary-foreground/50 text-[11px] flex items-center gap-1">
-                  {match.live && <span className="live-dot" />}
-                  <span className={match.live ? "text-highlight font-semibold text-[11px]" : ""}>
-                    {match.live ? match.minute : match.time}
+              {/* Teams & score */}
+              <div className="flex flex-col text-[11px] leading-tight gap-0.5">
+                <div className="flex items-center gap-1.5">
+                  <span>{match.hFlag}</span>
+                  <span className="font-medium w-8">{match.home}</span>
+                  <span className={`font-bold w-3 text-center ${match.live ? "text-live" : ""}`}>
+                    {match.hScore ?? "-"}
                   </span>
                 </div>
-
-                {/* Home team */}
-                <div className="flex items-center gap-1 flex-1 min-w-0 justify-end">
-                  <span className="text-primary-foreground/90 text-[12px] truncate font-medium">
-                    {match.home}
-                  </span>
-                  <span className="text-sm">{match.hFlag}</span>
-                </div>
-
-                {/* Score */}
-                <div className="w-12 text-center shrink-0">
-                  {match.hScore !== null ? (
-                    <span className={`match-score text-[13px] ${match.live ? "match-score-live" : ""}`}>
-                      {match.hScore} : {match.aScore}
-                    </span>
-                  ) : (
-                    <span className="text-primary-foreground/30 text-[12px]">– : –</span>
-                  )}
-                </div>
-
-                {/* Away team */}
-                <div className="flex items-center gap-1 flex-1 min-w-0">
-                  <span className="text-sm">{match.aFlag}</span>
-                  <span className="text-primary-foreground/90 text-[12px] truncate font-medium">
-                    {match.away}
+                <div className="flex items-center gap-1.5">
+                  <span>{match.aFlag}</span>
+                  <span className="font-medium w-8">{match.away}</span>
+                  <span className={`font-bold w-3 text-center ${match.live ? "text-live" : ""}`}>
+                    {match.aScore ?? "-"}
                   </span>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

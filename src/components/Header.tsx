@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { Menu, X, Search, Bell, User } from "lucide-react";
+import { Menu, X, Search, User } from "lucide-react";
 
 const navItems = [
-  { label: "Асосий", href: "#", active: true },
-  { label: "Янгиликлар", href: "#" },
-  { label: "Футбол", href: "#" },
-  { label: "Натижалар", href: "#" },
-  { label: "Жадвал", href: "#" },
+  { label: "Янгиликлар", href: "#", hasDropdown: true },
+  { label: "Турнирлар", href: "#", hasDropdown: true },
+  { label: "Жамоалар", href: "#", hasDropdown: true },
+  { label: "Рейтинглар", href: "#", hasDropdown: true },
   { label: "Стадионлар", href: "#" },
-  { label: "Жамоалар", href: "#" },
-  { label: "Мақолалар", href: "#" },
   { label: "Видео", href: "#" },
   { label: "Фото", href: "#" },
 ];
@@ -18,68 +15,64 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-primary">
-      <div className="container flex items-center justify-between h-11">
-        {/* Left: hamburger + logo */}
-        <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-50">
+      {/* Top bar - white with logo */}
+      <div className="bg-background border-b border-border">
+        <div className="container flex items-center justify-between h-10">
+          <a href="/" className="flex items-baseline gap-1">
+            <span className="text-xl font-heading font-black text-foreground tracking-tight">
+              WC2026
+            </span>
+            <span className="text-[10px] text-muted-foreground font-body">.uza.uz</span>
+          </a>
+
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center border border-border rounded-sm overflow-hidden">
+              <input
+                type="text"
+                placeholder="Қидириш..."
+                className="px-2 py-1 text-[12px] w-40 bg-background outline-none"
+              />
+              <button className="px-2 py-1 bg-muted hover:bg-border transition-colors">
+                <Search size={14} className="text-muted-foreground" />
+              </button>
+            </div>
+            <button className="text-[12px] text-link hover:underline flex items-center gap-1">
+              <User size={13} /> Кириш
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Green navigation bar */}
+      <div className="nav-bar">
+        <div className="container flex items-center justify-between">
+          <nav className="hidden lg:flex items-center">
+            {navItems.map((item) => (
+              <a key={item.label} href={item.href}>
+                {item.label} {item.hasDropdown && "▾"}
+              </a>
+            ))}
+          </nav>
+
+          <a href="#" className="hidden lg:block px-4 py-2 text-[13px] font-bold uppercase tracking-wide text-primary-foreground bg-accent hover:bg-accent/90 font-heading">
+            Матчлар ▸
+          </a>
+
           <button
-            className="lg:hidden text-primary-foreground/70 hover:text-primary-foreground"
+            className="lg:hidden text-primary-foreground p-2"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-          <a href="/" className="flex items-baseline gap-1.5">
-            <span className="text-lg font-heading font-black text-primary-foreground tracking-tight">
-              WC2026
-            </span>
-            <sup className="text-[9px] text-primary-foreground/40 font-body">uza.uz</sup>
-          </a>
-        </div>
-
-        {/* Center nav */}
-        <nav className="hidden lg:flex items-center gap-0 ml-6">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`px-3 py-3 text-[13px] font-medium transition-colors ${
-                item.active
-                  ? "text-secondary"
-                  : "text-primary-foreground/75 hover:text-primary-foreground"
-              }`}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Right icons */}
-        <div className="flex items-center gap-2 text-primary-foreground/60">
-          <button className="p-1.5 hover:text-primary-foreground transition-colors">
-            <Search size={17} />
-          </button>
-          <button className="p-1.5 hover:text-primary-foreground transition-colors hidden sm:block">
-            <Bell size={17} />
-          </button>
-          <button className="p-1.5 hover:text-primary-foreground transition-colors">
-            <User size={17} />
           </button>
         </div>
       </div>
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="lg:hidden bg-primary border-t border-primary-foreground/10 pb-2">
+        <nav className="lg:hidden nav-bar border-t border-primary-foreground/10 pb-2">
           {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`block px-4 py-2 text-[13px] font-medium ${
-                item.active
-                  ? "text-secondary"
-                  : "text-primary-foreground/75 hover:text-primary-foreground"
-              }`}
-            >
+            <a key={item.label} href={item.href} className="block">
               {item.label}
             </a>
           ))}

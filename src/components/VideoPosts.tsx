@@ -9,7 +9,7 @@ const thumbs = [hero1, hero2, hero3, hero5];
 
 const VideoPosts = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-sm">
+    <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Видео</span>
         <a href="#" className="more-link">Барчаси →</a>

@@ -2,7 +2,7 @@ import { teams } from "@/data/mockData";
 
 const TeamsSection = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-sm">
+    <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Терма жамоалар</span>
         <a href="#" className="more-link">Барчаси →</a>

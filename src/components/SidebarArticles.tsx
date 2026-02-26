@@ -16,7 +16,7 @@ const images = [photo1, photo2, photo3, photo4, hero1, hero2, hero3, hero4, hero
 const SidebarArticles = () => {
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
-      <div className="px-5 pt-5 pb-2">
+      <div className="px-5 pt-2 pb-2">
         <div className="section-title">
           <span>Мақолалар</span>
           <a href="#" className="more-link">Барчаси →</a>

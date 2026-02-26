@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube } from "lucide-react";
+import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
 import uzaLogo from "@/assets/uza-logo.png";
 
 const navItems = [
@@ -69,15 +69,24 @@ const Header = () => {
 
           <div className="flex items-center gap-2">
             {/* Social icons */}
-            <div className="hidden sm:flex items-center gap-1">
-              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="Telegram">
-                <Send size={14} />
-              </a>
-              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram">
-                <Instagram size={14} />
-              </a>
-              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="YouTube">
-                <Youtube size={14} />
+            <div className="hidden sm:flex items-center gap-0.5">
+              {[
+                { icon: Youtube, label: "YouTube" },
+                { icon: Twitter, label: "Twitter" },
+                { icon: Facebook, label: "Facebook" },
+                { icon: Instagram, label: "Instagram" },
+                { icon: Send, label: "Telegram" },
+                { icon: Linkedin, label: "LinkedIn" },
+              ].map(({ icon: Icon, label }) => (
+                <a key={label} href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label={label}>
+                  <Icon size={13} />
+                </a>
+              ))}
+              {/* TikTok (no lucide icon, using SVG) */}
+              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="TikTok">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                </svg>
               </a>
             </div>
 

@@ -7,7 +7,7 @@ const imgs = [stadium1, stadium2, stadium3, stadium1, stadium2, stadium3];
 
 const StadiumsSection = () => {
   return (
-    <div className="bg-card rounded-2xl p-4 shadow-sm">
+    <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Стадионлар</span>
         <a href="#" className="more-link">Барчаси →</a>

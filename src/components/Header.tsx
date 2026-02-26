@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
-import uzaLogo from "@/assets/uza-logo.svg";
+import uzaLogo from "@/assets/uza-logo.png";
 
 const navItems = [
   { label: "Асосий", href: "#", active: true },

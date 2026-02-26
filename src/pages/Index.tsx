@@ -28,6 +28,19 @@ const Index = () => {
           {/* Left: News feed */}
           <div className="lg:col-span-3 space-y-4">
             <NewsFeed />
+            {/* Banner */}
+            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Реклама</div>
+              <h3 className="font-heading font-extrabold text-base leading-tight mb-2">
+                🏆 Superliga 2026 — янги мавсум!
+              </h3>
+              <p className="text-[12px] font-body opacity-80 mb-3">
+                Ўзбекистон Суперлигаси ўйинларини жонли томоша қилинг
+              </p>
+              <div className="bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground text-[12px] font-bold font-heading text-center py-2 rounded-lg">
+                Батафсил →
+              </div>
+            </div>
             <HeroFootballers />
           </div>
 

@@ -1,25 +1,30 @@
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Flame } from "lucide-react";
 import { newsFeed } from "@/data/mockData";
 
 const NewsFeed = () => {
   return (
-    <div>
-      <div className="space-y-0">
+    <div className="bg-card rounded-lg p-4">
+      <div className="section-title">
+        <span>Сўнги янгиликлар</span>
+        <a href="#" className="more-link">Барчаси →</a>
+      </div>
+
+      <div>
         {newsFeed.map((item) => (
-          <article
-            key={item.id}
-            className="py-1.5 border-b border-border last:border-0 cursor-pointer group"
-          >
-            <h3 className="text-[13px] font-semibold text-foreground leading-snug group-hover:text-accent transition-colors">
-              {item.title}
-            </h3>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[11px] text-muted-foreground">{item.time}</span>
+          <div key={item.id} className="news-item px-1">
+            <h3>{item.title}</h3>
+            <div className="flex items-center gap-3 mt-1">
+              <span className="text-[11px] text-muted-foreground font-medium">{item.time}</span>
+              {item.fires > 0 && (
+                <span className="fire-count">
+                  <Flame size={11} /> {item.fires}
+                </span>
+              )}
               <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground">
                 <MessageSquare size={10} /> {item.comments}
               </span>
             </div>
-          </article>
+          </div>
         ))}
       </div>
     </div>

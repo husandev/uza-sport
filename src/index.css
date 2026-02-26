@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Condensed:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,41 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 210 20% 15%;
+    --background: 220 15% 97%;
+    --foreground: 220 25% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 20% 15%;
+    --card-foreground: 220 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 20% 15%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 195 50% 16%;
+    --primary: 210 65% 22%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 145 63% 42%;
+    --secondary: 145 55% 38%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 10% 96%;
-    --muted-foreground: 210 10% 45%;
+    --muted: 220 12% 93%;
+    --muted-foreground: 220 10% 50%;
 
-    --accent: 145 63% 42%;
+    --accent: 210 65% 22%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 10% 90%;
-    --input: 210 10% 90%;
-    --ring: 195 50% 16%;
+    --border: 220 12% 90%;
+    --input: 220 12% 90%;
+    --ring: 210 65% 22%;
 
-    --radius: 0rem;
+    --radius: 0.375rem;
 
-    --live: 0 80% 50%;
-    --score: 195 50% 16%;
+    --live: 0 75% 50%;
     --highlight: 45 100% 51%;
-    --link: 210 60% 42%;
-    --ticker-bg: 210 5% 96%;
-    --ticker-row: 210 5% 94%;
-    --ticker-header: 210 5% 88%;
-    --nav-bg: 145 63% 42%;
+    --link: 210 65% 40%;
+    --nav-bg: 210 65% 22%;
+    --ticker-bg: 210 55% 18%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -63,85 +60,82 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: -0.01em;
   }
 }
 
 @layer utilities {
+  /* Live dot animation */
   .live-dot {
-    @apply w-1.5 h-1.5 rounded-full;
+    @apply w-2 h-2 rounded-full;
     background: hsl(var(--live));
-    animation: blink 1.2s ease-in-out infinite;
+    animation: pulse-dot 1.5s ease-in-out infinite;
   }
 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 hsl(var(--live) / 0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 4px hsl(var(--live) / 0); }
   }
 
-  .ticker-league-header {
-    background: hsl(var(--ticker-header));
-    color: hsl(var(--foreground));
-    font-weight: 600;
+  /* Section styling */
+  .section-title {
+    @apply text-base font-bold uppercase tracking-wide py-2 mb-3;
+    font-family: 'Oswald', sans-serif;
+    border-bottom: 3px solid hsl(var(--primary));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .ticker-row {
-    background: hsl(var(--ticker-bg));
-    border-bottom: 1px solid hsl(var(--border));
-  }
-
-  .ticker-row:hover {
-    background: hsl(var(--ticker-row));
-  }
-
-  .match-score {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: 700;
-    color: hsl(var(--foreground));
-  }
-
-  .match-score-live {
-    color: hsl(var(--live));
-  }
-
-  .news-title {
-    font-family: 'Roboto Condensed', sans-serif;
-    @apply font-bold leading-tight;
-  }
-
-  .news-title:hover {
-    color: hsl(var(--accent));
-  }
-
-  .section-bar {
-    @apply flex items-center justify-between py-1.5 px-0 mb-2;
-    border-bottom: 2px solid hsl(var(--foreground));
-  }
-
-  .section-label {
-    @apply text-sm font-bold uppercase tracking-wider;
-    font-family: 'Roboto Condensed', sans-serif;
-    color: hsl(var(--foreground));
-  }
-
-  .meta-link {
-    @apply text-xs;
+  .section-title .more-link {
+    @apply text-xs font-normal normal-case tracking-normal;
+    font-family: 'Noto Sans', sans-serif;
     color: hsl(var(--link));
   }
 
-  .meta-link:hover {
+  .section-title .more-link:hover {
     text-decoration: underline;
   }
 
-  .fire-count {
-    @apply inline-flex items-center gap-0.5 text-xs font-semibold;
-    color: hsl(var(--accent));
+  /* News item */
+  .news-item {
+    @apply py-2.5 border-b border-border cursor-pointer transition-colors;
+  }
+
+  .news-item:hover {
+    background: hsl(var(--muted));
+  }
+
+  .news-item:last-child {
+    border-bottom: none;
+  }
+
+  .news-item h3 {
+    font-family: 'Noto Sans', sans-serif;
+    @apply text-[13px] font-semibold leading-snug;
+    color: hsl(var(--foreground));
+  }
+
+  .news-item:hover h3 {
+    color: hsl(var(--link));
+  }
+
+  /* Card hover */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
   }
 
   /* Nav bar */
@@ -149,17 +143,32 @@
     background: hsl(var(--nav-bg));
   }
 
-  .nav-bar a {
-    @apply px-3 py-2 text-[13px] font-semibold uppercase tracking-wide;
+  .nav-link {
+    @apply px-4 py-2.5 text-[13px] font-semibold uppercase tracking-wide;
+    font-family: 'Oswald', sans-serif;
+    color: hsl(var(--primary-foreground) / 0.85);
+    transition: all 0.2s;
+  }
+
+  .nav-link:hover {
     color: hsl(var(--primary-foreground));
-    font-family: 'Roboto Condensed', sans-serif;
+    background: hsl(210 65% 28%);
   }
 
-  .nav-bar a:hover {
-    background: hsl(145 63% 36%);
+  .nav-link.active {
+    color: hsl(var(--primary-foreground));
+    background: hsl(210 65% 28%);
+    border-bottom: 2px solid hsl(var(--highlight));
   }
 
-  .nav-bar a.active {
-    background: hsl(145 63% 36%);
+  /* Fire count */
+  .fire-count {
+    @apply inline-flex items-center gap-0.5 text-[11px] font-bold;
+    color: hsl(var(--live));
+  }
+
+  /* Match ticker */
+  .ticker-wrapper {
+    background: hsl(var(--ticker-bg));
   }
 }

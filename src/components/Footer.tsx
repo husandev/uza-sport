@@ -1,4 +1,4 @@
-import uzaLogo from "@/assets/uza-logo.svg";
+import uzaLogo from "@/assets/uza-logo.png";
 
 const Footer = () => {
   return (

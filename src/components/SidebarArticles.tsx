@@ -50,7 +50,7 @@ const SidebarArticles = () => {
                     </>
                   )}
                 </div>
-                <h3 className="text-[17px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                <h3 className="text-[19px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-3">
                   {article.title}
                 </h3>
               </div>

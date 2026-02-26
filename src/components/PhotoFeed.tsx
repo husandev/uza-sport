@@ -14,29 +14,44 @@ import footballer1 from "@/assets/footballer-1.jpg";
 import footballer2 from "@/assets/footballer-2.jpg";
 import footballer3 from "@/assets/footballer-3.jpg";
 import footballer4 from "@/assets/footballer-4.jpg";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import gallery5 from "@/assets/gallery-5.jpg";
+import gallery6 from "@/assets/gallery-6.jpg";
+import gallery7 from "@/assets/gallery-7.jpg";
+import gallery8 from "@/assets/gallery-8.jpg";
 import { Camera, Heart } from "lucide-react";
 
 const photos = [
   { src: photo1, caption: "Ўзбекистон — Аргентина ўйинидан", likes: 342 },
   { src: stadium1, caption: "MetLife стадиони", likes: 198 },
   { src: hero1, caption: "Терма жамоа сафга тизилмоқда", likes: 256 },
+  { src: gallery1, caption: "Мухлислар байрамда", likes: 445 },
   { src: photo2, caption: "Стадион тайёрлиги", likes: 128 },
   { src: footballer1, caption: "Шомуродов интервьюда", likes: 415 },
   { src: hero2, caption: "Голдан кейинги шодлик", likes: 302 },
+  { src: gallery2, caption: "Кечки машғулот", likes: 167 },
   { src: stadium2, caption: "Rose Bowl стадиони", likes: 176 },
+  { src: gallery3, caption: "Ғалаба кубоги", likes: 523 },
   { src: photo3, caption: "Мухлислар кутиб олиши", likes: 89 },
+  { src: gallery4, caption: "Зарба лаҳзаси", likes: 387 },
   { src: hero3, caption: "Ярим финал лаҳзалари", likes: 221 },
   { src: footballer2, caption: "Хусанов машғулотда", likes: 187 },
+  { src: gallery5, caption: "Ўйин юқоридан", likes: 294 },
   { src: hero4, caption: "Мухлислар байроқлари", likes: 145 },
+  { src: gallery6, caption: "Жамоа руҳи", likes: 312 },
   { src: stadium3, caption: "AT&T стадиони", likes: 163 },
   { src: footballer3, caption: "Урунов ўйин олдидан", likes: 278 },
+  { src: gallery7, caption: "Стадион қуёш ботишида", likes: 456 },
   { src: photo4, caption: "Терма жамоа машғулоти", likes: 94 },
+  { src: gallery8, caption: "Футбол тўпи", likes: 201 },
   { src: hero5, caption: "Волонтёрлар тайёрланмоқда", likes: 112 },
   { src: footballer4, caption: "Шукуров ғалабани нишонламоқда", likes: 334 },
 ];
 
 const PhotoFeed = () => {
-  // Split photos into 4 columns with varying heights
   const columns: typeof photos[] = [[], [], [], []];
   photos.forEach((photo, i) => {
     columns[i % 4].push(photo);
@@ -63,7 +78,6 @@ const PhotoFeed = () => {
                   className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   style={{
                     aspectRatio:
-                      // Vary aspect ratios to create masonry effect
                       (colIdx + i) % 3 === 0
                         ? "3/4"
                         : (colIdx + i) % 3 === 1
@@ -71,7 +85,6 @@ const PhotoFeed = () => {
                         : "4/3",
                   }}
                 />
-                {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
                   <span className="text-[11px] font-medium text-white flex items-center gap-1.5 font-body mb-1">
                     <Camera size={11} /> {photo.caption}

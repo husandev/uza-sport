@@ -193,7 +193,7 @@ const HeroSlider = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-5 py-2.5 bg-highlight text-foreground font-heading font-bold text-[13px] uppercase tracking-wide rounded-xl shadow-lg shadow-highlight/30 hover:shadow-highlight/50 transition-shadow"
+                  className="px-5 py-2.5 bg-highlight text-primary-foreground font-heading font-bold text-[13px] uppercase tracking-wide rounded-xl shadow-lg shadow-highlight/30 hover:shadow-highlight/50 transition-shadow"
                 >
                   Батафсил →
                 </motion.button>

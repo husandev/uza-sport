@@ -1,15 +1,15 @@
+import uzaLogo from "@/assets/uza-logo.svg";
+
 const Footer = () => {
   return (
     <footer className="bg-primary mt-6">
       <div className="container py-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2.5 mb-2">
-              <div className="w-8 h-8 bg-primary-foreground/10 rounded-xl flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-bold text-xs">WC</span>
-              </div>
+            <div className="flex items-center gap-3 mb-2">
+              <img src={uzaLogo} alt="UZA.uz" className="h-7 brightness-0 invert opacity-70" />
+              <div className="h-5 w-px bg-primary-foreground/20" />
               <span className="text-primary-foreground font-heading font-extrabold text-xl">WC2026</span>
-              <span className="text-primary-foreground/40 text-[10px] font-body">uza.uz</span>
             </div>
             <p className="text-primary-foreground/40 text-[13px] max-w-md font-body">
               Ўзбекистон Республикаси Миллий ахборот агентлиги — ЖЧ-2026 махсус лойиҳаси

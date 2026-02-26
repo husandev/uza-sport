@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50">
       {/* Top white bar */}
-      <div className="bg-card border-b border-border">
+      <div className="bg-card">
         <div className="container flex items-center justify-between h-14">
           <a href="/" className="flex items-center gap-3">
             <img src={uzaLogo} alt="UZA.uz" className="h-8" />

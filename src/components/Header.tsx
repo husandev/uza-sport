@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
+import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube } from "lucide-react";
 import uzaLogo from "@/assets/uza-logo.png";
 
 const navItems = [
@@ -68,6 +68,19 @@ const Header = () => {
           </a>
 
           <div className="flex items-center gap-2">
+            {/* Social icons */}
+            <div className="hidden sm:flex items-center gap-1">
+              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="Telegram">
+                <Send size={14} />
+              </a>
+              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="Instagram">
+                <Instagram size={14} />
+              </a>
+              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="YouTube">
+                <Youtube size={14} />
+              </a>
+            </div>
+
             {/* Search trigger */}
             <div ref={searchRef} className="relative">
               {!searchOpen ? (

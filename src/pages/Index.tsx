@@ -1,9 +1,16 @@
 import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
+import HeroSlider from "@/components/HeroSlider";
 import NewsFeed from "@/components/NewsFeed";
 import PhotoArticles from "@/components/PhotoArticles";
 import GroupStandings from "@/components/GroupStandings";
 import TopScorers from "@/components/TopScorers";
+import VideoPosts from "@/components/VideoPosts";
+import PhotoFeed from "@/components/PhotoFeed";
+import HeroFootballers from "@/components/HeroFootballers";
+import StadiumsSection from "@/components/StadiumsSection";
+import TeamsSection from "@/components/TeamsSection";
+import SidebarArticles from "@/components/SidebarArticles";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -12,25 +19,36 @@ const Index = () => {
       <Header />
       <MatchTicker />
 
-      {/* Main 3-column layout like soccer.ru */}
-      <div className="container py-3">
+      <div className="container py-4 space-y-4">
+        {/* Hero Slider */}
+        <HeroSlider />
+
+        {/* Main grid: left news + center content + right sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          {/* Left column - news list */}
-          <div className="lg:col-span-2 border-r border-border pr-3">
+          {/* Left: News feed */}
+          <div className="lg:col-span-3">
             <NewsFeed />
           </div>
 
-          {/* Center column - photo articles grid */}
-          <div className="lg:col-span-7">
+          {/* Center: Photo articles + Video + Photo feed */}
+          <div className="lg:col-span-6 space-y-4">
             <PhotoArticles />
+            <VideoPosts />
+            <StadiumsSection />
           </div>
 
-          {/* Right column - standings */}
-          <div className="lg:col-span-3 border-l border-border pl-3">
+          {/* Right: Standings + Scorers + Players + Articles */}
+          <div className="lg:col-span-3 space-y-4">
             <GroupStandings />
             <TopScorers />
+            <HeroFootballers />
+            <SidebarArticles />
           </div>
         </div>
+
+        {/* Full-width sections */}
+        <TeamsSection />
+        <PhotoFeed />
       </div>
 
       <Footer />

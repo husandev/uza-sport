@@ -257,4 +257,8 @@ export const teams = [
   { id: 6, name: "Испания", flag: "🇪🇸", group: "C", rank: 6 },
   { id: 7, name: "Германия", flag: "🇩🇪", group: "B", rank: 11 },
   { id: 8, name: "Италия", flag: "🇮🇹", group: "D", rank: 9 },
+  { id: 9, name: "Португалия", flag: "🇵🇹", group: "E", rank: 5 },
+  { id: 10, name: "Нидерландия", flag: "🇳🇱", group: "E", rank: 7 },
+  { id: 11, name: "Хорватия", flag: "🇭🇷", group: "F", rank: 8 },
+  { id: 12, name: "Уругвай", flag: "🇺🇾", group: "F", rank: 10 },
 ];

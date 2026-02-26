@@ -50,7 +50,7 @@ const Header = () => {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                Кир
+                Кириллча
               </button>
               <button
                 onClick={() => setScript("latin")}
@@ -60,7 +60,7 @@ const Header = () => {
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                Lot
+                Lotincha
               </button>
             </div>
 

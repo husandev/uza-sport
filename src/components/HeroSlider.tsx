@@ -186,16 +186,16 @@ const HeroSlider = () => {
           ))}
         </div>
 
-        {/* Navigation arrows */}
+        {/* Navigation arrows — always visible */}
         <button
           onClick={prev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-xl transition-all backdrop-blur-md border border-primary-foreground/10 z-20"
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-xl transition-all backdrop-blur-md border border-primary-foreground/10 z-20 hover:scale-110 active:scale-95"
         >
           <ChevronLeft size={22} />
         </button>
         <button
           onClick={next}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-xl transition-all backdrop-blur-md border border-primary-foreground/10 z-20 lg:hidden"
+          className="absolute right-4 lg:right-[232px] top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-xl transition-all backdrop-blur-md border border-primary-foreground/10 z-20 hover:scale-110 active:scale-95"
         >
           <ChevronRight size={22} />
         </button>

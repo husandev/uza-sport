@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -60,7 +60,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Rubik', 'Segoe UI', sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     font-size: 15px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -69,7 +69,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Play', sans-serif;
     letter-spacing: -0.02em;
   }
 }
@@ -90,7 +90,7 @@
   /* Section styling */
   .section-title {
     @apply text-sm font-bold uppercase tracking-wide py-1.5 mb-2;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Play', sans-serif;
     border-bottom: 3px solid hsl(var(--primary));
     display: flex;
     align-items: center;
@@ -99,7 +99,7 @@
 
   .section-title .more-link {
     @apply text-xs font-medium normal-case tracking-normal;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: hsl(var(--link));
   }
 
@@ -121,7 +121,7 @@
   }
 
   .news-item h3 {
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Inter', sans-serif;
     @apply text-sm font-semibold leading-snug;
     color: hsl(var(--foreground));
     transition: color 0.2s;
@@ -148,7 +148,7 @@
 
   .nav-link {
     @apply px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Play', sans-serif;
     color: hsl(var(--primary-foreground) / 0.85);
     transition: all 0.2s;
   }

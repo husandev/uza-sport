@@ -5,7 +5,7 @@ const NewsFeed = () => {
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
       {/* Header */}
-      <div className="px-4 pt-4 pb-2">
+      <div className="px-4 pt-2 pb-2">
         <div className="section-title">
           <span>Сўнги янгиликлар</span>
           <a href="#" className="more-link">Барчаси →</a>

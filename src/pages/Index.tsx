@@ -4,7 +4,7 @@ import HeroSlider from "@/components/HeroSlider";
 import NewsFeed from "@/components/NewsFeed";
 import PhotoArticles from "@/components/PhotoArticles";
 import GroupStandings from "@/components/GroupStandings";
-import TopScorers from "@/components/TopScorers";
+
 import VideoPosts from "@/components/VideoPosts";
 import PhotoFeed from "@/components/PhotoFeed";
 import HeroFootballers from "@/components/HeroFootballers";
@@ -26,8 +26,9 @@ const Index = () => {
         {/* Main grid: left news + center content + right sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Left: News feed */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 space-y-4">
             <NewsFeed />
+            <HeroFootballers />
           </div>
 
           {/* Center: Photo articles + Video + Photo feed */}
@@ -40,8 +41,6 @@ const Index = () => {
           {/* Right: Standings + Scorers + Players + Articles */}
           <div className="lg:col-span-3 space-y-4">
             <GroupStandings />
-            <TopScorers />
-            <HeroFootballers />
             <SidebarArticles />
           </div>
         </div>

@@ -22,77 +22,63 @@ const HeroSlider = () => {
   }, [next]);
 
   return (
-    <section className="relative h-[65vh] md:h-[75vh] overflow-hidden">
+    <div className="relative h-[280px] md:h-[340px] overflow-hidden rounded-sm">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.5 }}
           className="absolute inset-0"
         >
-          <img
-            src={images[current]}
-            alt={heroNews[current].title}
-            className="w-full h-full object-cover"
-          />
-          <div className="hero-overlay absolute inset-0" />
+          <img src={images[current]} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
         </motion.div>
       </AnimatePresence>
 
-      {/* Content */}
-      <div className="absolute inset-0 flex items-end">
-        <div className="container pb-12 md:pb-16">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <span className="inline-block px-3 py-1 bg-accent text-accent-foreground text-xs font-bold font-heading uppercase rounded mb-3">
-                {heroNews[current].category}
-              </span>
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-heading font-black text-primary-foreground leading-tight max-w-3xl">
-                {heroNews[current].title}
-              </h1>
-              <p className="mt-3 text-sm md:text-base text-primary-foreground/80 max-w-2xl">
-                {heroNews[current].subtitle}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current}
+            initial={{ y: 15, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -10, opacity: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <span className="inline-block px-1.5 py-0.5 bg-accent text-accent-foreground text-[10px] font-bold font-heading uppercase rounded-sm mb-1.5">
+              {heroNews[current].category}
+            </span>
+            <h2 className="text-base md:text-xl font-heading font-bold text-primary-foreground leading-tight max-w-xl">
+              {heroNews[current].title}
+            </h2>
+            <p className="mt-1 text-xs text-primary-foreground/70 max-w-lg line-clamp-1">
+              {heroNews[current].subtitle}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Navigation arrows */}
-      <button
-        onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-primary/50 hover:bg-primary/80 text-primary-foreground rounded-full transition-colors backdrop-blur-sm"
-      >
-        <ChevronLeft size={24} />
+      <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 p-1 bg-foreground/30 hover:bg-foreground/50 text-primary-foreground rounded-sm transition-colors">
+        <ChevronLeft size={18} />
       </button>
-      <button
-        onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-primary/50 hover:bg-primary/80 text-primary-foreground rounded-full transition-colors backdrop-blur-sm"
-      >
-        <ChevronRight size={24} />
+      <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 bg-foreground/30 hover:bg-foreground/50 text-primary-foreground rounded-sm transition-colors">
+        <ChevronRight size={18} />
       </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+      {/* Tabs at bottom */}
+      <div className="absolute bottom-0 right-0 flex">
         {heroNews.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${
-              i === current ? "bg-accent w-8" : "bg-primary-foreground/40"
+            className={`w-6 h-1 transition-all ${
+              i === current ? "bg-accent" : "bg-primary-foreground/30"
             }`}
           />
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

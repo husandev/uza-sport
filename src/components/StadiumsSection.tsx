@@ -8,46 +8,23 @@ const stadiumImages = [stadium1, stadium2, stadium3];
 
 const StadiumsSection = () => {
   return (
-    <section className="py-8 md:py-12 bg-muted/50">
-      <div className="container">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="section-title">Stadionlar</h2>
-          <a href="#" className="text-sm font-medium text-secondary hover:underline">
-            Barcha stadionlar →
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {stadiums.map((stadium, i) => (
-            <div
-              key={stadium.id}
-              className="bg-card rounded-lg border border-border overflow-hidden card-hover cursor-pointer group"
-            >
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={stadiumImages[i]}
-                  alt={stadium.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="p-4">
-                <h3 className="font-heading font-bold text-foreground text-base mb-2">
-                  {stadium.name}
-                </h3>
-                <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <MapPin size={12} /> {stadium.city}, {stadium.country}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Users size={12} /> {stadium.capacity}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="compact-card">
+      <div className="section-header px-3 pt-3 mx-3">
+        <h2 className="section-title">Stadionlar</h2>
+        <a href="#" className="section-link">Barchasi →</a>
       </div>
-    </section>
+      <div className="grid grid-cols-3 gap-2 p-3 pt-0">
+        {stadiums.slice(0, 3).map((stadium, i) => (
+          <div key={stadium.id} className="cursor-pointer group">
+            <div className="aspect-[3/2] overflow-hidden rounded-sm mb-1.5">
+              <img src={stadiumImages[i]} alt={stadium.name} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+            </div>
+            <h3 className="text-[11px] font-semibold text-foreground leading-tight">{stadium.name}</h3>
+            <span className="text-[10px] text-muted-foreground">{stadium.city}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

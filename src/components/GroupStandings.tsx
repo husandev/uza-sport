@@ -1,67 +1,72 @@
+import { useState } from "react";
 import { groupStandings } from "@/data/mockData";
 
 const GroupStandings = () => {
-  return (
-    <section className="py-8 md:py-12 bg-muted/50">
-      <div className="container">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="section-title">Turnir jadvali</h2>
-          <a href="#" className="text-sm font-medium text-secondary hover:underline">
-            Barcha guruhlar →
-          </a>
-        </div>
+  const [activeTab, setActiveTab] = useState(0);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {groupStandings.map((group) => (
-            <div key={group.group} className="bg-card rounded-lg border border-border overflow-hidden">
-              <div className="bg-primary px-4 py-3">
-                <h3 className="text-sm font-bold font-heading text-primary-foreground">
-                  {group.group}
-                </h3>
-              </div>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border text-muted-foreground">
-                    <th className="text-left px-4 py-2 font-medium">#</th>
-                    <th className="text-left px-4 py-2 font-medium">Jamoa</th>
-                    <th className="text-center px-2 py-2 font-medium">O</th>
-                    <th className="text-center px-2 py-2 font-medium">G</th>
-                    <th className="text-center px-2 py-2 font-medium">D</th>
-                    <th className="text-center px-2 py-2 font-medium">M</th>
-                    <th className="text-center px-2 py-2 font-medium">FT</th>
-                    <th className="text-center px-2 py-2 font-medium font-bold">O</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {group.teams.map((team, i) => (
-                    <tr
-                      key={team.name}
-                      className={`border-b border-border last:border-0 ${
-                        i < 2 ? "bg-secondary/5" : ""
-                      } ${team.name === "O'zbekiston" ? "bg-highlight/10 font-semibold" : ""}`}
-                    >
-                      <td className="px-4 py-2.5 font-medium">{team.pos}</td>
-                      <td className="px-4 py-2.5">
-                        <span className="flex items-center gap-2">
-                          <span className="text-lg">{team.flag}</span>
-                          {team.name}
-                        </span>
-                      </td>
-                      <td className="text-center px-2 py-2.5">{team.played}</td>
-                      <td className="text-center px-2 py-2.5">{team.won}</td>
-                      <td className="text-center px-2 py-2.5">{team.drawn}</td>
-                      <td className="text-center px-2 py-2.5">{team.lost}</td>
-                      <td className="text-center px-2 py-2.5">{team.gd}</td>
-                      <td className="text-center px-2 py-2.5 font-bold">{team.points}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ))}
-        </div>
+  return (
+    <div className="compact-card">
+      <div className="section-header px-3 pt-3 mx-3">
+        <h2 className="section-title">Turnir jadvali</h2>
+        <a href="#" className="section-link">Barchasi →</a>
       </div>
-    </section>
+
+      {/* Group tabs */}
+      <div className="flex border-b border-border px-3 gap-0 overflow-x-auto">
+        {groupStandings.map((g, i) => (
+          <button
+            key={g.group}
+            onClick={() => setActiveTab(i)}
+            className={`px-3 py-1.5 text-[11px] font-semibold font-heading whitespace-nowrap border-b-2 transition-colors ${
+              i === activeTab
+                ? "border-primary text-primary"
+                : "border-transparent text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {g.group}
+          </button>
+        ))}
+      </div>
+
+      <table className="w-full text-xs">
+        <thead>
+          <tr className="text-muted-foreground border-b border-border">
+            <th className="text-left pl-3 pr-1 py-1.5 font-medium w-6">#</th>
+            <th className="text-left px-1 py-1.5 font-medium">Jamoa</th>
+            <th className="text-center px-1 py-1.5 font-medium w-6">O</th>
+            <th className="text-center px-1 py-1.5 font-medium w-6">G</th>
+            <th className="text-center px-1 py-1.5 font-medium w-6">D</th>
+            <th className="text-center px-1 py-1.5 font-medium w-6">M</th>
+            <th className="text-center px-1 py-1.5 font-medium w-8">FT</th>
+            <th className="text-center pr-3 pl-1 py-1.5 font-bold w-6">O</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groupStandings[activeTab].teams.map((team, i) => (
+            <tr
+              key={team.name}
+              className={`border-b border-border last:border-0 hover:bg-muted/50 cursor-pointer ${
+                i < 2 ? "border-l-2 border-l-secondary" : "border-l-2 border-l-transparent"
+              } ${team.name === "O'zbekiston" ? "bg-highlight/8 font-semibold" : ""}`}
+            >
+              <td className="pl-3 pr-1 py-1.5 font-medium text-muted-foreground">{team.pos}</td>
+              <td className="px-1 py-1.5">
+                <span className="flex items-center gap-1.5">
+                  <span className="text-sm">{team.flag}</span>
+                  <span className="text-foreground">{team.name}</span>
+                </span>
+              </td>
+              <td className="text-center px-1 py-1.5">{team.p}</td>
+              <td className="text-center px-1 py-1.5">{team.w}</td>
+              <td className="text-center px-1 py-1.5">{team.d}</td>
+              <td className="text-center px-1 py-1.5">{team.l}</td>
+              <td className="text-center px-1 py-1.5">{team.gd}</td>
+              <td className="text-center pr-3 pl-1 py-1.5 font-bold">{team.pts}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

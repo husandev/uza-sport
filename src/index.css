@@ -89,7 +89,7 @@
 
   /* Section styling */
   .section-title {
-    @apply text-sm font-bold uppercase tracking-wide py-2.5 mb-3;
+    @apply text-sm font-bold uppercase tracking-wide py-1.5 mb-2;
     font-family: 'Montserrat', sans-serif;
     border-bottom: 3px solid hsl(var(--primary));
     display: flex;

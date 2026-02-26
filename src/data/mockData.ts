@@ -95,39 +95,111 @@ export const sidebarArticles = [
 
 export const groupStandings = [
   {
-    group: "A гуруҳ",
+    group: "A",
     teams: [
-      { pos: 1, name: "Аргентина", flag: "🇦🇷", p: 2, w: 2, d: 0, l: 0, gd: "+5", pts: 6 },
-      { pos: 2, name: "Ўзбекистон", flag: "🇺🇿", p: 2, w: 1, d: 0, l: 1, gd: "+1", pts: 3 },
-      { pos: 3, name: "Мексика", flag: "🇲🇽", p: 2, w: 1, d: 0, l: 1, gd: "0", pts: 3 },
-      { pos: 4, name: "Камерун", flag: "🇨🇲", p: 2, w: 0, d: 0, l: 2, gd: "-6", pts: 0 },
+      { pos: 1, name: "Мексика", flag: "🇲🇽", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Жанубий Корея", flag: "🇰🇷", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "ЖАР", flag: "🇿🇦", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "UEFA плейофф D", flag: "🏳️", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
     ],
   },
   {
-    group: "B гуруҳ",
+    group: "B",
     teams: [
-      { pos: 1, name: "Бразилия", flag: "🇧🇷", p: 2, w: 2, d: 0, l: 0, gd: "+4", pts: 6 },
-      { pos: 2, name: "Германия", flag: "🇩🇪", p: 2, w: 1, d: 1, l: 0, gd: "+2", pts: 4 },
-      { pos: 3, name: "Япония", flag: "🇯🇵", p: 2, w: 0, d: 1, l: 1, gd: "-1", pts: 1 },
-      { pos: 4, name: "Коста-Рика", flag: "🇨🇷", p: 2, w: 0, d: 0, l: 2, gd: "-5", pts: 0 },
+      { pos: 1, name: "Канада", flag: "🇨🇦", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Швейцария", flag: "🇨🇭", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Қатар", flag: "🇶🇦", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "UEFA плейофф A", flag: "🏳️", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
     ],
   },
   {
-    group: "C гуруҳ",
+    group: "C",
     teams: [
-      { pos: 1, name: "Франция", flag: "🇫🇷", p: 2, w: 2, d: 0, l: 0, gd: "+4", pts: 6 },
-      { pos: 2, name: "Испания", flag: "🇪🇸", p: 2, w: 1, d: 0, l: 1, gd: "+1", pts: 3 },
-      { pos: 3, name: "Марокаш", flag: "🇲🇦", p: 2, w: 1, d: 0, l: 1, gd: "0", pts: 3 },
-      { pos: 4, name: "Канада", flag: "🇨🇦", p: 2, w: 0, d: 0, l: 2, gd: "-5", pts: 0 },
+      { pos: 1, name: "Бразилия", flag: "🇧🇷", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Марокаш", flag: "🇲🇦", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Шотландия", flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "Гаити", flag: "🇭🇹", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
     ],
   },
   {
-    group: "D гуруҳ",
+    group: "D",
     teams: [
-      { pos: 1, name: "Англия", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", p: 2, w: 1, d: 1, l: 0, gd: "+3", pts: 4 },
-      { pos: 2, name: "Италия", flag: "🇮🇹", p: 2, w: 1, d: 1, l: 0, gd: "+2", pts: 4 },
-      { pos: 3, name: "Уругвай", flag: "🇺🇾", p: 2, w: 1, d: 0, l: 1, gd: "0", pts: 3 },
-      { pos: 4, name: "Гана", flag: "🇬🇭", p: 2, w: 0, d: 0, l: 2, gd: "-5", pts: 0 },
+      { pos: 1, name: "АҚШ", flag: "🇺🇸", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Австралия", flag: "🇦🇺", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Парагвай", flag: "🇵🇾", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "UEFA плейофф C", flag: "🏳️", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "E",
+    teams: [
+      { pos: 1, name: "Германия", flag: "🇩🇪", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Эквадор", flag: "🇪🇨", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Кот-д'Ивуар", flag: "🇨🇮", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "Кюрасао", flag: "🇨🇼", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "F",
+    teams: [
+      { pos: 1, name: "Голландия", flag: "🇳🇱", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Япония", flag: "🇯🇵", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Тунис", flag: "🇹🇳", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "UEFA плейофф B", flag: "🏳️", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "G",
+    teams: [
+      { pos: 1, name: "Бельгия", flag: "🇧🇪", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Эрон", flag: "🇮🇷", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Миср", flag: "🇪🇬", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "Янги Зеландия", flag: "🇳🇿", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "H",
+    teams: [
+      { pos: 1, name: "Испания", flag: "🇪🇸", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Уругвай", flag: "🇺🇾", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Саудия Арабистони", flag: "🇸🇦", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "Кабо-Верде", flag: "🇨🇻", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "I",
+    teams: [
+      { pos: 1, name: "Франция", flag: "🇫🇷", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Сенегал", flag: "🇸🇳", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Норвегия", flag: "🇳🇴", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "FIFA плейофф 2", flag: "🏳️", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "J",
+    teams: [
+      { pos: 1, name: "Аргентина", flag: "🇦🇷", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Австрия", flag: "🇦🇹", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Жазоир", flag: "🇩🇿", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "Иордания", flag: "🇯🇴", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "K",
+    teams: [
+      { pos: 1, name: "Португалия", flag: "🇵🇹", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Колумбия", flag: "🇨🇴", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Ўзбекистон", flag: "🇺🇿", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "FIFA плейофф 1", flag: "🏳️", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+    ],
+  },
+  {
+    group: "L",
+    teams: [
+      { pos: 1, name: "Англия", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 2, name: "Хорватия", flag: "🇭🇷", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 3, name: "Панама", flag: "🇵🇦", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
+      { pos: 4, name: "Гана", flag: "🇬🇭", p: 0, w: 0, d: 0, l: 0, gd: "0", pts: 0 },
     ],
   },
 ];

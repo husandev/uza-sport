@@ -2,13 +2,13 @@ import { groupStandings } from "@/data/mockData";
 
 const GroupStandings = () => {
   return (
-    <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
+    <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm h-full">
       <div className="section-title">
         <span>Турнир жадвали</span>
         <a href="#" className="more-link">Тўлиқ →</a>
       </div>
 
-      <div className="space-y-4 max-h-[1200px] overflow-y-auto pr-1 scrollbar-thin">
+      <div className="space-y-4 flex-1 overflow-y-auto pr-1 scrollbar-thin">
         {groupStandings.map((g) => (
           <div key={g.group}>
             {/* Group header */}

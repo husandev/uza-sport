@@ -169,8 +169,27 @@ const HeroSlider = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.4 }}
-                className="flex items-center gap-5"
+                className="flex items-center gap-4"
               >
+                {/* Arrows + Батафсил together */}
+                <div className="flex items-center gap-2">
+                  <motion.button
+                    onClick={prev}
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-xl transition-all backdrop-blur-md border border-primary-foreground/15"
+                  >
+                    <ChevronLeft size={20} />
+                  </motion.button>
+                  <motion.button
+                    onClick={next}
+                    whileHover={{ scale: 1.15 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-xl transition-all backdrop-blur-md border border-primary-foreground/15"
+                  >
+                    <ChevronRight size={20} />
+                  </motion.button>
+                </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -234,32 +253,7 @@ const HeroSlider = () => {
           ))}
         </div>
 
-        {/* Navigation arrows */}
-        <motion.button
-          onClick={prev}
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.9 }}
-          className="absolute left-5 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-2xl transition-all backdrop-blur-md border border-primary-foreground/15 z-20 shadow-xl"
-        >
-          <ChevronLeft size={24} />
-        </motion.button>
-        <motion.button
-          onClick={next}
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.9 }}
-          className="absolute right-[240px] top-1/2 -translate-y-1/2 w-12 h-12 hidden lg:flex items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-2xl transition-all backdrop-blur-md border border-primary-foreground/15 z-20 shadow-xl"
-        >
-          <ChevronRight size={24} />
-        </motion.button>
-        {/* Mobile right arrow */}
-        <motion.button
-          onClick={next}
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ scale: 0.9 }}
-          className="absolute right-5 top-1/2 -translate-y-1/2 w-12 h-12 flex lg:hidden items-center justify-center bg-primary-foreground/10 hover:bg-primary-foreground/25 text-primary-foreground rounded-2xl transition-all backdrop-blur-md border border-primary-foreground/15 z-20 shadow-xl"
-        >
-          <ChevronRight size={24} />
-        </motion.button>
+
 
         {/* Bottom bar */}
         <div className="absolute bottom-0 left-0 right-0 lg:right-[220px] z-30">

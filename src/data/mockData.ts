@@ -234,6 +234,9 @@ export const heroFootballers = [
   { id: 6, name: "Жасур Яхшибоев", position: "Ҳужумчи", club: "Насаф", number: 11, goals: 8, flag: "🇺🇿", headline: "Яхшибоев мавсумнинг энг яхши голини урди" },
   { id: 7, name: "Хуснидин Алиқулов", position: "Ҳимоячи", club: "Бунёдкор", number: 3, goals: 2, flag: "🇺🇿", headline: "Алиқулов Осиё Чемпионлар Лигасида порлади" },
   { id: 8, name: "Аббосбек Файзуллаев", position: "Ярим ҳимоячи", club: "Ланс", number: 7, goals: 6, flag: "🇺🇿", headline: "Файзуллаев Европа лигасида дубль қилди" },
+  { id: 9, name: "Жамшид Искандаров", position: "Ҳимоячи", club: "Пахтакор", number: 5, goals: 1, flag: "🇺🇿", headline: "Искандаров Суперлигада энг яхши ҳимоячи" },
+  { id: 10, name: "Улуғбек Хошимов", position: "Ярим ҳимоячи", club: "Навбаҳор", number: 6, goals: 4, flag: "🇺🇿", headline: "Хошимов ўйинда иккита гол урди" },
+  { id: 11, name: "Дониёр Тўрсунов", position: "Ҳужумчи", club: "Бунёдкор", number: 17, goals: 7, flag: "🇺🇿", headline: "Тўрсунов мавсумнинг энг тез голини урди" },
 ];
 
 export const stadiums = [

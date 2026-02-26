@@ -8,8 +8,11 @@ import footballer5 from "@/assets/footballer-5.jpg";
 import footballer6 from "@/assets/footballer-6.jpg";
 import footballer7 from "@/assets/footballer-7.jpg";
 import footballer8 from "@/assets/footballer-8.jpg";
+import footballer9 from "@/assets/footballer-9.jpg";
+import footballer10 from "@/assets/footballer-10.jpg";
+import footballer11 from "@/assets/footballer-11.jpg";
 
-const portraits = [footballer1, footballer2, footballer3, footballer4, footballer5, footballer6, footballer7, footballer8];
+const portraits = [footballer1, footballer2, footballer3, footballer4, footballer5, footballer6, footballer7, footballer8, footballer9, footballer10, footballer11];
 
 const HeroFootballers = () => {
   const featured = heroFootballers[0];

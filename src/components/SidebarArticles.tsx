@@ -1,73 +1,70 @@
-import { useState, useCallback, useEffect } from "react";
-import { ChevronLeft, ChevronRight, User } from "lucide-react";
+import { Flame } from "lucide-react";
 import { sidebarArticles } from "@/data/mockData";
+import photo1 from "@/assets/photo-1.jpg";
+import photo2 from "@/assets/photo-2.jpg";
+import photo3 from "@/assets/photo-3.jpg";
+import photo4 from "@/assets/photo-4.jpg";
+import hero1 from "@/assets/hero-1.jpg";
+import hero2 from "@/assets/hero-2.jpg";
+import hero3 from "@/assets/hero-3.jpg";
+import hero4 from "@/assets/hero-4.jpg";
+import hero5 from "@/assets/hero-5.jpg";
+import stadium1 from "@/assets/stadium-1.jpg";
+
+const images = [photo1, photo2, photo3, photo4, hero1, hero2, hero3, hero4, hero5, stadium1];
 
 const SidebarArticles = () => {
-  const [current, setCurrent] = useState(0);
-  const total = sidebarArticles.length;
-
-  const next = useCallback(() => setCurrent((p) => (p + 1) % total), [total]);
-  const prev = useCallback(() => setCurrent((p) => (p - 1 + total) % total), [total]);
-
-  // Auto-rotate
-  useEffect(() => {
-    const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
-  }, [next]);
-
-  const article = sidebarArticles[current];
-
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
-      <div className="px-4 pt-4 pb-2">
+      <div className="px-5 pt-5 pb-2">
         <div className="section-title">
           <span>Мақолалар</span>
           <a href="#" className="more-link">Барчаси →</a>
         </div>
       </div>
 
-      {/* Carousel card */}
-      <div className="relative px-4 pb-4">
-        <div className="bg-gradient-to-br from-primary/8 to-primary/3 rounded-xl p-4 min-h-[120px] flex flex-col justify-between transition-all duration-300">
-          <div>
-            <h3 className="text-sm font-semibold text-foreground leading-snug cursor-pointer hover:text-primary transition-colors line-clamp-3">
-              {article.title}
-            </h3>
-            <div className="flex items-center gap-2 mt-3 text-[11px] text-muted-foreground font-body">
-              <User size={10} />
-              <span className="font-medium">{article.author}</span>
+      <div className="divide-y divide-border">
+        {sidebarArticles.map((article, i) => (
+          <div
+            key={article.id}
+            className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group"
+          >
+            {/* Left: text */}
+            <div className="flex-1 min-w-0 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-1.5 font-body">
+                  <span>{article.time}</span>
+                  {article.category && (
+                    <>
+                      <span className="text-muted-foreground/40">|</span>
+                      <span className="text-primary font-medium">{article.category}</span>
+                    </>
+                  )}
+                </div>
+                <h3 className="text-[15px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                  {article.title}
+                </h3>
+              </div>
+              <div className="flex items-center gap-3 mt-2 text-[11px] text-muted-foreground font-body">
+                <span>{article.subtitle}</span>
+                {article.fires > 0 && (
+                  <span className="flex items-center gap-0.5 text-primary">
+                    <Flame size={10} /> {article.fires}
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Navigation */}
-          <div className="flex items-center justify-between mt-3">
-            <div className="flex gap-1">
-              {sidebarArticles.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === current ? "w-5 bg-primary" : "w-1.5 bg-muted-foreground/20"
-                  }`}
-                />
-              ))}
-            </div>
-            <div className="flex gap-1">
-              <button
-                onClick={prev}
-                className="w-6 h-6 flex items-center justify-center rounded-md bg-muted hover:bg-primary/10 transition-colors"
-              >
-                <ChevronLeft size={12} className="text-muted-foreground" />
-              </button>
-              <button
-                onClick={next}
-                className="w-6 h-6 flex items-center justify-center rounded-md bg-muted hover:bg-primary/10 transition-colors"
-              >
-                <ChevronRight size={12} className="text-muted-foreground" />
-              </button>
+            {/* Right: image */}
+            <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
+              <img
+                src={images[i % images.length]}
+                alt={article.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

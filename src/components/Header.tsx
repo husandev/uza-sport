@@ -1,73 +1,88 @@
 import { useState } from "react";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, Clock } from "lucide-react";
 
 const navItems = [
-  "Bosh sahifa",
-  "Yangiliklar",
-  "Natijalar",
-  "Jadval",
-  "Terma jamoalar",
-  "Stadionlar",
-  "Maqolalar",
-  "Video",
-  "Foto",
+  { label: "Asosiy", active: true },
+  { label: "Yangiliklar" },
+  { label: "Natijalar" },
+  { label: "Jadval" },
+  { label: "Statistika" },
+  { label: "Terma jamoalar" },
+  { label: "Stadionlar" },
+  { label: "Maqolalar" },
+  { label: "Video" },
+  { label: "Foto" },
 ];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-primary shadow-lg">
-      <div className="container flex items-center justify-between h-16">
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <span className="text-xl font-heading font-black text-primary-foreground tracking-tight">
+    <header className="sticky top-0 z-50">
+      {/* Top bar */}
+      <div className="bg-primary">
+        <div className="container flex items-center justify-between h-10">
+          <a href="/" className="flex items-center gap-2">
+            <span className="text-base font-heading font-black text-primary-foreground tracking-tight">
               WC2026
             </span>
-            <span className="text-xs text-primary-foreground/70 font-body hidden sm:block">
-              | UZA.UZ
+            <span className="text-[10px] text-primary-foreground/60 font-body border-l border-primary-foreground/20 pl-2 hidden sm:block">
+              UZA.UZ | O'zbekiston Milliy axborot agentligi
             </span>
-          </div>
-        </a>
-
-        {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navItems.map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="px-3 py-2 text-sm font-medium text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 rounded-md transition-colors"
+          </a>
+          <div className="flex items-center gap-3 text-primary-foreground/70 text-xs">
+            <span className="hidden md:flex items-center gap-1">
+              <Clock size={12} />
+              26.02.2026 | 14:32
+            </span>
+            <button className="p-1 hover:text-primary-foreground transition-colors">
+              <Search size={16} />
+            </button>
+            <button
+              className="lg:hidden p-1 text-primary-foreground"
+              onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {item}
-            </a>
-          ))}
-        </nav>
+              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
+        </div>
+      </div>
 
-        {/* Right side */}
-        <div className="flex items-center gap-2">
-          <button className="p-2 text-primary-foreground/80 hover:text-primary-foreground transition-colors">
-            <Search size={20} />
-          </button>
-          <button
-            className="lg:hidden p-2 text-primary-foreground"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+      {/* Nav bar */}
+      <div className="bg-card border-b border-border shadow-sm">
+        <div className="container">
+          <nav className="hidden lg:flex items-center gap-0 overflow-x-auto">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href="#"
+                className={`px-3 py-2.5 text-xs font-semibold font-heading uppercase tracking-wide whitespace-nowrap border-b-2 transition-colors ${
+                  item.active
+                    ? "border-accent text-accent"
+                    : "border-transparent text-foreground/70 hover:text-foreground hover:border-border"
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <nav className="lg:hidden bg-primary border-t border-primary-foreground/10 pb-4">
+        <nav className="lg:hidden bg-card border-b border-border">
           {navItems.map((item) => (
             <a
-              key={item}
+              key={item.label}
               href="#"
-              className="block px-6 py-3 text-sm font-medium text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
+              className={`block px-4 py-2.5 text-xs font-semibold font-heading uppercase tracking-wide border-l-3 ${
+                item.active
+                  ? "border-accent text-accent bg-accent/5"
+                  : "border-transparent text-foreground/70 hover:bg-muted"
+              }`}
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>

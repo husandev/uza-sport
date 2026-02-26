@@ -1,41 +1,37 @@
-import { Clock } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import { latestNews } from "@/data/mockData";
 
 const LatestNews = () => {
   return (
-    <section className="py-8 md:py-12 bg-muted/50">
-      <div className="container">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="section-title">So'nggi yangiliklar</h2>
-          <a href="#" className="text-sm font-medium text-secondary hover:underline">
-            Barcha yangiliklar →
-          </a>
-        </div>
+    <div className="compact-card">
+      <div className="section-header px-3 pt-3 mx-3">
+        <h2 className="section-title">So'nggi yangiliklar</h2>
+        <a href="#" className="section-link">Barchasi →</a>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {latestNews.map((news) => (
-            <article
-              key={news.id}
-              className="bg-card rounded-lg border border-border p-5 card-hover cursor-pointer"
-            >
-              <span className="inline-block px-2 py-0.5 bg-secondary/10 text-secondary text-xs font-semibold rounded mb-3">
-                {news.category}
-              </span>
-              <h3 className="font-heading font-bold text-foreground text-sm leading-snug mb-2 line-clamp-3">
+      <div className="divide-y divide-border">
+        {latestNews.map((news) => (
+          <article
+            key={news.id}
+            className="px-3 py-2 hover:bg-muted/50 cursor-pointer transition-colors flex items-start gap-2"
+          >
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[10px] font-semibold text-secondary uppercase">{news.category}</span>
+                <span className="text-[10px] text-muted-foreground">{news.time}</span>
+              </div>
+              <h3 className="text-xs font-semibold text-foreground leading-snug line-clamp-2 hover:text-accent transition-colors">
                 {news.title}
               </h3>
-              <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
-                {news.excerpt}
-              </p>
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock size={12} />
-                {news.date}
-              </div>
-            </article>
-          ))}
-        </div>
+            </div>
+            <span className="flex items-center gap-0.5 text-[10px] text-muted-foreground shrink-0 mt-2">
+              <MessageSquare size={10} />
+              {news.comments}
+            </span>
+          </article>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 

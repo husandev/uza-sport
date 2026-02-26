@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Oswald', 'sans-serif'],
-        body: ['Noto Sans', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
+        body: ['Source Sans 3', 'Segoe UI', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

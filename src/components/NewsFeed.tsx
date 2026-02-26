@@ -3,7 +3,7 @@ import { newsFeed } from "@/data/mockData";
 
 const NewsFeed = () => {
   return (
-    <div className="bg-card rounded-lg p-4">
+    <div className="bg-card rounded-2xl p-4 shadow-sm">
       <div className="section-title">
         <span>Сўнги янгиликлар</span>
         <a href="#" className="more-link">Барчаси →</a>
@@ -13,8 +13,8 @@ const NewsFeed = () => {
         {newsFeed.map((item) => (
           <div key={item.id} className="news-item px-1">
             <h3>{item.title}</h3>
-            <div className="flex items-center gap-3 mt-1">
-              <span className="text-[11px] text-muted-foreground font-medium">{item.time}</span>
+            <div className="flex items-center gap-3 mt-1.5">
+              <span className="text-[11px] text-muted-foreground font-medium font-body">{item.time}</span>
               {item.fires > 0 && (
                 <span className="fire-count">
                   <Flame size={11} /> {item.fires}

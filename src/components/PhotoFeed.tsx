@@ -17,18 +17,18 @@ const photos = [
 
 const PhotoFeed = () => {
   return (
-    <div className="bg-card rounded-lg p-4">
+    <div className="bg-card rounded-2xl p-4 shadow-sm">
       <div className="section-title">
         <span>Фотогалерея</span>
         <a href="#" className="more-link">Барчаси →</a>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {photos.map((photo, i) => (
-          <div key={i} className="relative aspect-square rounded-md overflow-hidden cursor-pointer group">
+          <div key={i} className="relative aspect-square rounded-xl overflow-hidden cursor-pointer group">
             <img src={photo.src} alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-              <span className="text-[12px] font-medium text-primary-foreground flex items-center gap-1.5">
+              <span className="text-[12px] font-medium text-primary-foreground flex items-center gap-1.5 font-body">
                 <Camera size={12} /> {photo.caption}
               </span>
             </div>

@@ -8,7 +8,7 @@ const GroupStandings = () => {
         <a href="#" className="more-link">Тўлиқ →</a>
       </div>
 
-      <div className="space-y-4 max-h-[900px] overflow-y-auto pr-1 scrollbar-thin">
+      <div className="space-y-4 max-h-[1200px] overflow-y-auto pr-1 scrollbar-thin">
         {groupStandings.map((g) => (
           <div key={g.group}>
             {/* Group header */}

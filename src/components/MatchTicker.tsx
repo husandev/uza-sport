@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { matchTickerData } from "@/data/mockData";
 
 const MatchTicker = () => {
@@ -61,13 +61,19 @@ const MatchTicker = () => {
     };
   }, []);
 
-  const scrollRight = () => {
+  const handleArrowClick = () => {
     const el = scrollRef.current;
     if (!el) return;
     pauseAutoScrollRef.current = true;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    const nextLeft = Math.min(el.scrollLeft + 300, maxScroll);
-    el.scrollTo({ left: nextLeft, behavior: "smooth" });
+    if (atEnd) {
+      // At the end — scroll back to start
+      el.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      // Not at end — scroll right
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const nextLeft = Math.min(el.scrollLeft + 300, maxScroll);
+      el.scrollTo({ left: nextLeft, behavior: "smooth" });
+    }
   };
 
   return (
@@ -137,12 +143,16 @@ const MatchTicker = () => {
         {/* Right arrow — only when more content exists */}
         {(canScrollRight || atEnd) && (
           <button
-            onClick={scrollRight}
+            onClick={handleArrowClick}
             className="absolute right-0 top-0 bottom-0 z-10 flex items-center px-2 transition-opacity duration-300"
-            aria-label="O'ngga scroll qilish"
+            aria-label={atEnd ? "Boshiga qaytish" : "O'ngga scroll qilish"}
           >
             <div className="w-8 h-8 rounded-lg bg-primary-foreground/15 hover:bg-primary-foreground/25 flex items-center justify-center transition-colors backdrop-blur-sm">
-              <ChevronRight size={16} className="text-primary-foreground" />
+              {atEnd ? (
+                <ChevronLeft size={16} className="text-primary-foreground" />
+              ) : (
+                <ChevronRight size={16} className="text-primary-foreground" />
+              )}
             </div>
           </button>
         )}

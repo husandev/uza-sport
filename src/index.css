@@ -109,25 +109,26 @@
 
   /* News item */
   .news-item {
-    @apply py-3 border-b border-border cursor-pointer transition-colors;
+    @apply py-3 px-3 cursor-pointer transition-all duration-200 rounded-xl;
+    border-left: 3px solid transparent;
+    margin-bottom: 2px;
   }
 
   .news-item:hover {
-    background: hsl(var(--muted));
-  }
-
-  .news-item:last-child {
-    border-bottom: none;
+    background: hsl(var(--primary) / 0.06);
+    border-left-color: hsl(var(--primary));
+    transform: translateX(4px);
   }
 
   .news-item h3 {
     font-family: 'Source Sans 3', sans-serif;
     @apply text-sm font-semibold leading-snug;
     color: hsl(var(--foreground));
+    transition: color 0.2s;
   }
 
   .news-item:hover h3 {
-    color: hsl(var(--link));
+    color: hsl(var(--primary));
   }
 
   /* Card hover */

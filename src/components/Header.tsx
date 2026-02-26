@@ -62,6 +62,10 @@ const Header = () => {
           <a href="/" className="flex items-center gap-2.5">
             <img src={uzaLogo} alt="UZA.uz" className="h-7" />
             <div className="h-5 w-px bg-border" />
+            {/* Rolling football */}
+            <span className="inline-block w-5 h-5 animate-[spin_3s_linear_infinite]">
+              ⚽
+            </span>
             <span className="text-base font-heading font-extrabold text-foreground tracking-tight leading-none">
               WC2026
             </span>

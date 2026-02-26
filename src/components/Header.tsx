@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
+import uzaLogo from "@/assets/uza-logo.svg";
 
 const navItems = [
   { label: "Асосий", href: "#", active: true },
@@ -20,16 +21,12 @@ const Header = () => {
       {/* Top white bar */}
       <div className="bg-card border-b border-border">
         <div className="container flex items-center justify-between h-14">
-          <a href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
-              <span className="text-primary-foreground font-heading font-bold text-sm">WC</span>
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-xl font-heading font-extrabold text-foreground tracking-tight leading-none">
-                WC2026
-              </span>
-              <span className="text-[10px] text-muted-foreground tracking-widest font-body font-medium">UZA.UZ</span>
-            </div>
+          <a href="/" className="flex items-center gap-3">
+            <img src={uzaLogo} alt="UZA.uz" className="h-8" />
+            <div className="h-6 w-px bg-border" />
+            <span className="text-lg font-heading font-extrabold text-foreground tracking-tight leading-none">
+              WC2026
+            </span>
           </a>
 
           <div className="hidden md:flex items-center bg-muted rounded-xl overflow-hidden">

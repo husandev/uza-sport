@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Oswald', 'sans-serif'],
-        body: ['Rubik', 'Segoe UI', 'sans-serif'],
+        heading: ['Play', 'sans-serif'],
+        body: ['Inter', 'Segoe UI', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

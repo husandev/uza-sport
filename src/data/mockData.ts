@@ -226,10 +226,10 @@ export const videoPosts = [
 ];
 
 export const heroFootballers = [
-  { id: 1, name: "Элдор Шомуродов", position: "Ҳужумчи", club: "Рома", number: 9, goals: 12, flag: "🇺🇿" },
-  { id: 2, name: "Абдуқодир Хусанов", position: "Ҳимоячи", club: "Манчестер Сити", number: 4, goals: 1, flag: "🇺🇿" },
-  { id: 3, name: "Остон Урунов", position: "Ярим ҳимоячи", club: "Ланс", number: 8, goals: 5, flag: "🇺🇿" },
-  { id: 4, name: "Отабек Шукуров", position: "Ярим ҳимоячи", club: "АГМК", number: 10, goals: 3, flag: "🇺🇿" },
+  { id: 1, name: "Элдор Шомуродов", position: "Ҳужумчи", club: "Рома", number: 9, goals: 12, flag: "🇺🇿", headline: "Шомуродов Серия А да яна ҳам гол урди!" },
+  { id: 2, name: "Абдуқодир Хусанов", position: "Ҳимоячи", club: "Манчестер Сити", number: 4, goals: 1, flag: "🇺🇿", headline: "Хусанов АПЛ да энг яхши ҳимоячи деб топилди" },
+  { id: 3, name: "Остон Урунов", position: "Ярим ҳимоячи", club: "Ланс", number: 8, goals: 5, flag: "🇺🇿", headline: "Урунов Лига 1 да ҳафтанинг ўйинчиси" },
+  { id: 4, name: "Отабек Шукуров", position: "Ярим ҳимоячи", club: "АГМК", number: 10, goals: 3, flag: "🇺🇿", headline: "Шукуров терма жамоага чақирилди" },
 ];
 
 export const stadiums = [

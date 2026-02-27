@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Host Grotesk', 'sans-serif'],
-        body: ['Host Grotesk', 'sans-serif'],
+        heading: ['Nunito Sans', 'sans-serif'],
+        body: ['Nunito Sans', 'sans-serif'],
+        sans: ['Nunito Sans', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

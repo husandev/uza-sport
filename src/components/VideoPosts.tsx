@@ -18,7 +18,7 @@ const VideoPosts = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {videoPosts.map((video, i) => (
-          <div key={video.id} className="cursor-pointer group">
+          <Link key={video.id} to={`/video/${video.id}`} className="cursor-pointer group">
             <div className="aspect-video rounded-xl overflow-hidden relative mb-2.5 bg-muted">
               <img src={thumbs[i]} alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
               <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -36,7 +36,7 @@ const VideoPosts = () => {
             <span className="flex items-center gap-1 text-[11px] text-muted-foreground mt-1.5 font-body">
               <Eye size={11} /> {video.views} ko'rish
             </span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -16,7 +16,7 @@ const StadiumsSection = () => {
 
       <div className="grid grid-cols-2 gap-4">
         {stadiums.slice(0, 6).map((stadium, i) => (
-          <div key={stadium.id} className="cursor-pointer group">
+          <Link key={stadium.id} to={`/stadium/${stadium.id}`} className="cursor-pointer group">
             <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-muted">
               <img
                 src={imgs[i]}
@@ -30,7 +30,7 @@ const StadiumsSection = () => {
             <p className="text-[12px] text-muted-foreground mt-1 font-body">
               {stadium.country} {stadium.city} · {stadium.capacity} o'rin
             </p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

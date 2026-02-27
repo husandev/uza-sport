@@ -72,7 +72,7 @@ const TeamsPage = () => {
                 {paginated.map((team, i) => (
                   <Link
                     key={team.id}
-                    to={`/article/${((team.id - 1) % 3) + 1}`}
+                    to={`/team/${team.id - 1}`}
                     className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                   >
                     {/* Image */}

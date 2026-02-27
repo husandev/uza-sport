@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import GroupStandings from "@/components/GroupStandings";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import hero1 from "@/assets/hero-1.jpg";
@@ -52,9 +53,10 @@ const VideosPage = () => {
           <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
             <div className="divide-y divide-border">
               {paginated.map((video, i) => (
-                <div
+                <Link
                   key={video.id}
-                  className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group"
+                  to={`/video/${video.id}`}
+                  className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                 >
                   {/* Image with play icon */}
                   <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative">
@@ -96,7 +98,7 @@ const VideosPage = () => {
                       <span>{video.category}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

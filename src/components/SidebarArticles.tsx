@@ -20,7 +20,7 @@ const SidebarArticles = () => {
       <div className="px-5 pt-2 pb-2">
         <div className="section-title">
           <span>Maqolalar</span>
-          <a href="#" className="more-link">Barchasi →</a>
+          <a href="/news" className="more-link">Barchasi →</a>
         </div>
       </div>
 

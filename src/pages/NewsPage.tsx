@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import GroupStandings from "@/components/GroupStandings";
 import { Flame, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -78,8 +76,8 @@ const NewsPage = () => {
   const paginatedNews = allNews.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <>
+
 
       <div className="container pt-4 pb-8">
         <div className="mb-5">
@@ -176,8 +174,7 @@ const NewsPage = () => {
         </div>
       </div>
 
-      <Footer />
-    </div>
+    </>
   );
 };
 

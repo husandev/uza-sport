@@ -295,19 +295,6 @@ const FootballerPage = () => {
 
                 {/* Career highlights */}
 
-                {/* Tags */}
-                <div className="mt-7 pt-5 border-t border-border">
-                  <div className="flex flex-wrap gap-2">
-                    {[data.currentClub.split(" ")[0], data.position, "O'zbekiston", "JCh-2026", "Terma jamoa", "Kapitan"].map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[11px] font-semibold px-3 py-1.5 rounded-full bg-muted text-muted-foreground border border-border hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
             </article>
 

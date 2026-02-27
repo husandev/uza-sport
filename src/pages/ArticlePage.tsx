@@ -256,45 +256,41 @@ const ArticlePage = () => {
             </article>
 
             {/* Related Posts — below article */}
-            <div className="mt-6">
-              <h3 className="section-title mb-4">
-                <span>O'xshash maqolalar</span>
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="mt-6 bg-card rounded-2xl shadow-sm overflow-hidden">
+              <div className="px-5 pt-2 pb-2">
+                <div className="section-title">
+                  <span>O'xshash maqolalar</span>
+                </div>
+              </div>
+              <div className="divide-y divide-border">
                 {filtered.map((post) => (
                   <Link
                     key={post.id}
                     to={`/article/${post.id}`}
-                    className="group rounded-xl overflow-hidden bg-card border border-border card-hover"
+                    className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group block"
                   >
-                    <div className="aspect-[16/10] overflow-hidden">
+                    <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
                       <img
                         src={post.image}
                         alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="p-3">
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-primary">{post.category}</span>
-                      <h4 className="text-[13px] font-bold text-foreground leading-snug mt-1 group-hover:text-primary transition-colors line-clamp-2">
-                        {post.title}
-                      </h4>
-                      <span className="text-[10px] text-muted-foreground mt-1.5 block">{post.date}</span>
+                    <div className="flex-1 min-w-0 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-1.5 font-body">
+                          <span>{post.date}</span>
+                          <span className="text-muted-foreground/40">|</span>
+                          <span className="text-primary font-medium">{post.category}</span>
+                        </div>
+                        <h3 className="text-[19px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-3">
+                          {post.title}
+                        </h3>
+                      </div>
                     </div>
                   </Link>
                 ))}
               </div>
-            </div>
-
-            {/* Back link */}
-            <div className="mt-6 flex justify-center">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-2 text-[13px] font-semibold text-primary hover:underline"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Bosh sahifaga qaytish
-              </Link>
             </div>
           </div>
 

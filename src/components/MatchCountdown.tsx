@@ -67,8 +67,9 @@ const MatchCountdown = () => {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden relative"
+      className="overflow-hidden relative"
       style={{
+        borderRadius: "24px",
         background: "hsl(var(--card))",
         border: "1px solid hsl(var(--border))",
         boxShadow: "0 1px 3px hsl(0 0% 0% / 0.04), 0 8px 30px hsl(0 0% 0% / 0.04)",

@@ -18,8 +18,8 @@ const SidebarArticles = () => {
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 pt-2 pb-2">
         <div className="section-title">
-          <span>Мақолалар</span>
-          <a href="#" className="more-link">Барчаси →</a>
+          <span>Maqolalar</span>
+          <a href="#" className="more-link">Barchasi →</a>
         </div>
       </div>
 

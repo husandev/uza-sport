@@ -4,8 +4,8 @@ const TeamsSection = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Терма жамоалар</span>
-        <a href="#" className="more-link">Барчаси →</a>
+        <span>Terma jamoalar</span>
+        <a href="#" className="more-link">Barchasi →</a>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -20,7 +20,7 @@ const TeamsSection = () => {
             <div>
               <span className="text-sm font-bold font-heading block leading-tight">{team.name}</span>
               <span className="text-[11px] text-muted-foreground font-body">
-                {team.group} гуруҳ · #{team.rank}
+                {team.group} guruh · #{team.rank}
               </span>
             </div>
           </div>

@@ -9,8 +9,8 @@ const StadiumsSection = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Стадионлар</span>
-        <a href="#" className="more-link">Барчаси →</a>
+        <span>Stadionlar</span>
+        <a href="#" className="more-link">Barchasi →</a>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -27,7 +27,7 @@ const StadiumsSection = () => {
               {stadium.name}
             </h3>
             <p className="text-[12px] text-muted-foreground mt-1 font-body">
-              {stadium.country} {stadium.city} · {stadium.capacity} ўрин
+              {stadium.country} {stadium.city} · {stadium.capacity} o'rin
             </p>
           </div>
         ))}

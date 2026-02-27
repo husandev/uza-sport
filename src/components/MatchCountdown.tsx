@@ -4,26 +4,26 @@ import { motion, AnimatePresence } from "framer-motion";
 const MATCH_DATE = new Date("2026-06-14T18:00:00");
 
 const CountdownRing = ({ value, max, label }: { value: number; max: number; label: string }) => {
-  const radius = 28;
+  const radius = 20;
   const circumference = 2 * Math.PI * radius;
   const progress = (value / max) * circumference;
 
   return (
     <div className="flex flex-col items-center gap-1">
-      <div className="relative w-[68px] h-[68px] sm:w-[76px] sm:h-[76px]">
+      <div className="relative w-[48px] h-[48px] sm:w-[54px] sm:h-[54px]">
         {/* Background ring */}
-        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 64 64">
+        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 48 48">
           <circle
-            cx="32" cy="32" r={radius}
+            cx="24" cy="24" r={radius}
             fill="none"
             stroke="hsl(var(--border))"
-            strokeWidth="3"
+            strokeWidth="2.5"
           />
           <motion.circle
-            cx="32" cy="32" r={radius}
+            cx="24" cy="24" r={radius}
             fill="none"
             stroke="url(#ringGradient)"
-            strokeWidth="3.5"
+            strokeWidth="3"
             strokeLinecap="round"
             strokeDasharray={circumference}
             animate={{ strokeDashoffset: circumference - progress }}
@@ -46,7 +46,7 @@ const CountdownRing = ({ value, max, label }: { value: number; max: number; labe
               animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
               exit={{ scale: 0.7, opacity: 0, filter: "blur(4px)" }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="text-xl sm:text-2xl font-black tabular-nums text-foreground"
+              className="text-sm sm:text-base font-black tabular-nums text-foreground"
             >
               {String(value).padStart(2, "0")}
             </motion.span>

@@ -57,7 +57,7 @@ const Header = () => {
       <div className="bg-card">
         <div className="container flex items-center justify-between h-12">
           <a href="/" className="flex items-center gap-2.5">
-            <img src={uzaLogo} alt="UZA.uz" className="h-9" />
+            <img src={uzaLogo} alt="UZA.uz" className="h-6" />
             <div className="h-5 w-px bg-border" />
             {/* Bouncing football */}
             <div className="football-anim">

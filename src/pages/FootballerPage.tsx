@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, Trophy, MapPin, Shirt, Target, ArrowRight } from "lucide-react";
+import { ArrowLeft, Trophy, MapPin, Shirt, Target, ArrowRight, Quote } from "lucide-react";
 import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
 import Footer from "@/components/Footer";
@@ -34,19 +34,6 @@ const playerBios: Record<number, string> = {
   11: "Doniyor To'rsunov — Bunyodkor klubining hujumchisi. Mavsumning eng tez golini urgan va jamoa hujumida muhim rol o'ynaydi.",
 };
 
-const playerStats: Record<number, { matches: number; goals: number; assists: number; rating: string }> = {
-  1: { matches: 48, goals: 12, assists: 5, rating: "7.8" },
-  2: { matches: 42, goals: 1, assists: 3, rating: "8.2" },
-  3: { matches: 38, goals: 5, assists: 7, rating: "7.4" },
-  4: { matches: 35, goals: 3, assists: 4, rating: "7.1" },
-  5: { matches: 40, goals: 0, assists: 0, rating: "7.5" },
-  6: { matches: 32, goals: 8, assists: 2, rating: "7.3" },
-  7: { matches: 30, goals: 2, assists: 1, rating: "7.0" },
-  8: { matches: 36, goals: 6, assists: 8, rating: "7.6" },
-  9: { matches: 34, goals: 1, assists: 0, rating: "7.2" },
-  10: { matches: 28, goals: 4, assists: 3, rating: "7.0" },
-  11: { matches: 33, goals: 7, assists: 2, rating: "7.3" },
-};
 
 const FootballerPage = () => {
   const { id } = useParams();
@@ -54,7 +41,6 @@ const FootballerPage = () => {
   const player = heroFootballers.find((p) => p.id === playerId) || heroFootballers[0];
   const portrait = portraits[(playerId - 1) % portraits.length];
   const bio = playerBios[playerId] || playerBios[1];
-  const stats = playerStats[playerId] || playerStats[1];
 
   const otherPlayers = heroFootballers.filter((p) => p.id !== playerId).slice(0, 8);
 
@@ -69,82 +55,91 @@ const FootballerPage = () => {
           {/* Main Content */}
           <div className="lg:col-span-8">
             <article className="bg-card rounded-2xl border border-border overflow-hidden">
-              {/* Back + badge */}
-              <div className="px-5 sm:px-7 pt-5 pb-3">
-                <Link
-                  to="/"
-                  className="inline-flex items-center gap-1.5 text-[12px] text-muted-foreground hover:text-primary transition-colors font-body mb-4"
-                >
-                  <ArrowLeft size={14} /> Bosh sahifa
-                </Link>
+              {/* Creative hero: diagonal split layout */}
+              <div className="relative overflow-hidden" style={{ minHeight: "420px" }}>
+                {/* Full-bleed image */}
+                <img
+                  src={portrait}
+                  alt={player.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Artistic overlay — diagonal gradient */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: "linear-gradient(135deg, hsl(var(--primary) / 0.92) 0%, hsl(var(--primary) / 0.7) 35%, transparent 60%)",
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
-                <div className="flex items-center gap-3 mb-3">
-                  <span
-                    className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground"
-                    style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}
-                  >
-                    {player.position}
-                  </span>
-                  <span className="text-[11px] text-muted-foreground flex items-center gap-1">
-                    <Shirt className="w-3 h-3" /> #{player.number}
-                  </span>
-                  <span className="text-[11px] text-muted-foreground flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> {player.club}
-                  </span>
-                </div>
-
-                <h1 className="text-2xl sm:text-[30px] lg:text-[36px] font-extrabold leading-[1.08] tracking-[-0.035em] text-foreground mb-2">
-                  {player.name}
-                </h1>
-                <p className="text-[15px] leading-[1.7] text-muted-foreground max-w-[90%]">
-                  {player.headline}
-                </p>
-              </div>
-
-              {/* Hero portrait */}
-              <div className="relative mx-5 sm:mx-7 mb-5 rounded-xl overflow-hidden">
-                <div className="aspect-[3/4] sm:aspect-[4/5] max-h-[600px]">
-                  <img
-                    src={portrait}
-                    alt={player.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
-                {/* Floating stats */}
-                <div className="absolute bottom-4 left-4 right-4 flex gap-3">
-                  {[
-                    { label: "O'yinlar", value: stats.matches, icon: "🏟️" },
-                    { label: "Gollar", value: stats.goals, icon: "⚽" },
-                    { label: "Assistlar", value: stats.assists, icon: "🅰️" },
-                    { label: "Reyting", value: stats.rating, icon: "⭐" },
-                  ].map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="flex-1 backdrop-blur-md rounded-xl py-3 text-center"
-                      style={{
-                        background: "hsla(0, 0%, 0%, 0.45)",
-                        border: "1px solid hsla(0, 0%, 100%, 0.15)",
-                      }}
+                {/* Content on top of image */}
+                <div className="relative z-10 flex flex-col justify-between h-full p-6 sm:p-8" style={{ minHeight: "420px" }}>
+                  {/* Top: back + badges */}
+                  <div>
+                    <Link
+                      to="/"
+                      className="inline-flex items-center gap-1.5 text-[12px] text-white/70 hover:text-white transition-colors font-body mb-6"
                     >
-                      <div className="text-[11px] mb-0.5">{stat.icon}</div>
-                      <div className="text-white font-heading font-extrabold text-lg leading-none">{stat.value}</div>
-                      <div className="text-white/60 text-[10px] font-body mt-1">{stat.label}</div>
+                      <ArrowLeft size={14} /> Bosh sahifa
+                    </Link>
+
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span
+                        className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground"
+                        style={{ background: "hsla(0, 0%, 100%, 0.2)", backdropFilter: "blur(8px)", border: "1px solid hsla(0, 0%, 100%, 0.2)" }}
+                      >
+                        {player.position}
+                      </span>
+                      <span className="text-[11px] text-white/80 flex items-center gap-1">
+                        <Shirt className="w-3 h-3" /> #{player.number}
+                      </span>
+                      <span className="text-[11px] text-white/80 flex items-center gap-1">
+                        <MapPin className="w-3 h-3" /> {player.club}
+                      </span>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Bottom: name + headline */}
+                  <div className="max-w-md">
+                    <h1 className="text-3xl sm:text-[40px] lg:text-[48px] font-extrabold leading-[1.02] tracking-[-0.04em] text-white mb-3 drop-shadow-lg">
+                      {player.name}
+                    </h1>
+                    <p className="text-[15px] leading-[1.6] text-white/75 font-body">
+                      {player.headline}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Decorative number watermark */}
+                <div
+                  className="absolute -right-4 bottom-[-20px] font-heading font-black text-white/[0.06] select-none pointer-events-none"
+                  style={{ fontSize: "clamp(180px, 25vw, 300px)", lineHeight: 1 }}
+                >
+                  {player.number}
                 </div>
               </div>
 
-              {/* Bio */}
-              <div className="px-5 sm:px-7 pb-7">
-                <h2 className="text-[18px] font-heading font-extrabold text-foreground mb-3 flex items-center gap-2">
-                  <Trophy size={18} className="text-primary" /> Biografiya
-                </h2>
-                <p className="text-[15px] leading-[1.8] text-muted-foreground font-body">
+              {/* Bio section */}
+              <div className="px-6 sm:px-8 py-8">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <div className="w-1 h-6 rounded-full bg-primary" />
+                  <h2 className="text-[20px] font-heading font-extrabold text-foreground">
+                    Biografiya
+                  </h2>
+                </div>
+
+                <p className="text-[16px] sm:text-[17px] leading-[1.9] text-muted-foreground font-body">
                   {bio}
                 </p>
+
+                {/* Pullquote */}
+                <div className="my-7 pl-5 border-l-[3px] border-primary/40">
+                  <Quote size={20} className="text-primary/40 mb-2" />
+                  <p className="text-[16px] sm:text-[18px] font-heading font-bold text-foreground leading-[1.5] italic">
+                    «Biz har bir o'yinda tarixni yozmoqdamiz. Terma jamoa uchun o'ynash — eng katta sharaf.»
+                  </p>
+                  <p className="text-[12px] text-muted-foreground mt-2 font-body">— {player.name}</p>
+                </div>
 
                 {/* Tags */}
                 <div className="mt-6 pt-5 border-t border-border">

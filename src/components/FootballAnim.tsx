@@ -4,7 +4,7 @@ const FootballAnim = () => {
   return (
     <div
       className="inline-block relative"
-      style={{ width: 22, height: 22, perspective: 800 }}
+      style={{ width: 16, height: 16, perspective: 800 }}
     >
       <div
         style={{
@@ -25,8 +25,8 @@ const FootballAnim = () => {
       <div
         style={{
           content: '""',
-          height: 4,
-          width: 10,
+          height: 3,
+          width: 8,
           position: 'absolute',
           left: 6,
           bottom: -3,

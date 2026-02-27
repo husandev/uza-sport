@@ -137,35 +137,42 @@ const ArticlePage = () => {
           <div className="lg:col-span-8">
 
             <article className="bg-card rounded-2xl border border-border overflow-hidden">
-              {/* Hero image — full bleed */}
-              <div className="relative aspect-[21/9] overflow-hidden">
-                <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+              {/* Category + Title — above image */}
+              <div className="px-5 sm:px-7 pt-6 pb-5">
+                <div className="flex items-center gap-3 mb-4">
                   <span
-                    className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground mb-3"
+                    className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground"
                     style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}
                   >
                     {article.category}
                   </span>
-                  <h1 className="text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-extrabold leading-[1.1] tracking-tight text-foreground">
-                    {article.title}
-                  </h1>
+                  <span className="text-[11px] text-muted-foreground flex items-center gap-1"><Calendar className="w-3 h-3" />{article.date}</span>
+                  <span className="text-[11px] text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
                 </div>
-              </div>
 
-              <div className="p-5 sm:p-7">
-                {/* Lead */}
-                <p className="text-[14px] sm:text-[15px] leading-relaxed text-muted-foreground mb-5 border-l-2 border-primary pl-4">
+                <h1 className="text-2xl sm:text-[30px] lg:text-[36px] font-extrabold leading-[1.08] tracking-[-0.035em] text-foreground mb-4">
+                  {article.title}
+                </h1>
+
+                <p className="text-[15px] leading-[1.7] text-muted-foreground max-w-[90%]">
                   {article.lead}
                 </p>
+              </div>
 
+              {/* Hero image — cinematic aspect */}
+              <div className="relative mx-5 sm:mx-7 mb-6 rounded-xl overflow-hidden">
+                <div className="aspect-[2/1] sm:aspect-[21/9]">
+                  <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                </div>
+                {/* Subtle vignette */}
+                <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10" />
+              </div>
+
+              <div className="px-5 sm:px-7 pb-7">
                 {/* Meta + share row */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-border">
                   <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
-                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{article.date}</span>
-                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
-                    <span className="flex items-center gap-1"><Eye className="w-3 h-3" />2.4K</span>
+                    <span className="flex items-center gap-1"><Eye className="w-3 h-3" />2.4K ko'rish</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <button className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">

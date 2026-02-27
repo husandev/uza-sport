@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import flagUzb from "@/assets/flag-uzbekistan.webp";
+import flagCol from "@/assets/flag-colombia.png";
 
 const MATCH_DATE = new Date("2026-06-14T18:00:00");
 
@@ -24,14 +26,14 @@ const Digit = ({ value, label }: { value: number; label: string }) => (
         exit={{ y: 24, opacity: 0, filter: "blur(4px)" }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="block text-[34px] sm:text-[38px] font-black tabular-nums leading-none"
-        style={{ color: "hsl(0 0% 100%)", textShadow: "0 0 20px hsl(var(--highlight) / 0.3)" }}
+        style={{ color: "hsl(var(--primary))", textShadow: "0 0 20px hsl(var(--primary) / 0.15)" }}
       >
         {String(value).padStart(2, "0")}
       </motion.span>
     </AnimatePresence>
     <span
       className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em] mt-2"
-      style={{ color: "hsl(0 0% 100% / 0.35)" }}
+      style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}
     >
       {label}
     </span>
@@ -42,61 +44,17 @@ const ColonSeparator = () => (
   <div className="flex flex-col gap-2 -mt-3">
     <motion.div
       className="w-[5px] h-[5px] rounded-full"
-      style={{ background: "hsl(var(--highlight))" }}
+      style={{ background: "hsl(var(--primary) / 0.3)" }}
       animate={{ opacity: [1, 0.2, 1], scale: [1, 0.8, 1] }}
       transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
     />
     <motion.div
       className="w-[5px] h-[5px] rounded-full"
-      style={{ background: "hsl(var(--highlight))" }}
+      style={{ background: "hsl(var(--primary) / 0.3)" }}
       animate={{ opacity: [0.2, 1, 0.2], scale: [0.8, 1, 0.8] }}
       transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
     />
   </div>
-);
-
-const TeamCard = ({
-  flag,
-  name,
-  code,
-  gradientFrom,
-  gradientTo,
-  delay,
-}: {
-  flag: string;
-  name: string;
-  code: string;
-  gradientFrom: string;
-  gradientTo: string;
-  delay: number;
-}) => (
-  <motion.div
-    className="flex-1 rounded-xl py-3 px-3 flex items-center gap-3"
-    style={{
-      background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
-      border: "1px solid hsl(var(--border) / 0.7)",
-      boxShadow: "0 2px 12px hsl(0 0% 0% / 0.04)",
-    }}
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay }}
-  >
-    <motion.span
-      className="text-[32px] leading-none"
-      animate={{ rotate: [0, -3, 3, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay }}
-    >
-      {flag}
-    </motion.span>
-    <div>
-      <p className="text-[14px] font-extrabold leading-tight" style={{ color: "hsl(var(--foreground))" }}>
-        {name}
-      </p>
-      <p className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "hsl(var(--muted-foreground) / 0.5)" }}>
-        {code}
-      </p>
-    </div>
-  </motion.div>
 );
 
 const MatchCountdown = () => {
@@ -117,9 +75,9 @@ const MatchCountdown = () => {
       }}
     >
       {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-[0.025] pointer-events-none" style={{
-        backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-        backgroundSize: "20px 20px",
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
+        backgroundSize: "16px 16px",
       }} />
 
       <div className="relative z-10">
@@ -138,71 +96,99 @@ const MatchCountdown = () => {
         </div>
 
         {/* Teams row */}
-        <div className="px-4 pb-4 flex items-center gap-2">
-          <TeamCard
-            flag="🇺🇿"
-            name="O'zbekiston"
-            code="UZB"
-            gradientFrom="hsl(210 70% 96%)"
-            gradientTo="hsl(145 40% 96%)"
-            delay={0}
-          />
-
+        <div className="px-5 pb-4 flex items-center justify-between">
+          {/* UZB */}
           <motion.div
-            className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+            className="flex flex-col items-center gap-2 flex-1"
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div
+              className="w-16 h-16 rounded-full overflow-hidden"
+              style={{
+                boxShadow: "0 4px 16px hsl(210 60% 50% / 0.2), 0 0 0 3px hsl(var(--card)), 0 0 0 5px hsl(var(--border))",
+              }}
+              whileHover={{ scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <img src={flagUzb} alt="O'zbekiston" className="w-full h-full object-cover" />
+            </motion.div>
+            <div className="text-center">
+              <p className="text-[13px] font-extrabold" style={{ color: "hsl(var(--foreground))" }}>O'zbekiston</p>
+              <p className="text-[9px] font-bold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>UZB</p>
+            </div>
+          </motion.div>
+
+          {/* VS */}
+          <motion.div
+            className="w-11 h-11 rounded-full flex items-center justify-center mx-2 shrink-0"
             style={{
-              background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))",
-              boxShadow: "0 4px 16px hsl(var(--primary) / 0.3)",
+              background: "hsl(var(--muted))",
+              border: "2px solid hsl(var(--border))",
             }}
             animate={{ scale: [1, 1.06, 1] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="text-[10px] font-black" style={{ color: "hsl(0 0% 100%)" }}>VS</span>
+            <span className="text-[11px] font-black" style={{ color: "hsl(var(--muted-foreground))" }}>VS</span>
           </motion.div>
 
-          <TeamCard
-            flag="🇨🇴"
-            name="Kolumbiya"
-            code="COL"
-            gradientFrom="hsl(45 90% 96%)"
-            gradientTo="hsl(210 50% 96%)"
-            delay={0.15}
-          />
+          {/* COL */}
+          <motion.div
+            className="flex flex-col items-center gap-2 flex-1"
+            initial={{ opacity: 0, x: 15 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <motion.div
+              className="w-16 h-16 rounded-full overflow-hidden"
+              style={{
+                boxShadow: "0 4px 16px hsl(45 80% 50% / 0.2), 0 0 0 3px hsl(var(--card)), 0 0 0 5px hsl(var(--border))",
+              }}
+              whileHover={{ scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <img src={flagCol} alt="Kolumbiya" className="w-full h-full object-cover" />
+            </motion.div>
+            <div className="text-center">
+              <p className="text-[13px] font-extrabold" style={{ color: "hsl(var(--foreground))" }}>Kolumbiya</p>
+              <p className="text-[9px] font-bold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>COL</p>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Countdown bar */}
+        {/* Divider */}
+        <div className="px-5 mb-3">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(var(--border)), transparent)" }} />
+            <span className="text-[8px] font-bold uppercase tracking-[0.2em]" style={{ color: "hsl(var(--muted-foreground) / 0.35)" }}>
+              O'yingacha qoldi
+            </span>
+            <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, hsl(var(--border)), transparent)" }} />
+          </div>
+        </div>
+
+        {/* Countdown bar — light */}
         <div className="px-3 pb-3">
           <div
             className="relative rounded-2xl py-5 flex items-center justify-center overflow-hidden"
             style={{
-              background: "linear-gradient(145deg, hsl(220 22% 12%), hsl(220 18% 18%))",
-              boxShadow: "inset 0 1px 0 hsl(0 0% 100% / 0.05), 0 6px 24px hsl(0 0% 0% / 0.2)",
+              background: "linear-gradient(145deg, hsl(var(--muted)), hsl(220 15% 95%))",
+              border: "1px solid hsl(var(--border))",
+              boxShadow: "inset 0 1px 0 hsl(0 0% 100% / 0.8), 0 2px 8px hsl(0 0% 0% / 0.04)",
             }}
           >
+            {/* Soft animated orb */}
             <motion.div
-              className="absolute w-40 h-40 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.15), transparent 70%)", filter: "blur(30px)" }}
-              animate={{ x: [-40, 40, -40], y: [-20, 20, -20] }}
+              className="absolute w-36 h-36 rounded-full pointer-events-none"
+              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06), transparent 70%)", filter: "blur(25px)" }}
+              animate={{ x: [-30, 30, -30], y: [-15, 15, -15] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
-            <motion.div
-              className="absolute w-32 h-32 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, hsl(var(--highlight) / 0.1), transparent 70%)", filter: "blur(25px)" }}
-              animate={{ x: [30, -30, 30], y: [15, -15, 15] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(0 0% 100%) 0.5px, transparent 0)`,
-              backgroundSize: "12px 12px",
-            }} />
-            <motion.div
-              className="absolute inset-x-0 h-px pointer-events-none"
-              style={{ background: "linear-gradient(90deg, transparent, hsl(var(--highlight) / 0.15), transparent)" }}
-              animate={{ top: ["20%", "80%", "20%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <div className="absolute inset-x-0 top-0 h-px" style={{
-              background: "linear-gradient(90deg, transparent, hsl(var(--highlight) / 0.2), transparent)",
+            {/* Dot pattern */}
+            <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
+              backgroundSize: "14px 14px",
             }} />
 
             <div className="relative z-10 flex items-center justify-center">

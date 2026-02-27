@@ -152,7 +152,7 @@ const MatchCountdown = () => {
 
         {/* Date pill */}
         <div className="flex justify-center mt-3">
-          <span className="text-[9px] font-medium text-muted-foreground/50">
+          <span className="text-[11px] sm:text-xs font-semibold text-muted-foreground/60">
             📅 14 Iyun, 2026 · 🕕 18:00
           </span>
         </div>

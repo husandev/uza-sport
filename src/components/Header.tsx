@@ -8,7 +8,7 @@ const navItems = [
   { label: "Asosiy", href: "/" },
   { label: "Yangiliklar", href: "/news" },
   { label: "Maqolalar", href: "/articles" },
-  { label: "Natijalar", href: "#" },
+  { label: "Natijalar", href: "/results" },
   { label: "Jadval", href: "#" },
   { label: "Jamoalar", href: "#" },
   { label: "Stadionlar", href: "#" },

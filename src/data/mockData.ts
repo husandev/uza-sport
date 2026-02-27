@@ -246,6 +246,16 @@ export const stadiums = [
   { id: 4, name: "Estadio Azteca", city: "Mexiko", capacity: "87,523", country: "🇲🇽" },
   { id: 5, name: "BMO Field", city: "Toronto", capacity: "45,736", country: "🇨🇦" },
   { id: 6, name: "SoFi Stadium", city: "Los-Anjeles", capacity: "70,240", country: "🇺🇸" },
+  { id: 7, name: "Hard Rock Stadium", city: "Mayami", capacity: "64,767", country: "🇺🇸" },
+  { id: 8, name: "Lumen Field", city: "Sietl", capacity: "68,740", country: "🇺🇸" },
+  { id: 9, name: "NRG Stadium", city: "Xyuston", capacity: "72,220", country: "🇺🇸" },
+  { id: 10, name: "Lincoln Financial Field", city: "Filadelfiya", capacity: "69,176", country: "🇺🇸" },
+  { id: 11, name: "Arrowhead Stadium", city: "Kanzas-Siti", capacity: "76,416", country: "🇺🇸" },
+  { id: 12, name: "Mercedes-Benz Stadium", city: "Atlanta", capacity: "71,000", country: "🇺🇸" },
+  { id: 13, name: "Estadio BBVA", city: "Monterrey", capacity: "53,500", country: "🇲🇽" },
+  { id: 14, name: "Estadio Akron", city: "Gvadalaxara", capacity: "49,850", country: "🇲🇽" },
+  { id: 15, name: "BC Place", city: "Vankuver", capacity: "54,500", country: "🇨🇦" },
+  { id: 16, name: "Gillette Stadium", city: "Boston", capacity: "65,878", country: "🇺🇸" },
 ];
 
 export const teams = [

@@ -129,14 +129,6 @@ const ArticlePage = () => {
 
           {/* Main Article — 9 cols */}
           <div className="lg:col-span-8 xl:col-span-9">
-            {/* Breadcrumb */}
-            <div className="pb-3">
-              <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-                <Link to="/" className="hover:text-primary transition-colors">Bosh sahifa</Link>
-                <ChevronRight className="w-3 h-3" />
-                <span className="text-foreground font-medium">{article.category}</span>
-              </div>
-            </div>
 
             <article className="bg-card rounded-2xl border border-border overflow-hidden">
               {/* Hero image — full bleed */}

@@ -148,7 +148,7 @@ const ArticlePage = () => {
                   >
                     {article.category}
                   </span>
-                  <h1 className="text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-bold leading-[1.15] tracking-tight text-foreground" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                  <h1 className="text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-extrabold leading-[1.1] tracking-tight text-foreground">
                     {article.title}
                   </h1>
                 </div>

@@ -145,7 +145,7 @@ const playerBios: Record<number, PlayerBioData> = {
 
 const FootballerPage = () => {
   const { id } = useParams();
-  const playerId = parseInt(id || "1");
+  const playerId = 1; // Hozircha barcha sportchilar uchun Eldor Shomurodov sahifasi ochiladi
   const player = heroFootballers.find((p) => p.id === playerId) || heroFootballers[0];
   const portrait = portraits[(playerId - 1) % portraits.length];
   const data = playerBios[playerId] || playerBios[1];

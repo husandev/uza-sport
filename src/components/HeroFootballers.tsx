@@ -26,7 +26,7 @@ const HeroFootballers = () => {
       </div>
 
       {/* Featured player - large card */}
-      <div className="relative rounded-xl overflow-hidden cursor-pointer group mb-3">
+      <Link to={`/footballer/${featured.id}`} className="relative rounded-xl overflow-hidden cursor-pointer group mb-3 block">
         <div className="aspect-[3/4] w-full">
           <img
             src={portraits[0]}
@@ -34,16 +34,11 @@ const HeroFootballers = () => {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-        
-        {/* Badge */}
         <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur-sm text-primary-foreground text-[10px] font-heading font-bold uppercase px-2.5 py-1 rounded-full flex items-center gap-1">
           <Trophy size={10} />
           #{featured.number} · {featured.position}
         </div>
-
-        {/* Content */}
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <div className="text-highlight text-[11px] font-bold font-body mb-1">{featured.club}</div>
           <h3 className="text-white font-heading font-extrabold text-lg leading-tight mb-1.5">
@@ -56,12 +51,13 @@ const HeroFootballers = () => {
             Maqolani o'qish <ArrowRight size={13} />
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* Other players - compact list */}
       <div className="space-y-2">
         {rest.map((player, i) => (
-          <div
+          <Link
+            to={`/footballer/${player.id}`}
             key={player.id}
             className="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-muted/50 transition-colors group"
           >
@@ -89,7 +85,7 @@ const HeroFootballers = () => {
               <div className="text-[15px] font-heading font-extrabold text-primary">{player.goals}</div>
               <div className="text-[9px] text-muted-foreground font-body uppercase">gol</div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 

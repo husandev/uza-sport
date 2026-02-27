@@ -17,7 +17,8 @@ import photoImg1 from "@/assets/photo-1.jpg";
 import photoImg2 from "@/assets/photo-2.jpg";
 import photoImg3 from "@/assets/photo-3.jpg";
 import photoImg4 from "@/assets/photo-4.jpg";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { ZoomIn, ZoomOut, X as XIcon } from "lucide-react";
 
 const articleData: Record<string, {
   title: string;
@@ -146,6 +147,18 @@ const ArticlePage = () => {
   const { id } = useParams();
   const article = articleData[id || "1"];
   const [copied, setCopied] = useState(false);
+  const [lightbox, setLightbox] = useState<{ src: string; caption?: string } | null>(null);
+  const [zoom, setZoom] = useState(1);
+
+  const openLightbox = useCallback((src: string, caption?: string) => {
+    setLightbox({ src, caption });
+    setZoom(1);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightbox(null);
+    setZoom(1);
+  }, []);
 
   if (!article) {
     return (
@@ -203,11 +216,10 @@ const ArticlePage = () => {
               </div>
 
               {/* Hero image — cinematic aspect */}
-              <div className="relative mx-5 sm:mx-7 mb-6 rounded-xl overflow-hidden">
+              <div className="relative mx-5 sm:mx-7 mb-6 rounded-xl overflow-hidden cursor-zoom-in" onClick={() => openLightbox(article.image, article.title)}>
                 <div className="aspect-[2/1] sm:aspect-[21/9]">
-                  <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                  <img src={article.image} alt={article.title} className="w-full h-full object-cover hover:opacity-90 transition-opacity" />
                 </div>
-                {/* Subtle vignette */}
                 <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10" />
               </div>
 
@@ -258,7 +270,12 @@ const ArticlePage = () => {
                     if (block.type === "image") {
                       return (
                         <figure key={i} className="my-6 flex flex-col items-center">
-                          <img src={block.content} alt={block.caption || ""} className="max-w-[85%] h-auto rounded-xl" />
+                          <img
+                            src={block.content}
+                            alt={block.caption || ""}
+                            className="max-w-[85%] h-auto rounded-xl cursor-zoom-in hover:opacity-90 transition-opacity"
+                            onClick={() => openLightbox(block.content, block.caption)}
+                          />
                           {block.caption && (
                             <figcaption className="text-[11px] text-muted-foreground mt-2.5 text-center italic">
                               📸 {block.caption}
@@ -458,6 +475,55 @@ const ArticlePage = () => {
       </div>
 
       <Footer />
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center"
+          onClick={closeLightbox}
+        >
+          {/* Controls */}
+          <div className="absolute top-4 right-4 flex items-center gap-2 z-[101]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setZoom((z) => Math.max(0.5, z - 0.25))}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            >
+              <ZoomOut className="w-5 h-5" />
+            </button>
+            <span className="text-white/70 text-xs font-mono min-w-[3rem] text-center">{Math.round(zoom * 100)}%</span>
+            <button
+              onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            >
+              <ZoomIn className="w-5 h-5" />
+            </button>
+            <button
+              onClick={closeLightbox}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors ml-2"
+            >
+              <XIcon className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Image */}
+          <div className="max-w-[90vw] max-h-[85vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={lightbox.src}
+              alt={lightbox.caption || ""}
+              className="transition-transform duration-200 ease-out rounded-lg"
+              style={{ transform: `scale(${zoom})`, transformOrigin: "center center" }}
+              draggable={false}
+            />
+          </div>
+
+          {/* Caption */}
+          {lightbox.caption && (
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
+              📸 {lightbox.caption}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

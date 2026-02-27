@@ -3,6 +3,9 @@ import { ArrowLeft, Calendar, Clock, User, Share2, Facebook, Twitter, MessageCir
 import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
 import Footer from "@/components/Footer";
+import NewsFeed from "@/components/NewsFeed";
+import HeroFootballers from "@/components/HeroFootballers";
+import GroupStandings from "@/components/GroupStandings";
 import heroImg1 from "@/assets/hero-1.jpg";
 import heroImg2 from "@/assets/hero-2.jpg";
 import heroImg3 from "@/assets/hero-3.jpg";
@@ -122,202 +125,239 @@ const ArticlePage = () => {
       <Header />
       <MatchTicker />
 
-      {/* Breadcrumb */}
-      <div className="container pt-4 pb-2">
-        <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-          <Link to="/" className="hover:text-primary transition-colors">Bosh sahifa</Link>
-          <ChevronRight className="w-3 h-3" />
-          <span className="text-foreground font-medium">{article.category}</span>
+      <div className="container pt-4 pb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+          {/* Left Sidebar */}
+          <div className="hidden lg:block lg:col-span-3 space-y-4">
+            <NewsFeed />
+            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>
+              <h3 className="font-heading font-extrabold text-base leading-tight mb-2">
+                🏆 Superliga 2026 — yangi mavsum!
+              </h3>
+              <p className="text-[12px] font-body opacity-80 mb-3">
+                O'zbekiston Superligasi o'yinlarini jonli tomosha qiling
+              </p>
+              <div className="bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground text-[12px] font-bold font-heading text-center py-2 rounded-lg">
+                Batafsil →
+              </div>
+            </div>
+            <HeroFootballers />
+          </div>
+
+          {/* Center: Article content */}
+          <div className="lg:col-span-6">
+            {/* Breadcrumb */}
+            <div className="pb-2">
+              <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                <Link to="/" className="hover:text-primary transition-colors">Bosh sahifa</Link>
+                <ChevronRight className="w-3 h-3" />
+                <span className="text-foreground font-medium">{article.category}</span>
+              </div>
+            </div>
+
+            <article>
+              {/* Category badge */}
+              <div className="mb-3">
+                <span
+                  className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground"
+                  style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}
+                >
+                  {article.category}
+                </span>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-2xl sm:text-3xl lg:text-[32px] font-black leading-[1.15] tracking-tight text-foreground mb-4">
+                {article.title}
+              </h1>
+
+              {/* Lead */}
+              <p className="text-[14px] sm:text-[15px] leading-relaxed text-muted-foreground mb-5">
+                {article.lead}
+              </p>
+
+              {/* Meta row */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pb-5 mb-5 border-b border-border">
+                <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>{article.date}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{article.readTime} o'qish</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                  <User className="w-3.5 h-3.5" />
+                  <span className="font-semibold text-foreground">{article.author.name}</span>
+                  <span>— {article.author.role}</span>
+                </div>
+              </div>
+
+              {/* Hero image */}
+              <div className="rounded-2xl overflow-hidden mb-8 border border-border">
+                <img src={article.image} alt={article.title} className="w-full h-auto object-cover" />
+              </div>
+
+              {/* Article body */}
+              <div className="space-y-5">
+                {article.body.map((block, i) => {
+                  if (block.type === "text") {
+                    return (
+                      <p key={i} className="text-[14px] sm:text-[15px] leading-[1.8] text-foreground/85">
+                        {block.content}
+                      </p>
+                    );
+                  }
+                  if (block.type === "subtitle") {
+                    return (
+                      <h2 key={i} className="text-lg sm:text-xl font-extrabold text-foreground mt-8 mb-2 flex items-center gap-2">
+                        <span className="w-1 h-5 rounded-full bg-gradient-to-b from-primary to-secondary shrink-0" />
+                        {block.content}
+                      </h2>
+                    );
+                  }
+                  if (block.type === "image") {
+                    return (
+                      <figure key={i} className="my-6">
+                        <div className="rounded-xl overflow-hidden border border-border">
+                          <img src={block.content} alt={block.caption || ""} className="w-full h-auto object-cover" />
+                        </div>
+                        {block.caption && (
+                          <figcaption className="text-[11px] text-muted-foreground mt-2 text-center italic">
+                            📸 {block.caption}
+                          </figcaption>
+                        )}
+                      </figure>
+                    );
+                  }
+                  if (block.type === "quote") {
+                    return (
+                      <blockquote
+                        key={i}
+                        className="relative my-6 py-4 px-5 rounded-xl bg-muted/50 border-l-[3px]"
+                        style={{ borderLeftColor: "hsl(var(--primary))" }}
+                      >
+                        <p className="text-[13px] sm:text-[14px] leading-relaxed text-foreground/80 italic font-medium">
+                          {block.content}
+                        </p>
+                      </blockquote>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+
+              {/* Tags */}
+              <div className="mt-10 pt-6 border-t border-border">
+                <div className="flex flex-wrap gap-2">
+                  {article.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[11px] font-semibold px-3 py-1.5 rounded-full bg-muted text-muted-foreground border border-border hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Share & Author */}
+              <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-card border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-sm">
+                    {article.author.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-foreground">{article.author.name}</p>
+                    <p className="text-[11px] text-muted-foreground">{article.author.role}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-semibold text-muted-foreground mr-1">Ulashish:</span>
+                  <button className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+                    <Facebook className="w-3.5 h-3.5" />
+                  </button>
+                  <button className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+                    <Twitter className="w-3.5 h-3.5" />
+                  </button>
+                  <button className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={handleShare}
+                    className="h-8 px-3 rounded-full bg-muted border border-border flex items-center gap-1.5 hover:bg-primary hover:text-primary-foreground transition-colors text-[11px] font-semibold"
+                  >
+                    <Share2 className="w-3.5 h-3.5" />
+                    {copied ? "Nusxalandi!" : "Havola"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Related Posts */}
+              <div className="mt-10">
+                <h3 className="section-title mb-4">
+                  <span>O'xshash maqolalar</span>
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {filtered.map((post) => (
+                    <Link
+                      key={post.id}
+                      to={`/article/${post.id}`}
+                      className="group rounded-xl overflow-hidden bg-card border border-border card-hover"
+                    >
+                      <div className="aspect-[16/10] overflow-hidden">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="p-3">
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-primary">{post.category}</span>
+                        <h4 className="text-[13px] font-bold text-foreground leading-snug mt-1 group-hover:text-primary transition-colors line-clamp-2">
+                          {post.title}
+                        </h4>
+                        <span className="text-[10px] text-muted-foreground mt-1.5 block">{post.date}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Back link */}
+              <div className="mt-8 flex justify-center">
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 text-[13px] font-semibold text-primary hover:underline"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Bosh sahifaga qaytish
+                </Link>
+              </div>
+            </article>
+          </div>
+
+          {/* Right Sidebar */}
+          <div className="hidden lg:block lg:col-span-3 space-y-4">
+            <GroupStandings />
+            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>
+              <h3 className="font-heading font-extrabold text-base leading-tight mb-2">
+                ⚽ FIFA 2026 chiptalari sotuvda!
+              </h3>
+              <p className="text-[12px] font-body opacity-80 mb-3">
+                O'zbekiston terma jamoasi o'yinlariga chipta oling
+              </p>
+              <div className="bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground text-[12px] font-bold font-heading text-center py-2 rounded-lg">
+                Chipta olish →
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <article className="container pb-8">
-        <div className="max-w-[780px] mx-auto">
-
-          {/* Category badge */}
-          <div className="mb-3">
-            <span
-              className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground"
-              style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}
-            >
-              {article.category}
-            </span>
-          </div>
-
-          {/* Title */}
-          <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-black leading-[1.15] tracking-tight text-foreground mb-4">
-            {article.title}
-          </h1>
-
-          {/* Lead */}
-          <p className="text-[15px] sm:text-base leading-relaxed text-muted-foreground mb-5">
-            {article.lead}
-          </p>
-
-          {/* Meta row */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pb-5 mb-5 border-b border-border">
-            <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{article.date}</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-              <Clock className="w-3.5 h-3.5" />
-              <span>{article.readTime} o'qish</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
-              <User className="w-3.5 h-3.5" />
-              <span className="font-semibold text-foreground">{article.author.name}</span>
-              <span>— {article.author.role}</span>
-            </div>
-          </div>
-
-          {/* Hero image */}
-          <div className="rounded-2xl overflow-hidden mb-8 border border-border">
-            <img src={article.image} alt={article.title} className="w-full h-auto object-cover" />
-          </div>
-
-          {/* Article body */}
-          <div className="space-y-5">
-            {article.body.map((block, i) => {
-              if (block.type === "text") {
-                return (
-                  <p key={i} className="text-[15px] leading-[1.8] text-foreground/85">
-                    {block.content}
-                  </p>
-                );
-              }
-              if (block.type === "subtitle") {
-                return (
-                  <h2 key={i} className="text-lg sm:text-xl font-extrabold text-foreground mt-8 mb-2 flex items-center gap-2">
-                    <span className="w-1 h-5 rounded-full bg-gradient-to-b from-primary to-secondary shrink-0" />
-                    {block.content}
-                  </h2>
-                );
-              }
-              if (block.type === "image") {
-                return (
-                  <figure key={i} className="my-6">
-                    <div className="rounded-xl overflow-hidden border border-border">
-                      <img src={block.content} alt={block.caption || ""} className="w-full h-auto object-cover" />
-                    </div>
-                    {block.caption && (
-                      <figcaption className="text-[11px] text-muted-foreground mt-2 text-center italic">
-                        📸 {block.caption}
-                      </figcaption>
-                    )}
-                  </figure>
-                );
-              }
-              if (block.type === "quote") {
-                return (
-                  <blockquote
-                    key={i}
-                    className="relative my-6 py-4 px-5 rounded-xl bg-muted/50 border-l-[3px]"
-                    style={{ borderLeftColor: "hsl(var(--primary))" }}
-                  >
-                    <p className="text-[14px] sm:text-[15px] leading-relaxed text-foreground/80 italic font-medium">
-                      {block.content}
-                    </p>
-                  </blockquote>
-                );
-              }
-              return null;
-            })}
-          </div>
-
-          {/* Tags */}
-          <div className="mt-10 pt-6 border-t border-border">
-            <div className="flex flex-wrap gap-2">
-              {article.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[11px] font-semibold px-3 py-1.5 rounded-full bg-muted text-muted-foreground border border-border hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Share & Author */}
-          <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-card border border-border">
-            {/* Author */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-sm">
-                {article.author.name.charAt(0)}
-              </div>
-              <div>
-                <p className="text-[13px] font-bold text-foreground">{article.author.name}</p>
-                <p className="text-[11px] text-muted-foreground">{article.author.role}</p>
-              </div>
-            </div>
-
-            {/* Share buttons */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold text-muted-foreground mr-1">Ulashish:</span>
-              <button className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Facebook className="w-3.5 h-3.5" />
-              </button>
-              <button className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Twitter className="w-3.5 h-3.5" />
-              </button>
-              <button className="w-8 h-8 rounded-full bg-muted border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                <MessageCircle className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={handleShare}
-                className="h-8 px-3 rounded-full bg-muted border border-border flex items-center gap-1.5 hover:bg-primary hover:text-primary-foreground transition-colors text-[11px] font-semibold"
-              >
-                <Share2 className="w-3.5 h-3.5" />
-                {copied ? "Nusxalandi!" : "Havola"}
-              </button>
-            </div>
-          </div>
-
-          {/* Related Posts */}
-          <div className="mt-10">
-            <h3 className="section-title mb-4">
-              <span>O'xshash maqolalar</span>
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {filtered.map((post) => (
-                <Link
-                  key={post.id}
-                  to={`/article/${post.id}`}
-                  className="group rounded-xl overflow-hidden bg-card border border-border card-hover"
-                >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-3">
-                    <span className="text-[9px] font-bold uppercase tracking-wider text-primary">{post.category}</span>
-                    <h4 className="text-[13px] font-bold text-foreground leading-snug mt-1 group-hover:text-primary transition-colors line-clamp-2">
-                      {post.title}
-                    </h4>
-                    <span className="text-[10px] text-muted-foreground mt-1.5 block">{post.date}</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Back link */}
-          <div className="mt-8 flex justify-center">
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-[13px] font-semibold text-primary hover:underline"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Bosh sahifaga qaytish
-            </Link>
-          </div>
-
-        </div>
-      </article>
 
       <Footer />
     </div>

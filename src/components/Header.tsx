@@ -12,7 +12,7 @@ const navItems = [
   { label: "Jadval", href: "/standings" },
   { label: "Jamoalar", href: "/teams" },
   { label: "Stadionlar", href: "/stadiums" },
-  { label: "Video", href: "#" },
+  { label: "Video", href: "/videos" },
   { label: "Foto", href: "#" },
 ];
 

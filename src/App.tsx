@@ -10,6 +10,7 @@ import FootballerPage from "./pages/FootballerPage";
 import NewsPage from "./pages/NewsPage";
 import ArticlesPage from "./pages/ArticlesPage";
 import ResultsPage from "./pages/ResultsPage";
+import StandingsPage from "./pages/StandingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/news" element={<NewsPage />} />
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/results" element={<ResultsPage />} />
+            <Route path="/standings" element={<StandingsPage />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

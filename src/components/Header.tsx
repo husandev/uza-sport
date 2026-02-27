@@ -9,7 +9,7 @@ const navItems = [
   { label: "Yangiliklar", href: "/news" },
   { label: "Maqolalar", href: "/articles" },
   { label: "Natijalar", href: "/results" },
-  { label: "Jadval", href: "#" },
+  { label: "Jadval", href: "/standings" },
   { label: "Jamoalar", href: "#" },
   { label: "Stadionlar", href: "#" },
   { label: "Video", href: "#" },

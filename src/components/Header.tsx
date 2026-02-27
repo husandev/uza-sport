@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
 import uzaLogo from "@/assets/uza-logo-solo.png";
+import FootballAnim from "./FootballAnim";
 
 const navItems = [
   { label: "Asosiy", href: "#", active: true },
@@ -59,11 +60,7 @@ const Header = () => {
           <a href="/" className="flex items-center gap-2.5">
             <img src={uzaLogo} alt="UZA.uz" className="h-6" />
             <div className="h-5 w-px bg-border" />
-            {/* Bouncing football */}
-            <div className="football-anim">
-              <span className="ball">⚽</span>
-              <span className="ball-shadow" />
-            </div>
+            <FootballAnim />
             <span className="text-base font-heading font-extrabold text-foreground tracking-tight leading-none">
               WC2026
             </span>

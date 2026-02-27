@@ -124,11 +124,11 @@ const ArticlePage = () => {
       <Header />
       <MatchTicker />
 
-      <div className="container pt-4 pb-8">
+      <div className="max-w-6xl mx-auto px-4 pt-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
-          {/* Main Article — 9 cols */}
-          <div className="lg:col-span-8 xl:col-span-9">
+          {/* Main Article */}
+          <div className="lg:col-span-8">
 
             <article className="bg-card rounded-2xl border border-border overflow-hidden">
               {/* Hero image — full bleed */}
@@ -299,7 +299,7 @@ const ArticlePage = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="hidden lg:block lg:col-span-4 xl:col-span-3 space-y-4">
+          <div className="hidden lg:block lg:col-span-4 space-y-4">
             <NewsFeed />
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
               <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>

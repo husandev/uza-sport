@@ -149,10 +149,11 @@ const MatchCountdown = () => {
         </div>
 
         {/* Countdown bar */}
-        <div className="px-3 pb-2.5">
+        <div className="px-5 pb-2.5">
           <div
-            className="relative rounded-xl py-2.5 flex items-center justify-center overflow-hidden"
+            className="relative py-2.5 flex items-center justify-center overflow-hidden"
             style={{
+              borderRadius: "33rem",
               background: "linear-gradient(145deg, hsl(var(--muted)), hsl(220 15% 95%))",
               border: "1px solid hsl(var(--border))",
               boxShadow: "inset 0 1px 0 hsl(0 0% 100% / 0.8), 0 2px 8px hsl(0 0% 0% / 0.04)",

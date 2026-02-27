@@ -91,6 +91,12 @@ const relatedPosts = [
   { id: "2", title: "Fransiya Ispaniyani yirik hisobda mag'lub etdi — 3:1", image: heroImg2, category: "NATIJA", date: "26 Fevral" },
   { id: "3", title: "Abduqodir Xusanov — JCh-2026 ning eng yaxshi himoyachisi", image: heroImg3, category: "TAHLIL", date: "26 Fevral" },
   { id: "1", title: "O'zbekiston Argentinaga qarshi: tarixiy o'yin davom etmoqda!", image: heroImg1, category: "JONLI", date: "27 Fevral" },
+  { id: "4", title: "48 jamoali format: qanday o'zgarishlar kutilmoqda?", image: heroImg4, category: "MAQOLA", date: "25 Fevral" },
+  { id: "5", title: "MetLife Stadium — Jahon chempionati finalining mezboni", image: galleryImg1, category: "STADION", date: "25 Fevral" },
+  { id: "6", title: "Mbappe JCh-2026 da yulduz bo'la oladimi?", image: heroImg2, category: "TAHLIL", date: "24 Fevral" },
+  { id: "7", title: "Eldor Shomurodov: «Biz tarixni yozishga tayyormiz»", image: heroImg3, category: "INTERVYU", date: "24 Fevral" },
+  { id: "8", title: "Guruh bosqichi taqvimi e'lon qilindi — barcha o'yinlar", image: heroImg1, category: "TAQVIM", date: "23 Fevral" },
+  { id: "9", title: "Chipta narxlari va xarid yo'llari — to'liq qo'llanma", image: heroImg4, category: "QO'LLANMA", date: "23 Fevral" },
 ];
 
 const ArticlePage = () => {
@@ -117,7 +123,7 @@ const ArticlePage = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const filtered = relatedPosts.filter((p) => p.id !== id).slice(0, 3);
+  const filtered = relatedPosts.filter((p) => p.id !== id).slice(0, 8);
 
   return (
     <div className="min-h-screen bg-background">

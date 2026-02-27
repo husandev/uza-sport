@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import NewsFeed from "@/components/NewsFeed";
 
 import { heroFootballers } from "@/data/mockData";
-import footballer1 from "@/assets/footballer-1.jpg";
+import footballer1 from "@/assets/footballer-1.png";
 import footballer2 from "@/assets/footballer-2.jpg";
 import footballer3 from "@/assets/footballer-3.jpg";
 import footballer4 from "@/assets/footballer-4.jpg";

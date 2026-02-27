@@ -156,21 +156,10 @@ const ArticlePage = () => {
 
                 {/* Meta + share row */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pb-5 mb-6 border-b border-border">
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-xs">
-                        {article.author.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-[12px] font-bold text-foreground leading-none">{article.author.name}</p>
-                        <p className="text-[10px] text-muted-foreground">{article.author.role}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
-                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{article.date}</span>
-                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
-                      <span className="flex items-center gap-1"><Eye className="w-3 h-3" />2.4K</span>
-                    </div>
+                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{article.date}</span>
+                    <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{article.readTime}</span>
+                    <span className="flex items-center gap-1"><Eye className="w-3 h-3" />2.4K</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <button className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
@@ -250,6 +239,17 @@ const ArticlePage = () => {
                         #{tag}
                       </span>
                     ))}
+                  </div>
+                </div>
+
+                {/* Author */}
+                <div className="mt-6 pt-5 border-t border-border flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-sm">
+                    {article.author.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-foreground leading-none">{article.author.name}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">{article.author.role}</p>
                   </div>
                 </div>
               </div>

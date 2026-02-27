@@ -18,6 +18,7 @@ import photoImg2 from "@/assets/photo-2.jpg";
 import photoImg3 from "@/assets/photo-3.jpg";
 import photoImg4 from "@/assets/photo-4.jpg";
 import { useState, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import { ZoomIn, ZoomOut, X as XIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -482,112 +483,87 @@ const ArticlePage = () => {
       <Footer />
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            className="fixed inset-0 z-[100] flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={closeLightbox}
+      {lightbox && createPortal(
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 99999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.94)",
+          }}
+          onClick={closeLightbox}
+        >
+          {/* Controls */}
+          <div
+            className="absolute top-4 right-4 flex items-center gap-2 z-[10]"
+            style={{ animation: "fade-in 0.3s ease-out 0.15s both" }}
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Background */}
-            <motion.div
-              className="absolute inset-0 bg-black/92"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-
-            {/* Controls */}
-            <motion.div
-              className="absolute top-4 right-4 flex items-center gap-2 z-[101]"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ delay: 0.2, duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()}
+            <button
+              onClick={() => setZoom((z) => Math.max(0.5, z - 0.25))}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
             >
-              <button
-                onClick={() => setZoom((z) => Math.max(0.5, z - 0.25))}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-              >
-                <ZoomOut className="w-5 h-5" />
-              </button>
-              <span className="text-white/70 text-xs font-mono min-w-[3rem] text-center">{Math.round(zoom * 100)}%</span>
-              <button
-                onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-              >
-                <ZoomIn className="w-5 h-5" />
-              </button>
-              <button
-                onClick={closeLightbox}
-                className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors ml-2"
-              >
-                <XIcon className="w-5 h-5" />
-              </button>
-            </motion.div>
-
-            {/* Image container - no overflow hidden so zoom works freely */}
-            <motion.div
-              className="relative z-[100] flex items-center justify-center"
-              initial={lightbox.rect ? {
-                x: lightbox.rect.left + lightbox.rect.width / 2 - window.innerWidth / 2,
-                y: lightbox.rect.top + lightbox.rect.height / 2 - window.innerHeight / 2,
-                scale: 0.3,
-                opacity: 0.5,
-              } : { scale: 0.7, opacity: 0 }}
-              animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", damping: 28, stiffness: 300, mass: 0.8 }}
-              onClick={(e) => e.stopPropagation()}
+              <ZoomOut className="w-5 h-5" />
+            </button>
+            <span className="text-white/70 text-xs font-mono min-w-[3rem] text-center">{Math.round(zoom * 100)}%</span>
+            <button
+              onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
             >
-              {/* Loading shimmer overlay */}
-              <AnimatePresence>
-                {!imgLoaded && (
-                  <motion.div
-                    className="absolute inset-0 z-10 rounded-lg overflow-hidden"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <div className="w-full h-full bg-white/5 backdrop-blur-md rounded-lg animate-pulse" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_1.5s_infinite]" style={{
-                      backgroundSize: "200% 100%",
-                      animation: "shimmer 1.5s infinite linear",
-                    }} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <ZoomIn className="w-5 h-5" />
+            </button>
+            <button
+              onClick={closeLightbox}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors ml-2"
+            >
+              <XIcon className="w-5 h-5" />
+            </button>
+          </div>
 
-              <img
-                src={lightbox.src}
-                alt={lightbox.caption || ""}
-                className="max-w-[90vw] max-h-[85vh] rounded-lg transition-transform duration-200 ease-out"
-                style={{ transform: `scale(${zoom})` }}
-                draggable={false}
-                onLoad={() => setImgLoaded(true)}
-              />
-            </motion.div>
-
-            {/* Caption */}
-            {lightbox.caption && (
-              <motion.div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full z-[101]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.15, duration: 0.3 }}
-              >
-                📸 {lightbox.caption}
-              </motion.div>
+          {/* Image container */}
+          <div
+            className="relative z-[5] flex items-center justify-center"
+            style={{
+              animation: "lightbox-zoom-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Loading shimmer */}
+            {!imgLoaded && (
+              <div className="absolute inset-0 z-10 rounded-lg overflow-hidden">
+                <div className="w-full h-full bg-white/5 backdrop-blur-md rounded-lg animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" style={{
+                  backgroundSize: "200% 100%",
+                  animation: "shimmer 1.5s infinite linear",
+                }} />
+              </div>
             )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            <img
+              src={lightbox.src}
+              alt={lightbox.caption || ""}
+              className="max-w-[85vw] max-h-[80vh] rounded-lg transition-transform duration-200 ease-out"
+              style={{ transform: `scale(${zoom})` }}
+              draggable={false}
+              onLoad={() => setImgLoaded(true)}
+            />
+          </div>
+
+          {/* Caption */}
+          {lightbox.caption && (
+            <div
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full z-[10]"
+              style={{ animation: "fade-in 0.3s ease-out 0.2s both" }}
+            >
+              📸 {lightbox.caption}
+            </div>
+          )}
+        </div>,
+        document.body
+      )}
     </div>
   );
 };

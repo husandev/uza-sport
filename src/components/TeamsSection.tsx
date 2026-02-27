@@ -10,9 +10,10 @@ const TeamsSection = () => {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-        {teams.map((team) => (
-          <div
+        {teams.map((team, i) => (
+          <Link
             key={team.id}
+            to={`/team/${i}`}
             className={`flex items-center gap-2.5 p-3 rounded-xl border border-border cursor-pointer hover:bg-muted transition-colors ${
               team.flag === "🇺🇿" ? "border-primary bg-primary/5" : ""
             }`}
@@ -24,7 +25,7 @@ const TeamsSection = () => {
                 {team.group} guruh · #{team.rank}
               </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

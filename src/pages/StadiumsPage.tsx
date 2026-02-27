@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import GroupStandings from "@/components/GroupStandings";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { stadiums } from "@/data/mockData";
@@ -52,9 +53,10 @@ const StadiumsPage = () => {
           <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
             <div className="divide-y divide-border">
               {paginated.map((stadium, i) => (
-                <div
+                <Link
                   key={stadium.id}
-                  className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group"
+                  to={`/stadium/${stadium.id}`}
+                  className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                 >
                   {/* Image */}
                   <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden">
@@ -91,7 +93,7 @@ const StadiumsPage = () => {
                       <span>{stadium.country} {stadium.city}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -15,6 +15,9 @@ import TeamsPage from "./pages/TeamsPage";
 import StadiumsPage from "./pages/StadiumsPage";
 import VideosPage from "./pages/VideosPage";
 import PhotosPage from "./pages/PhotosPage";
+import TeamArticlePage from "./pages/TeamArticlePage";
+import StadiumArticlePage from "./pages/StadiumArticlePage";
+import VideoArticlePage from "./pages/VideoArticlePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +41,9 @@ const App = () => (
             <Route path="/stadiums" element={<StadiumsPage />} />
             <Route path="/videos" element={<VideosPage />} />
             <Route path="/photos" element={<PhotosPage />} />
+            <Route path="/team/:id" element={<TeamArticlePage />} />
+            <Route path="/stadium/:id" element={<StadiumArticlePage />} />
+            <Route path="/video/:id" element={<VideoArticlePage />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

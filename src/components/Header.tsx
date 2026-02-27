@@ -13,7 +13,7 @@ const navItems = [
   { label: "Jamoalar", href: "/teams" },
   { label: "Stadionlar", href: "/stadiums" },
   { label: "Video", href: "/videos" },
-  { label: "Foto", href: "#" },
+  { label: "Foto", href: "/photos" },
 ];
 
 const hotSearches = [

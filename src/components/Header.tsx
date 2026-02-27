@@ -7,6 +7,7 @@ import FootballAnim from "./FootballAnim";
 const navItems = [
   { label: "Asosiy", href: "/" },
   { label: "Yangiliklar", href: "/news" },
+  { label: "Maqolalar", href: "#" },
   { label: "Natijalar", href: "#" },
   { label: "Jadval", href: "#" },
   { label: "Jamoalar", href: "#" },

@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
 import Footer from "@/components/Footer";
 import NewsFeed from "@/components/NewsFeed";
-import HeroFootballers from "@/components/HeroFootballers";
+
 import { heroFootballers } from "@/data/mockData";
 import footballer1 from "@/assets/footballer-1.jpg";
 import footballer2 from "@/assets/footballer-2.jpg";
@@ -392,7 +392,7 @@ const FootballerPage = () => {
                 Batafsil →
               </div>
             </div>
-            <HeroFootballers />
+            
           </div>
 
         </div>

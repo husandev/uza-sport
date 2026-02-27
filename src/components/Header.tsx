@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import uzaLogo from "@/assets/uza-logo-solo.png";
 import FootballAnim from "./FootballAnim";
 
 const navItems = [
-  { label: "Asosiy", href: "#", active: true },
+  { label: "Asosiy", href: "/" },
   { label: "Yangiliklar", href: "/news" },
   { label: "Natijalar", href: "#" },
   { label: "Jadval", href: "#" },
@@ -30,6 +31,7 @@ const quickLinks = [
 ];
 
 const Header = () => {
+  const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -207,7 +209,7 @@ const Header = () => {
               <a
                 key={item.label}
                 href={item.href}
-                className={`nav-link ${item.active ? "active" : ""}`}
+                className={`nav-link ${pathname === item.href || (item.href === "/" && pathname === "/") ? "active" : ""}`}
               >
                 {item.label}
               </a>

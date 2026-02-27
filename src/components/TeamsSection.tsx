@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { teams } from "@/data/mockData";
 
 const TeamsSection = () => {
@@ -5,7 +6,7 @@ const TeamsSection = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Terma jamoalar</span>
-        <a href="#" className="more-link">Barchasi →</a>
+        <Link to="/teams" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">

@@ -1,4 +1,5 @@
 import { Play, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
 import { videoPosts } from "@/data/mockData";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -12,7 +13,7 @@ const VideoPosts = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Video</span>
-        <a href="#" className="more-link">Barchasi →</a>
+        <Link to="/videos" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

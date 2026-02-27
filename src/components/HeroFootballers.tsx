@@ -90,12 +90,12 @@ const HeroFootballers = () => {
       </div>
 
       {/* Button */}
-      <a
-        href="#"
+      <Link
+        to="/teams"
         className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-background border border-border text-foreground text-[13px] font-heading font-bold hover:bg-muted transition-colors"
       >
         Barchasi <ArrowRight size={14} />
-      </a>
+      </Link>
     </div>
   );
 };

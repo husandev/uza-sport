@@ -149,7 +149,7 @@ const MatchCountdown = () => {
         </div>
 
         {/* Countdown bar */}
-        <div className="px-5 pb-2.5">
+        <div className="px-8 pb-2.5">
           <div
             className="relative py-2.5 flex items-center justify-center overflow-hidden"
             style={{

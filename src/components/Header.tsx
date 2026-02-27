@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
-import uzaLogo from "@/assets/uza-logo.png";
+import uzaLogo from "@/assets/uza-logo-solo.png";
 
 const navItems = [
   { label: "Asosiy", href: "#", active: true },
@@ -57,7 +57,7 @@ const Header = () => {
       <div className="bg-card">
         <div className="container flex items-center justify-between h-12">
           <a href="/" className="flex items-center gap-2.5">
-            <img src={uzaLogo} alt="UZA.uz" className="h-7" />
+            <img src={uzaLogo} alt="UZA.uz" className="h-9" />
             <div className="h-5 w-px bg-border" />
             {/* Bouncing football */}
             <div className="football-anim">

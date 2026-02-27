@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Camera, Heart, ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Play, Pause, Maximize2 } from "lucide-react";
+import { Camera, ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Play, Pause, Maximize2 } from "lucide-react";
 import photo1 from "@/assets/photo-1.jpg";
 import photo2 from "@/assets/photo-2.jpg";
 import photo3 from "@/assets/photo-3.jpg";
@@ -27,30 +27,30 @@ import gallery7 from "@/assets/gallery-7.jpg";
 import gallery8 from "@/assets/gallery-8.jpg";
 
 const photos = [
-  { src: photo1, caption: "O'zbekiston — Argentina o'yinidan", likes: 342 },
-  { src: stadium1, caption: "MetLife stadioni", likes: 198 },
-  { src: hero1, caption: "Terma jamoa safga tizilmoqda", likes: 256 },
-  { src: gallery1, caption: "Muxlislar bayramda", likes: 445 },
-  { src: photo2, caption: "Stadion tayyorligi", likes: 128 },
-  { src: footballer1, caption: "Shomurodov intervyuda", likes: 415 },
-  { src: hero2, caption: "Goldan keyingi shodlik", likes: 302 },
-  { src: gallery2, caption: "Kechki mashg'ulot", likes: 167 },
-  { src: stadium2, caption: "Rose Bowl stadioni", likes: 176 },
-  { src: gallery3, caption: "G'alaba kubogi", likes: 523 },
-  { src: photo3, caption: "Muxlislar kutib olishi", likes: 89 },
-  { src: gallery4, caption: "Zarba lahzasi", likes: 387 },
-  { src: hero3, caption: "Yarim final lahzalari", likes: 221 },
-  { src: footballer2, caption: "Xusanov mashg'ulotda", likes: 187 },
-  { src: gallery5, caption: "O'yin yuqoridan", likes: 294 },
-  { src: hero4, caption: "Muxlislar bayroqlari", likes: 145 },
-  { src: gallery6, caption: "Jamoa ruhi", likes: 312 },
-  { src: stadium3, caption: "AT&T stadioni", likes: 163 },
-  { src: footballer3, caption: "Urunov o'yin oldidan", likes: 278 },
-  { src: gallery7, caption: "Stadion quyosh botishida", likes: 456 },
-  { src: photo4, caption: "Terma jamoa mashg'uloti", likes: 94 },
-  { src: gallery8, caption: "Futbol to'pi", likes: 201 },
-  { src: hero5, caption: "Volontyorlar tayyorlanmoqda", likes: 112 },
-  { src: footballer4, caption: "Shukurov g'alabani nishonlamoqda", likes: 334 },
+  { src: photo1, caption: "O'zbekiston — Argentina o'yinidan" },
+  { src: stadium1, caption: "MetLife stadioni" },
+  { src: hero1, caption: "Terma jamoa safga tizilmoqda" },
+  { src: gallery1, caption: "Muxlislar bayramda" },
+  { src: photo2, caption: "Stadion tayyorligi" },
+  { src: footballer1, caption: "Shomurodov intervyuda" },
+  { src: hero2, caption: "Goldan keyingi shodlik" },
+  { src: gallery2, caption: "Kechki mashg'ulot" },
+  { src: stadium2, caption: "Rose Bowl stadioni" },
+  { src: gallery3, caption: "G'alaba kubogi" },
+  { src: photo3, caption: "Muxlislar kutib olishi" },
+  { src: gallery4, caption: "Zarba lahzasi" },
+  { src: hero3, caption: "Yarim final lahzalari" },
+  { src: footballer2, caption: "Xusanov mashg'ulotda" },
+  { src: gallery5, caption: "O'yin yuqoridan" },
+  { src: hero4, caption: "Muxlislar bayroqlari" },
+  { src: gallery6, caption: "Jamoa ruhi" },
+  { src: stadium3, caption: "AT&T stadioni" },
+  { src: footballer3, caption: "Urunov o'yin oldidan" },
+  { src: gallery7, caption: "Stadion quyosh botishida" },
+  { src: photo4, caption: "Terma jamoa mashg'uloti" },
+  { src: gallery8, caption: "Futbol to'pi" },
+  { src: hero5, caption: "Volontyorlar tayyorlanmoqda" },
+  { src: footballer4, caption: "Shukurov g'alabani nishonlamoqda" },
 ];
 
 const PER_PAGE = 24;
@@ -241,10 +241,6 @@ const PhotoLightbox = ({
             <Camera size={14} className="text-white/60" />
             {photo.caption}
           </p>
-          <p className="text-white/50 text-xs font-body flex items-center gap-1.5">
-            <Heart size={11} className="fill-red-400 text-red-400" />
-            {photo.likes} ta yoqtirish
-          </p>
         </div>
 
         {/* Thumbnail strip */}
@@ -352,11 +348,8 @@ const PhotosPage = () => {
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                    <span className="text-[12px] font-medium text-white flex items-center gap-1.5 font-body mb-1">
+                    <span className="text-[12px] font-medium text-white flex items-center gap-1.5 font-body">
                       <Camera size={12} /> {photo.caption}
-                    </span>
-                    <span className="text-[11px] text-white/70 flex items-center gap-1 font-body">
-                      <Heart size={10} className="fill-red-400 text-red-400" /> {photo.likes}
                     </span>
                   </div>
                 </div>

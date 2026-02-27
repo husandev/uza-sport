@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Camera, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
+import { Camera, Heart, ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Play, Pause, Maximize2 } from "lucide-react";
 import photo1 from "@/assets/photo-1.jpg";
 import photo2 from "@/assets/photo-2.jpg";
 import photo3 from "@/assets/photo-3.jpg";
@@ -54,8 +55,215 @@ const photos = [
 
 const PER_PAGE = 24;
 
+/* ─── Lightbox Component ─── */
+const PhotoLightbox = ({
+  index,
+  onClose,
+  onPrev,
+  onNext,
+  total,
+}: {
+  index: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  total: number;
+}) => {
+  const [zoom, setZoom] = useState(1);
+  const [playing, setPlaying] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const photo = photos[index];
+
+  // Reset zoom & loaded on photo change
+  useEffect(() => {
+    setZoom(1);
+    setImgLoaded(false);
+  }, [index]);
+
+  // Slideshow
+  useEffect(() => {
+    if (playing) {
+      timerRef.current = setInterval(() => {
+        onNext();
+      }, 3000);
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [playing, onNext]);
+
+  // Keyboard
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") { setPlaying(false); onPrev(); }
+      if (e.key === "ArrowRight") { setPlaying(false); onNext(); }
+      if (e.key === "+" || e.key === "=") setZoom((z) => Math.min(3, z + 0.25));
+      if (e.key === "-") setZoom((z) => Math.max(0.5, z - 0.25));
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, onPrev, onNext]);
+
+  const zoomIn = () => setZoom((z) => Math.min(3, z + 0.5));
+  const zoomOut = () => setZoom((z) => Math.max(0.5, z - 0.5));
+  const resetZoom = () => setZoom(1);
+
+  const controlBtn = "w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors";
+
+  return createPortal(
+    <div
+      style={{ position: "fixed", inset: 0, zIndex: 99999 }}
+      className="flex flex-col"
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/95" onClick={onClose} />
+
+      {/* Top bar */}
+      <div className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-3">
+        <div className="flex items-center gap-2">
+          <span className="text-white/60 text-sm font-body">
+            {index + 1} / {total}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {/* Play / Pause */}
+          <button onClick={() => setPlaying(!playing)} className={controlBtn} title={playing ? "To'xtatish" : "Slaydshow"}>
+            {playing ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
+          </button>
+          {/* Zoom out */}
+          <button onClick={zoomOut} className={controlBtn} title="Kichiklashtirish" disabled={zoom <= 0.5}>
+            <ZoomOut size={16} />
+          </button>
+          {/* Zoom level */}
+          <button onClick={resetZoom} className="text-white/60 text-xs font-mono min-w-[40px] text-center hover:text-white transition-colors" title="Asl o'lcham">
+            {Math.round(zoom * 100)}%
+          </button>
+          {/* Zoom in */}
+          <button onClick={zoomIn} className={controlBtn} title="Kattalashtirish" disabled={zoom >= 3}>
+            <ZoomIn size={16} />
+          </button>
+          {/* Fit */}
+          <button onClick={resetZoom} className={controlBtn} title="Ekranga moslashtirish">
+            <Maximize2 size={15} />
+          </button>
+          {/* Close */}
+          <button onClick={onClose} className={`${controlBtn} ml-1`} title="Yopish">
+            <X size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* Main image area */}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-16 overflow-hidden" onClick={onClose}>
+        {/* Prev */}
+        <button
+          onClick={(e) => { e.stopPropagation(); setPlaying(false); onPrev(); }}
+          className="absolute left-3 sm:left-5 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors"
+        >
+          <ChevronLeft size={22} />
+        </button>
+
+        {/* Image */}
+        <div
+          className="relative flex items-center justify-center"
+          onClick={(e) => e.stopPropagation()}
+          style={{ animation: "lightbox-fade-in 0.25s ease-out" }}
+        >
+          {!imgLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full border-2 border-white/20 border-t-white/80 animate-spin" />
+            </div>
+          )}
+          <img
+            key={index}
+            src={photo.src}
+            alt={photo.caption}
+            className="max-w-[85vw] max-h-[72vh] rounded-lg transition-transform duration-200 ease-out select-none"
+            style={{ transform: `scale(${zoom})`, opacity: imgLoaded ? 1 : 0 }}
+            onLoad={() => setImgLoaded(true)}
+            draggable={false}
+          />
+        </div>
+
+        {/* Next */}
+        <button
+          onClick={(e) => { e.stopPropagation(); setPlaying(false); onNext(); }}
+          className="absolute right-3 sm:right-5 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors"
+        >
+          <ChevronRight size={22} />
+        </button>
+      </div>
+
+      {/* Bottom: caption + likes + progress */}
+      <div className="relative z-10 px-4 sm:px-6 pb-4 pt-2">
+        {/* Slideshow progress bar */}
+        {playing && (
+          <div className="w-full max-w-md mx-auto mb-3 h-0.5 bg-white/10 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-white/60 rounded-full"
+              style={{
+                animation: "slideshow-progress 3s linear infinite",
+              }}
+            />
+          </div>
+        )}
+
+        <div className="flex flex-col items-center gap-1.5">
+          <p className="text-white text-sm font-medium font-body flex items-center gap-2">
+            <Camera size={14} className="text-white/60" />
+            {photo.caption}
+          </p>
+          <p className="text-white/50 text-xs font-body flex items-center gap-1.5">
+            <Heart size={11} className="fill-red-400 text-red-400" />
+            {photo.likes} ta yoqtirish
+          </p>
+        </div>
+
+        {/* Thumbnail strip */}
+        <div className="flex items-center justify-center gap-1.5 mt-3 overflow-x-auto max-w-full pb-1">
+          {photos.map((p, i) => (
+            <button
+              key={i}
+              onClick={() => { setPlaying(false); }}
+              className={`w-10 h-10 rounded-md overflow-hidden flex-shrink-0 border-2 transition-all duration-200 ${
+                i === index ? "border-white scale-110" : "border-transparent opacity-50 hover:opacity-80"
+              }`}
+              // We use a wrapper click that also changes the index
+              onClickCapture={() => {
+                // This triggers re-render with new index via parent
+                const event = new CustomEvent("lightbox-goto", { detail: i });
+                window.dispatchEvent(event);
+              }}
+            >
+              <img src={p.src} alt="" className="w-full h-full object-cover" />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Inline keyframe styles */}
+      <style>{`
+        @keyframes lightbox-fade-in {
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideshow-progress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}</style>
+    </div>,
+    document.body
+  );
+};
+
+/* ─── Photos Page ─── */
 const PhotosPage = () => {
   const [page, setPage] = useState(1);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const totalPages = Math.ceil(photos.length / PER_PAGE);
   const paginated = photos.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
@@ -63,6 +271,29 @@ const PhotosPage = () => {
   paginated.forEach((photo, i) => {
     columns[i % 4].push(photo);
   });
+
+  // Map column+row index back to flat index
+  const getFlatIndex = (colIdx: number, rowIdx: number) => {
+    return rowIdx * 4 + colIdx;
+  };
+
+  const openLightbox = (flatIdx: number) => {
+    setLightboxIndex(flatIdx);
+  };
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const goPrev = useCallback(() => setLightboxIndex((i) => (i !== null ? (i - 1 + photos.length) % photos.length : null)), []);
+  const goNext = useCallback(() => setLightboxIndex((i) => (i !== null ? (i + 1) % photos.length : null)), []);
+
+  // Listen for thumbnail goto events
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const idx = (e as CustomEvent).detail;
+      setLightboxIndex(idx);
+    };
+    window.addEventListener("lightbox-goto", handler);
+    return () => window.removeEventListener("lightbox-goto", handler);
+  }, []);
 
   return (
     <div className="container pt-4 pb-8">
@@ -76,10 +307,11 @@ const PhotosPage = () => {
         <div className="flex gap-3">
           {columns.map((col, colIdx) => (
             <div key={colIdx} className="flex-1 flex flex-col gap-3">
-              {col.map((photo, i) => (
+              {col.map((photo, rowIdx) => (
                 <div
-                  key={i}
+                  key={rowIdx}
                   className="relative rounded-xl overflow-hidden cursor-pointer group"
+                  onClick={() => openLightbox(getFlatIndex(colIdx, rowIdx))}
                 >
                   <img
                     src={photo.src}
@@ -87,9 +319,9 @@ const PhotosPage = () => {
                     className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     style={{
                       aspectRatio:
-                        (colIdx + i) % 3 === 0
+                        (colIdx + rowIdx) % 3 === 0
                           ? "3/4"
-                          : (colIdx + i) % 3 === 1
+                          : (colIdx + rowIdx) % 3 === 1
                           ? "1/1"
                           : "4/3",
                     }}
@@ -137,6 +369,17 @@ const PhotosPage = () => {
             <ChevronRight size={16} />
           </button>
         </div>
+      )}
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <PhotoLightbox
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={goPrev}
+          onNext={goNext}
+          total={photos.length}
+        />
       )}
     </div>
   );

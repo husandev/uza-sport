@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import uzaLogo from "@/assets/uza-logo-solo.png";
+import oksLogo from "@/assets/oks-logo.png";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Footer = () => {
   return (
@@ -21,6 +23,19 @@ const Footer = () => {
             <a href="https://t.me" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Telegram</a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Instagram</a>
             <span className="text-primary-foreground/25">© 2026 UZA.uz</span>
+            <div className="h-4 w-px bg-primary-foreground/20" />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <a href="https://oks.uz" target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
+                    <img src={oksLogo} alt="OKS Technologies" className="h-4" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p className="text-xs">OKS Technologies tomonidan mehr bilan ishlab chiqilgan ❤️</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </div>

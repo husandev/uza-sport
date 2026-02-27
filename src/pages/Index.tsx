@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import MatchTicker from "@/components/MatchTicker";
+import MatchCountdown from "@/components/MatchCountdown";
 import HeroSlider from "@/components/HeroSlider";
 import NewsFeed from "@/components/NewsFeed";
 
@@ -46,6 +47,7 @@ const Index = () => {
 
           {/* Center: Articles carousel + Video + Stadiums */}
           <div className="lg:col-span-6 space-y-4">
+            <MatchCountdown />
             <SidebarArticles />
             
             <VideoPosts />

@@ -294,26 +294,6 @@ const FootballerPage = () => {
                 </div>
 
                 {/* Career highlights */}
-                {data.careerHighlights.length > 0 && (
-                  <div className="mt-7">
-                    <div className="flex items-center gap-2.5 mb-4">
-                      <div className="w-1 h-6 rounded-full bg-primary" />
-                      <h2 className="text-[18px] font-heading font-extrabold text-foreground">
-                        Karera yutuqlari
-                      </h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {data.careerHighlights.map((item, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-muted/40 border border-border text-[13px] font-body text-foreground"
-                        >
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
                 {/* Tags */}
                 <div className="mt-7 pt-5 border-t border-border">

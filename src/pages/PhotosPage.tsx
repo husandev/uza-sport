@@ -72,7 +72,9 @@ const PhotoLightbox = ({
   const [zoom, setZoom] = useState(1);
   const [playing, setPlaying] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const photo = photos[index];
 
   // Reset zoom & loaded on photo change
@@ -93,29 +95,52 @@ const PhotoLightbox = ({
     };
   }, [playing, onNext]);
 
-  // Keyboard
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") { setPlaying(false); onPrev(); }
-      if (e.key === "ArrowRight") { setPlaying(false); onNext(); }
-      if (e.key === "+" || e.key === "=") setZoom((z) => Math.min(3, z + 0.25));
-      if (e.key === "-") setZoom((z) => Math.max(0.5, z - 0.25));
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose, onPrev, onNext]);
-
   const zoomIn = () => setZoom((z) => Math.min(3, z + 0.5));
   const zoomOut = () => setZoom((z) => Math.max(0.5, z - 0.5));
   const resetZoom = () => setZoom(1);
 
+  const toggleFullscreen = useCallback(async () => {
+    if (!containerRef.current) return;
+    try {
+      if (!document.fullscreenElement) {
+        await containerRef.current.requestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    } catch (err) {
+      console.log("Fullscreen not supported");
+    }
+  }, []);
+
+  // Listen for fullscreen change
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handler);
+    return () => document.removeEventListener("fullscreenchange", handler);
+  }, []);
+
+  // Keyboard
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !document.fullscreenElement) onClose();
+      if (e.key === "ArrowLeft") { setPlaying(false); onPrev(); }
+      if (e.key === "ArrowRight") { setPlaying(false); onNext(); }
+      if (e.key === "+" || e.key === "=") setZoom((z) => Math.min(3, z + 0.25));
+      if (e.key === "-") setZoom((z) => Math.max(0.5, z - 0.25));
+      if (e.key === "f" || e.key === "F") toggleFullscreen();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, onPrev, onNext, toggleFullscreen]);
   const controlBtn = "w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors";
 
   return createPortal(
     <div
+      ref={containerRef}
       style={{ position: "fixed", inset: 0, zIndex: 99999 }}
-      className="flex flex-col"
+      className="flex flex-col bg-black"
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/95" onClick={onClose} />
@@ -145,8 +170,8 @@ const PhotoLightbox = ({
           <button onClick={zoomIn} className={controlBtn} title="Kattalashtirish" disabled={zoom >= 3}>
             <ZoomIn size={16} />
           </button>
-          {/* Fit */}
-          <button onClick={resetZoom} className={controlBtn} title="Ekranga moslashtirish">
+          {/* Fullscreen */}
+          <button onClick={toggleFullscreen} className={controlBtn} title={isFullscreen ? "Fullscreendan chiqish" : "Fullscreen"}>
             <Maximize2 size={15} />
           </button>
           {/* Close */}

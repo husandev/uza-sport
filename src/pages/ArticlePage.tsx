@@ -17,7 +17,7 @@ import photoImg1 from "@/assets/photo-1.jpg";
 import photoImg2 from "@/assets/photo-2.jpg";
 import photoImg3 from "@/assets/photo-3.jpg";
 import photoImg4 from "@/assets/photo-4.jpg";
-import { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { ZoomIn, ZoomOut, X as XIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -165,6 +165,16 @@ const ArticlePage = () => {
     setZoom(1);
     setImgLoaded(false);
   }, []);
+
+  // Escape tugmasi bilan yopish
+  useEffect(() => {
+    if (!lightbox) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightbox, closeLightbox]);
 
   if (!article) {
     return (
@@ -552,13 +562,15 @@ const ArticlePage = () => {
             />
           </div>
 
-          {/* Caption */}
+          {/* Caption - centered at bottom */}
           {lightbox.caption && (
             <div
-              className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full z-[10]"
+              className="fixed bottom-8 left-0 right-0 flex justify-center z-[10] pointer-events-none"
               style={{ animation: "fade-in 0.3s ease-out 0.2s both" }}
             >
-              📸 {lightbox.caption}
+              <span className="text-white/80 text-sm bg-black/50 backdrop-blur-sm px-5 py-2 rounded-full text-center max-w-[80vw]">
+                📸 {lightbox.caption}
+              </span>
             </div>
           )}
         </div>,

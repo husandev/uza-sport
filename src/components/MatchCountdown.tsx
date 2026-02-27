@@ -73,39 +73,93 @@ const MatchCountdown = () => {
               O'yingacha
             </span>
 
-            <div className="flex items-center gap-1">
-              {blocks.map((b, i) => (
-                <div key={b.label} className="flex items-center gap-1">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className="relative w-10 h-11 sm:w-12 sm:h-13 rounded-lg flex items-center justify-center overflow-hidden"
-                      style={{
-                        background: "linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%)",
-                        boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.05), 0 0 0 1px hsl(var(--border))",
-                      }}
-                    >
-                      <AnimatePresence mode="popLayout">
-                        <motion.span
-                          key={b.value}
-                          initial={{ y: -8, opacity: 0, scale: 0.9 }}
-                          animate={{ y: 0, opacity: 1, scale: 1 }}
-                          exit={{ y: 8, opacity: 0, scale: 0.9 }}
-                          transition={{ duration: 0.25, ease: "easeOut" }}
-                          className="text-lg sm:text-xl font-black tabular-nums text-primary"
-                        >
-                          {String(b.value).padStart(2, "0")}
-                        </motion.span>
-                      </AnimatePresence>
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              {blocks.map((b, i) => {
+                const digits = String(b.value).padStart(2, "0").split("");
+                return (
+                  <div key={b.label} className="flex items-center gap-1.5 sm:gap-2">
+                    <div className="flex flex-col items-center">
+                      <div className="flex gap-[3px]">
+                        {digits.map((d, di) => (
+                          <div
+                            key={di}
+                            className="relative w-[22px] h-[30px] sm:w-[26px] sm:h-[36px] rounded-md overflow-hidden"
+                            style={{
+                              perspective: "200px",
+                            }}
+                          >
+                            {/* Top half */}
+                            <div
+                              className="absolute inset-x-0 top-0 h-1/2 overflow-hidden rounded-t-md"
+                              style={{
+                                background: "linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%)",
+                                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8), 0 0 0 0.5px hsl(var(--border))",
+                              }}
+                            >
+                              <AnimatePresence mode="popLayout">
+                                <motion.span
+                                  key={d}
+                                  initial={{ rotateX: -90, opacity: 0 }}
+                                  animate={{ rotateX: 0, opacity: 1 }}
+                                  exit={{ rotateX: 90, opacity: 0 }}
+                                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                                  className="absolute inset-0 flex items-end justify-center pb-px text-[15px] sm:text-[18px] font-black tabular-nums text-primary"
+                                  style={{ transformOrigin: "bottom center" }}
+                                >
+                                  {d}
+                                </motion.span>
+                              </AnimatePresence>
+                            </div>
+
+                            {/* Center divider line */}
+                            <div className="absolute inset-x-0 top-1/2 h-px bg-primary/[0.08] z-10" />
+
+                            {/* Bottom half */}
+                            <div
+                              className="absolute inset-x-0 bottom-0 h-1/2 overflow-hidden rounded-b-md"
+                              style={{
+                                background: "linear-gradient(180deg, #eaeff5 0%, #e2e8f0 100%)",
+                                boxShadow: "inset 0 -1px 0 rgba(255,255,255,0.5), 0 0 0 0.5px hsl(var(--border)), 0 2px 4px rgba(0,0,0,0.04)",
+                              }}
+                            >
+                              <AnimatePresence mode="popLayout">
+                                <motion.span
+                                  key={d}
+                                  initial={{ rotateX: 90, opacity: 0 }}
+                                  animate={{ rotateX: 0, opacity: 1 }}
+                                  exit={{ rotateX: -90, opacity: 0 }}
+                                  transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1], delay: 0.05 }}
+                                  className="absolute inset-0 flex items-start justify-center pt-px text-[15px] sm:text-[18px] font-black tabular-nums text-primary/90"
+                                  style={{ transformOrigin: "top center" }}
+                                >
+                                  {d}
+                                </motion.span>
+                              </AnimatePresence>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <span className="text-[7px] sm:text-[8px] font-bold tracking-[0.12em] text-muted-foreground/50 mt-1.5">
+                        {b.label}
+                      </span>
                     </div>
-                    <span className="text-[7px] sm:text-[8px] font-bold tracking-[0.1em] text-muted-foreground/60 mt-1">
-                      {b.label}
-                    </span>
+                    {i < blocks.length - 1 && (
+                      <div className="flex flex-col gap-1 -mt-4">
+                        <motion.div
+                          className="w-[3px] h-[3px] rounded-full bg-primary/30"
+                          animate={{ opacity: [0.3, 1, 0.3] }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                        <motion.div
+                          className="w-[3px] h-[3px] rounded-full bg-primary/30"
+                          animate={{ opacity: [0.3, 1, 0.3] }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                        />
+                      </div>
+                    )}
                   </div>
-                  {i < blocks.length - 1 && (
-                    <span className="text-primary/25 font-black text-sm -mt-3 mx-px">:</span>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <span className="text-[8px] sm:text-[9px] font-semibold text-muted-foreground/50 leading-none mt-0.5">

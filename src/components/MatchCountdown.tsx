@@ -24,111 +24,122 @@ const MatchCountdown = () => {
   }, []);
 
   const blocks = [
-    { value: timeLeft.days, label: "Kun" },
-    { value: timeLeft.hours, label: "Soat" },
-    { value: timeLeft.minutes, label: "Daqiqa" },
-    { value: timeLeft.seconds, label: "Soniya" },
+    { value: timeLeft.days, label: "KUN" },
+    { value: timeLeft.hours, label: "SOAT" },
+    { value: timeLeft.minutes, label: "DAQ" },
+    { value: timeLeft.seconds, label: "SON" },
   ];
 
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-card border border-border shadow-sm">
-      {/* Decorative background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-[0.06]" style={{ background: "radial-gradient(circle, hsl(var(--primary)), transparent 70%)" }} />
-        <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full opacity-[0.04]" style={{ background: "radial-gradient(circle, hsl(var(--secondary)), transparent 70%)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 border border-border/50 rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-border/30 rounded-full" />
-        <div className="absolute top-0 bottom-0 left-1/2 w-px bg-border/30" />
-      </div>
+    <div
+      className="relative rounded-2xl overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #ffffff 0%, #f0f4f8 50%, #e8eef5 100%)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)",
+        border: "1px solid hsl(var(--border))",
+      }}
+    >
+      {/* Subtle pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `radial-gradient(circle at 20% 50%, hsl(var(--primary)) 1px, transparent 1px),
+                          radial-gradient(circle at 80% 50%, hsl(var(--primary)) 1px, transparent 1px)`,
+        backgroundSize: "40px 40px",
+      }} />
 
-      <div className="relative z-10 px-5 py-5 sm:px-7 sm:py-6">
-        {/* Top label */}
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-transparent to-primary/20" />
-          <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary">
-            ⚽ FIFA Jahon Chempionati 2026
-          </span>
-          <div className="h-px flex-1 max-w-[60px] bg-gradient-to-l from-transparent to-primary/20" />
-        </div>
+      <div className="relative z-10 py-4 px-4 sm:px-6">
+        {/* Main layout */}
+        <div className="flex items-center justify-between gap-3">
 
-        {/* Teams & Countdown row */}
-        <div className="flex items-center justify-center gap-4 sm:gap-6">
-          {/* Uzbekistan */}
-          <div className="flex flex-col items-center gap-1.5">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-muted border border-border flex items-center justify-center shadow-sm">
-              <span className="text-2xl sm:text-3xl">🇺🇿</span>
+          {/* Left: Uzbekistan */}
+          <div className="flex items-center gap-2.5 flex-1 justify-end">
+            <div className="text-right hidden sm:block">
+              <p className="text-[13px] font-extrabold uppercase tracking-wide text-foreground leading-none">O'zbekiston</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">Terma jamoa</p>
             </div>
-            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-foreground">
-              O'zbekiston
-            </span>
+            <div
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0"
+              style={{
+                background: "linear-gradient(145deg, #ffffff, #f0f0f0)",
+                boxShadow: "4px 4px 10px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)",
+              }}
+            >
+              <span className="text-xl sm:text-2xl">🇺🇿</span>
+            </div>
           </div>
 
-          {/* VS + Countdown center */}
-          <div className="flex flex-col items-center gap-3">
-            <span className="text-sm font-black text-primary tracking-widest">VS</span>
+          {/* Center: Countdown */}
+          <div className="flex flex-col items-center gap-1 px-2 sm:px-4">
+            <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.2em] text-primary/60 leading-none">
+              O'yingacha
+            </span>
 
-            {/* Countdown blocks */}
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1">
               {blocks.map((b, i) => (
-                <div key={b.label} className="flex items-center gap-1.5 sm:gap-2">
+                <div key={b.label} className="flex items-center gap-1">
                   <div className="flex flex-col items-center">
                     <div
-                      className="relative rounded-xl w-12 h-14 sm:w-14 sm:h-16 flex items-center justify-center overflow-hidden bg-muted border border-border"
+                      className="relative w-10 h-11 sm:w-12 sm:h-13 rounded-lg flex items-center justify-center overflow-hidden"
                       style={{
-                        boxShadow: "0 2px 8px hsl(var(--primary) / 0.08)",
+                        background: "linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%)",
+                        boxShadow: "inset 0 -1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.05), 0 0 0 1px hsl(var(--border))",
                       }}
                     >
-                      <div className="absolute top-1/2 left-0 right-0 h-px bg-border/40" />
                       <AnimatePresence mode="popLayout">
                         <motion.span
                           key={b.value}
-                          initial={{ y: -10, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          exit={{ y: 10, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="text-xl sm:text-2xl font-black text-primary tabular-nums"
+                          initial={{ y: -8, opacity: 0, scale: 0.9 }}
+                          animate={{ y: 0, opacity: 1, scale: 1 }}
+                          exit={{ y: 8, opacity: 0, scale: 0.9 }}
+                          transition={{ duration: 0.25, ease: "easeOut" }}
+                          className="text-lg sm:text-xl font-black tabular-nums text-primary"
                         >
                           {String(b.value).padStart(2, "0")}
                         </motion.span>
                       </AnimatePresence>
                     </div>
-                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.15em] text-muted-foreground mt-1.5">
+                    <span className="text-[7px] sm:text-[8px] font-bold tracking-[0.1em] text-muted-foreground/60 mt-1">
                       {b.label}
                     </span>
                   </div>
                   {i < blocks.length - 1 && (
-                    <div className="flex flex-col gap-1.5 -mt-4">
-                      <div className="w-1 h-1 rounded-full bg-primary/40" />
-                      <div className="w-1 h-1 rounded-full bg-primary/40" />
-                    </div>
+                    <span className="text-primary/25 font-black text-sm -mt-3 mx-px">:</span>
                   )}
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* Colombia */}
-          <div className="flex flex-col items-center gap-1.5">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-muted border border-border flex items-center justify-center shadow-sm">
-              <span className="text-2xl sm:text-3xl">🇨🇴</span>
-            </div>
-            <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-foreground">
-              Kolumbiya
+            <span className="text-[8px] sm:text-[9px] font-semibold text-muted-foreground/50 leading-none mt-0.5">
+              14 Iyun • 18:00
             </span>
           </div>
+
+          {/* Right: Colombia */}
+          <div className="flex items-center gap-2.5 flex-1">
+            <div
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0"
+              style={{
+                background: "linear-gradient(145deg, #ffffff, #f0f0f0)",
+                boxShadow: "4px 4px 10px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)",
+              }}
+            >
+              <span className="text-xl sm:text-2xl">🇨🇴</span>
+            </div>
+            <div className="hidden sm:block">
+              <p className="text-[13px] font-extrabold uppercase tracking-wide text-foreground leading-none">Kolumbiya</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">Terma jamoa</p>
+            </div>
+          </div>
+
         </div>
 
-        {/* Bottom info */}
-        <div className="flex items-center justify-center mt-4">
-          <div className="bg-muted border border-border rounded-full px-4 py-1.5 flex items-center gap-2">
-            <span className="text-[10px] sm:text-[11px] text-muted-foreground font-medium">
-              📅 14 Iyun, 2026
-            </span>
-            <div className="w-px h-3 bg-border" />
-            <span className="text-[10px] sm:text-[11px] text-muted-foreground font-medium">
-              🕕 18:00
-            </span>
-          </div>
+        {/* Bottom accent line */}
+        <div className="mt-3 h-[2px] rounded-full overflow-hidden bg-border/50">
+          <motion.div
+            className="h-full rounded-full"
+            style={{ background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--highlight)), hsl(var(--secondary)))" }}
+            animate={{ width: ["0%", "100%"] }}
+            transition={{ duration: 2, ease: "easeOut" }}
+          />
         </div>
       </div>
     </div>

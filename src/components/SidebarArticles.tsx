@@ -1,4 +1,5 @@
 import { Flame } from "lucide-react";
+import { Link } from "react-router-dom";
 import { sidebarArticles } from "@/data/mockData";
 import photo1 from "@/assets/photo-1.jpg";
 import photo2 from "@/assets/photo-2.jpg";
@@ -25,9 +26,10 @@ const SidebarArticles = () => {
 
       <div className="divide-y divide-border">
         {sidebarArticles.map((article, i) => (
-          <div
+          <Link
             key={article.id}
-            className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group"
+            to={`/article/${((article.id - 1) % 3) + 1}`}
+            className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group block"
           >
             {/* Left: image */}
             <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
@@ -63,7 +65,7 @@ const SidebarArticles = () => {
                 )}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

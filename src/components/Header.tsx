@@ -3,36 +3,33 @@ import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, You
 import uzaLogo from "@/assets/uza-logo.png";
 
 const navItems = [
-  { label: "Асосий", href: "#", active: true },
-  { label: "Янгиликлар", href: "#" },
-  { label: "Натижалар", href: "#" },
-  { label: "Жадвал", href: "#" },
-  { label: "Жамоалар", href: "#" },
-  { label: "Стадионлар", href: "#" },
-  { label: "Видео", href: "#" },
-  { label: "Фото", href: "#" },
+  { label: "Asosiy", href: "#", active: true },
+  { label: "Yangiliklar", href: "#" },
+  { label: "Natijalar", href: "#" },
+  { label: "Jadval", href: "#" },
+  { label: "Jamoalar", href: "#" },
+  { label: "Stadionlar", href: "#" },
+  { label: "Video", href: "#" },
+  { label: "Foto", href: "#" },
 ];
 
 const hotSearches = [
-  "Ўзбекистон — Колумбия",
-  "Роналду ЖЧ-2026",
-  "K гуруҳ жадвали",
-  "Шомуродов голлари",
-  "Хусанов трансфер",
+  "O'zbekiston — Kolumbiya",
+  "Ronaldu JCh-2026",
+  "K guruhi jadvali",
+  "Shomurodov gollari",
+  "Xusanov transfer",
 ];
 
 const quickLinks = [
-  { label: "ЖЧ-2026 жадвал", icon: "📊" },
-  { label: "Бугунги ўйинлар", icon: "⚽" },
-  { label: "Энг яхши ҳужумчилар", icon: "🏆" },
-  { label: "Стадионлар рўйхати", icon: "🏟️" },
+  { label: "JCh-2026 jadval", icon: "📊" },
+  { label: "Bugungi o'yinlar", icon: "⚽" },
+  { label: "Eng yaxshi hujumchilar", icon: "🏆" },
+  { label: "Stadionlar ro'yxati", icon: "🏟️" },
 ];
-
-type Script = "cyrillic" | "latin";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [script, setScript] = useState<Script>("cyrillic");
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
@@ -103,7 +100,7 @@ const Header = () => {
                   className="flex items-center gap-2 h-8 px-3 rounded-full bg-muted/80 hover:bg-muted text-muted-foreground text-[12px] font-body transition-all hover:shadow-sm"
                 >
                   <Search size={13} />
-                  <span className="hidden sm:inline">{script === "cyrillic" ? "Қидириш..." : "Qidirish..."}</span>
+                  <span className="hidden sm:inline">Qidirish...</span>
                   <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-background text-[9px] font-mono text-muted-foreground border border-border ml-1">
                     ⌘K
                   </kbd>
@@ -126,7 +123,7 @@ const Header = () => {
                           type="text"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder={script === "cyrillic" ? "Нима қидирмоқдасиз?" : "Nima qidirmoqdasiz?"}
+                          placeholder="Nima qidirmoqdasiz?"
                           className="flex-1 bg-transparent outline-none text-base font-body text-foreground placeholder:text-muted-foreground/60"
                         />
                         {searchQuery ? (
@@ -152,7 +149,7 @@ const Header = () => {
                       <div className="px-5 pt-4 pb-3">
                         <p className="flex items-center gap-1.5 text-[11px] font-heading font-bold uppercase tracking-wider text-muted-foreground mb-3">
                           <TrendingUp size={12} />
-                          Тренддаги
+                          Trenddagi
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {hotSearches.map((term) => (
@@ -173,7 +170,7 @@ const Header = () => {
                       <div className="px-5 pt-3 pb-4">
                         <p className="flex items-center gap-1.5 text-[11px] font-heading font-bold uppercase tracking-wider text-muted-foreground mb-2">
                           <Sparkles size={12} />
-                          Тез ҳаволалар
+                          Tez havolalar
                         </p>
                         <div className="space-y-0.5">
                           {quickLinks.map((item) => (
@@ -193,37 +190,6 @@ const Header = () => {
                   </div>
                 </>
               )}
-            </div>
-
-            {/* Script switcher - right of search */}
-            <div className="relative flex items-center bg-muted rounded-full p-0.5 h-7">
-              <div
-                className="absolute top-0.5 bottom-0.5 rounded-full bg-primary shadow-md transition-all duration-300 ease-out"
-                style={{
-                  width: "calc(50% - 2px)",
-                  left: script === "cyrillic" ? "2px" : "calc(50%)",
-                }}
-              />
-              <button
-                onClick={() => setScript("cyrillic")}
-                className={`relative z-10 px-2.5 h-full text-[10px] font-heading font-bold uppercase tracking-wide rounded-full transition-colors duration-300 ${
-                  script === "cyrillic"
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Кир
-              </button>
-              <button
-                onClick={() => setScript("latin")}
-                className={`relative z-10 px-2.5 h-full text-[10px] font-heading font-bold uppercase tracking-wide rounded-full transition-colors duration-300 ${
-                  script === "latin"
-                    ? "text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Lot
-              </button>
             </div>
           </div>
         </div>

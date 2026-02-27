@@ -83,7 +83,7 @@ const MatchTicker = () => {
         <div className="z-10 flex items-center shrink-0">
           <div className="flex items-center px-4 py-2.5 text-[11px] font-heading font-bold text-primary-foreground uppercase tracking-wider shrink-0 bg-primary/50 backdrop-blur-sm rounded-r-lg">
             <span className="live-dot mr-2" />
-            Жонли
+            Jonli
           </div>
         </div>
 
@@ -113,7 +113,7 @@ const MatchTicker = () => {
                       {match.minute}
                     </span>
                   ) : match.hScore !== null ? (
-                    <span className="text-primary-foreground/50 text-[10px] font-body">тугади</span>
+                    <span className="text-primary-foreground/50 text-[10px] font-body">tugadi</span>
                   ) : (
                     <span className="text-primary-foreground/70 text-[11px] font-medium font-body">{match.time}</span>
                   )}

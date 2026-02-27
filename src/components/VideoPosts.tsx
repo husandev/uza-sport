@@ -11,8 +11,8 @@ const VideoPosts = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Видео</span>
-        <a href="#" className="more-link">Барчаси →</a>
+        <span>Video</span>
+        <a href="#" className="more-link">Barchasi →</a>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -33,7 +33,7 @@ const VideoPosts = () => {
               {video.title}
             </h3>
             <span className="flex items-center gap-1 text-[11px] text-muted-foreground mt-1.5 font-body">
-              <Eye size={11} /> {video.views} кўриш
+              <Eye size={11} /> {video.views} ko'rish
             </span>
           </div>
         ))}

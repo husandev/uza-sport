@@ -7,8 +7,8 @@ const NewsFeed = () => {
       {/* Header */}
       <div className="px-4 pt-2 pb-2">
         <div className="section-title">
-          <span>Сўнги янгиликлар</span>
-          <a href="#" className="more-link">Барчаси →</a>
+          <span>So'ngi yangiliklar</span>
+          <a href="#" className="more-link">Barchasi →</a>
         </div>
       </div>
 

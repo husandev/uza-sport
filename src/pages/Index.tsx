@@ -30,15 +30,15 @@ const Index = () => {
             <NewsFeed />
             {/* Banner */}
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
-              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Реклама</div>
+              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>
               <h3 className="font-heading font-extrabold text-base leading-tight mb-2">
-                🏆 Superliga 2026 — янги мавсум!
+                🏆 Superliga 2026 — yangi mavsum!
               </h3>
               <p className="text-[12px] font-body opacity-80 mb-3">
-                Ўзбекистон Суперлигаси ўйинларини жонли томоша қилинг
+                O'zbekiston Superligasi o'yinlarini jonli tomosha qiling
               </p>
               <div className="bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground text-[12px] font-bold font-heading text-center py-2 rounded-lg">
-                Батафсил →
+                Batafsil →
               </div>
             </div>
             <HeroFootballers />
@@ -57,15 +57,15 @@ const Index = () => {
             <GroupStandings />
             {/* Banner */}
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
-              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Реклама</div>
+              <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>
               <h3 className="font-heading font-extrabold text-base leading-tight mb-2">
-                ⚽ FIFA 2026 чипталари сотувда!
+                ⚽ FIFA 2026 chiptalari sotuvda!
               </h3>
               <p className="text-[12px] font-body opacity-80 mb-3">
-                Ўзбекистон терма жамоаси ўйинларига чипта олинг
+                O'zbekiston terma jamoasi o'yinlariga chipta oling
               </p>
               <div className="bg-primary-foreground/20 backdrop-blur-sm text-primary-foreground text-[12px] font-bold font-heading text-center py-2 rounded-lg">
-                Чипта олиш →
+                Chipta olish →
               </div>
             </div>
           </div>

@@ -25,30 +25,30 @@ import gallery8 from "@/assets/gallery-8.jpg";
 import { Camera, Heart } from "lucide-react";
 
 const photos = [
-  { src: photo1, caption: "Ўзбекистон — Аргентина ўйинидан", likes: 342 },
-  { src: stadium1, caption: "MetLife стадиони", likes: 198 },
-  { src: hero1, caption: "Терма жамоа сафга тизилмоқда", likes: 256 },
-  { src: gallery1, caption: "Мухлислар байрамда", likes: 445 },
-  { src: photo2, caption: "Стадион тайёрлиги", likes: 128 },
-  { src: footballer1, caption: "Шомуродов интервьюда", likes: 415 },
-  { src: hero2, caption: "Голдан кейинги шодлик", likes: 302 },
-  { src: gallery2, caption: "Кечки машғулот", likes: 167 },
-  { src: stadium2, caption: "Rose Bowl стадиони", likes: 176 },
-  { src: gallery3, caption: "Ғалаба кубоги", likes: 523 },
-  { src: photo3, caption: "Мухлислар кутиб олиши", likes: 89 },
-  { src: gallery4, caption: "Зарба лаҳзаси", likes: 387 },
-  { src: hero3, caption: "Ярим финал лаҳзалари", likes: 221 },
-  { src: footballer2, caption: "Хусанов машғулотда", likes: 187 },
-  { src: gallery5, caption: "Ўйин юқоридан", likes: 294 },
-  { src: hero4, caption: "Мухлислар байроқлари", likes: 145 },
-  { src: gallery6, caption: "Жамоа руҳи", likes: 312 },
-  { src: stadium3, caption: "AT&T стадиони", likes: 163 },
-  { src: footballer3, caption: "Урунов ўйин олдидан", likes: 278 },
-  { src: gallery7, caption: "Стадион қуёш ботишида", likes: 456 },
-  { src: photo4, caption: "Терма жамоа машғулоти", likes: 94 },
-  { src: gallery8, caption: "Футбол тўпи", likes: 201 },
-  { src: hero5, caption: "Волонтёрлар тайёрланмоқда", likes: 112 },
-  { src: footballer4, caption: "Шукуров ғалабани нишонламоқда", likes: 334 },
+  { src: photo1, caption: "O'zbekiston — Argentina o'yinidan", likes: 342 },
+  { src: stadium1, caption: "MetLife stadioni", likes: 198 },
+  { src: hero1, caption: "Terma jamoa safga tizilmoqda", likes: 256 },
+  { src: gallery1, caption: "Muxlislar bayramda", likes: 445 },
+  { src: photo2, caption: "Stadion tayyorligi", likes: 128 },
+  { src: footballer1, caption: "Shomurodov intervyuda", likes: 415 },
+  { src: hero2, caption: "Goldan keyingi shodlik", likes: 302 },
+  { src: gallery2, caption: "Kechki mashg'ulot", likes: 167 },
+  { src: stadium2, caption: "Rose Bowl stadioni", likes: 176 },
+  { src: gallery3, caption: "G'alaba kubogi", likes: 523 },
+  { src: photo3, caption: "Muxlislar kutib olishi", likes: 89 },
+  { src: gallery4, caption: "Zarba lahzasi", likes: 387 },
+  { src: hero3, caption: "Yarim final lahzalari", likes: 221 },
+  { src: footballer2, caption: "Xusanov mashg'ulotda", likes: 187 },
+  { src: gallery5, caption: "O'yin yuqoridan", likes: 294 },
+  { src: hero4, caption: "Muxlislar bayroqlari", likes: 145 },
+  { src: gallery6, caption: "Jamoa ruhi", likes: 312 },
+  { src: stadium3, caption: "AT&T stadioni", likes: 163 },
+  { src: footballer3, caption: "Urunov o'yin oldidan", likes: 278 },
+  { src: gallery7, caption: "Stadion quyosh botishida", likes: 456 },
+  { src: photo4, caption: "Terma jamoa mashg'uloti", likes: 94 },
+  { src: gallery8, caption: "Futbol to'pi", likes: 201 },
+  { src: hero5, caption: "Volontyorlar tayyorlanmoqda", likes: 112 },
+  { src: footballer4, caption: "Shukurov g'alabani nishonlamoqda", likes: 334 },
 ];
 
 const PhotoFeed = () => {
@@ -60,8 +60,8 @@ const PhotoFeed = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Фотогалерея</span>
-        <a href="#" className="more-link">Барчаси →</a>
+        <span>Fotogalereya</span>
+        <a href="#" className="more-link">Barchasi →</a>
       </div>
 
       <div className="flex gap-2.5">

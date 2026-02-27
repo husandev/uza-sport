@@ -4,17 +4,17 @@ const TopScorers = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Бомбардирлар</span>
-        <a href="#" className="more-link">Тўлиқ →</a>
+        <span>Bombardirlar</span>
+        <a href="#" className="more-link">To'liq →</a>
       </div>
 
       <table className="w-full text-[13px] font-body">
         <thead>
           <tr className="text-muted-foreground text-[11px]">
             <th className="text-left pl-1 py-2 font-medium w-5">#</th>
-            <th className="text-left py-2 font-medium">Футболчи</th>
-            <th className="text-center py-2 font-medium w-8">Гол</th>
-            <th className="text-center pr-1 py-2 font-medium w-8">Ас.</th>
+            <th className="text-left py-2 font-medium">Futbolchi</th>
+            <th className="text-center py-2 font-medium w-8">Gol</th>
+            <th className="text-center pr-1 py-2 font-medium w-8">As.</th>
           </tr>
         </thead>
         <tbody>

@@ -10,13 +10,13 @@ const Footer = () => {
             <div className="h-4 w-px bg-primary-foreground/20" />
             <span className="text-primary-foreground font-heading font-bold text-sm">WC2026</span>
             <span className="text-primary-foreground/30 text-[11px] font-body hidden sm:inline">
-              — ЖЧ-2026 махсус лойиҳаси
+              — JCh-2026 maxsus loyihasi
             </span>
           </div>
 
           <div className="flex items-center gap-4 text-[12px] text-primary-foreground/50 font-body">
-            <a href="#" className="hover:text-primary-foreground transition-colors">Янгиликлар</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Жадвал</a>
+            <a href="#" className="hover:text-primary-foreground transition-colors">Yangiliklar</a>
+            <a href="#" className="hover:text-primary-foreground transition-colors">Jadval</a>
             <a href="#" className="hover:text-primary-foreground transition-colors">Telegram</a>
             <a href="#" className="hover:text-primary-foreground transition-colors">Instagram</a>
             <span className="text-primary-foreground/25">© 2026 UZA.uz</span>

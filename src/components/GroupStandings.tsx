@@ -4,8 +4,8 @@ const GroupStandings = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Турнир жадвали</span>
-        <a href="#" className="more-link">Тўлиқ →</a>
+        <span>Turnir jadvali</span>
+        <a href="#" className="more-link">To'liq →</a>
       </div>
 
       <div className="space-y-4 overflow-y-auto pr-1 scrollbar-thin">
@@ -14,7 +14,7 @@ const GroupStandings = () => {
             {/* Group header */}
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-[11px] font-heading font-bold text-muted-foreground uppercase tracking-wider">
-                {g.group} гуруҳ
+                {g.group} guruh
               </span>
               <div className="flex-1 h-px bg-border" />
             </div>
@@ -23,13 +23,13 @@ const GroupStandings = () => {
               <thead>
                 <tr className="text-muted-foreground text-[10px]">
                   <th className="text-left pl-1 py-1 font-medium w-4">#</th>
-                  <th className="text-left py-1 font-medium">Жамоа</th>
-                  <th className="text-center py-1 font-medium w-5">Ў</th>
-                  <th className="text-center py-1 font-medium w-5">Ғ</th>
-                  <th className="text-center py-1 font-medium w-5">Д</th>
-                  <th className="text-center py-1 font-medium w-5">М</th>
-                  <th className="text-center py-1 font-medium w-7">ФТ</th>
-                  <th className="text-center pr-1 py-1 font-bold w-5">О</th>
+                  <th className="text-left py-1 font-medium">Jamoa</th>
+                  <th className="text-center py-1 font-medium w-5">O'</th>
+                  <th className="text-center py-1 font-medium w-5">G'</th>
+                  <th className="text-center py-1 font-medium w-5">D</th>
+                  <th className="text-center py-1 font-medium w-5">M</th>
+                  <th className="text-center py-1 font-medium w-7">FT</th>
+                  <th className="text-center pr-1 py-1 font-bold w-5">O</th>
                 </tr>
               </thead>
               <tbody>

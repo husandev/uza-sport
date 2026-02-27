@@ -21,8 +21,8 @@ const PhotoArticles = () => {
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
-        <span>Фото янгиликлар</span>
-        <a href="#" className="more-link">Барчаси →</a>
+        <span>Foto yangiliklar</span>
+        <a href="#" className="more-link">Barchasi →</a>
       </div>
 
       <div className="space-y-5">

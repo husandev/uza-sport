@@ -195,7 +195,7 @@ const HeroSlider = () => {
                   whileTap={{ scale: 0.95 }}
                   className="px-5 py-2.5 bg-highlight text-foreground font-heading font-bold text-[13px] uppercase tracking-wide rounded-xl shadow-lg shadow-highlight/30 hover:shadow-highlight/50 transition-shadow"
                 >
-                  Батафсил →
+                  Batafsil →
                 </motion.button>
                 <div className="flex items-center gap-4 text-primary-foreground/50 text-[13px] font-body">
                   <span className="flex items-center gap-1.5">
@@ -205,7 +205,7 @@ const HeroSlider = () => {
                     <MessageSquare size={14} /> {slide.comments}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Clock size={13} /> 2 соат
+                    <Clock size={13} /> 2 soat
                   </span>
                 </div>
               </motion.div>
@@ -291,7 +291,7 @@ const HeroSlider = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-primary-foreground/40 text-[11px] font-body">
-                {isHovered ? "⏸ Тўхтатилди" : "▶ Автоўтиш"}
+                {isHovered ? "⏸ To'xtatildi" : "▶ Avto o'tish"}
               </span>
               <span className="text-primary-foreground/60 text-[13px] font-heading font-bold tracking-widest">
                 {String(current + 1).padStart(2, "0")}

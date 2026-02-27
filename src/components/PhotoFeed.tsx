@@ -10,7 +10,7 @@ import hero5 from "@/assets/hero-5.jpg";
 import stadium1 from "@/assets/stadium-1.jpg";
 import stadium2 from "@/assets/stadium-2.jpg";
 import stadium3 from "@/assets/stadium-3.jpg";
-import footballer1 from "@/assets/footballer-1.jpg";
+import footballer1 from "@/assets/footballer-1.png";
 import footballer2 from "@/assets/footballer-2.jpg";
 import footballer3 from "@/assets/footballer-3.jpg";
 import footballer4 from "@/assets/footballer-4.jpg";

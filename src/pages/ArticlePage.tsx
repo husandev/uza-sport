@@ -28,7 +28,7 @@ const articleData: Record<string, {
   author: { name: string; role: string };
   category: string;
   tags: string[];
-  body: { type: "text" | "image" | "quote" | "subtitle"; content: string; caption?: string }[];
+  body: { type: "text" | "image" | "quote" | "subtitle" | "table" | "telegram" | "instagram"; content: string; caption?: string; tableData?: { headers: string[]; rows: string[][] } }[];
 }> = {
   "1": {
     title: "O'zbekiston Argentinaga qarshi: tarixiy o'yin davom etmoqda!",
@@ -74,15 +74,58 @@ const articleData: Record<string, {
     lead: "FIFA rasmiy statistikasi bo'yicha Xusanov barcha himoyachilar orasida birinchi o'rinni egalladi. Manchester Siti yulduzi turnirda ajoyib o'ynayapti.",
     image: heroImg3,
     date: "26 Fevral, 2026",
-    readTime: "5 daqiqa",
+    readTime: "12 daqiqa",
     author: { name: "Bobur Alimov", role: "Analitik" },
     category: "TAHLIL",
-    tags: ["Xusanov", "Manchester Siti", "JCh-2026", "O'zbekiston"],
+    tags: ["Xusanov", "Manchester Siti", "JCh-2026", "O'zbekiston", "Himoyachi", "FIFA"],
     body: [
-      { type: "text", content: "Abduqodir Xusanov JCh-2026 da ajoyib o'ynayapti. FIFA statistikasiga ko'ra, u eng ko'p to'p qo'lga olgan, eng ko'p duelda g'alaba qozongan himoyachi hisoblanadi." },
+      { type: "text", content: "Abduqodir Xusanov JCh-2026 da ajoyib o'ynayapti. FIFA statistikasiga ko'ra, u eng ko'p to'p qo'lga olgan, eng ko'p duelda g'alaba qozongan himoyachi hisoblanadi. 22 yoshli futbolchi Manchester Siti safida olgan tajribasi natijasida jahon arenasida o'zini to'liq namoyon qilmoqda." },
+      { type: "subtitle", content: "Raqamlar gapiradi" },
+      { type: "text", content: "FIFA rasmiy statistikasi bo'yicha Xusanov turnirning birinchi ikki turida barcha himoyachilar orasida eng yuqori ko'rsatkichlarga erishdi. Quyidagi jadvalda uning raqiblar bilan solishtirmali statistikasi keltirilgan:" },
+      { type: "table", content: "", tableData: {
+        headers: ["Ko'rsatkich", "Xusanov 🇺🇿", "Van Dijk 🇳🇱", "Dias 🇵🇹", "Romero 🇦🇷"],
+        rows: [
+          ["To'p qo'lga olish", "18", "12", "14", "11"],
+          ["Havo dueli (g'alaba)", "9/11", "7/10", "6/9", "5/8"],
+          ["Bloklangan zarbalar", "6", "3", "4", "2"],
+          ["Uzatma aniqligi", "91%", "88%", "89%", "85%"],
+          ["Duel g'alabalari", "14/17", "10/15", "11/16", "9/13"],
+          ["FIFA reytingi", "8.7", "7.9", "8.1", "7.6"],
+        ]
+      }},
       { type: "image", content: galleryImg4, caption: "Xusanov turnirdagi eng yaxshi himoyachi — FIFA reytingi" },
-      { type: "quote", content: "«Xusanov — dunyodagi eng yaxshi yosh himoyachilardan biri. U kelajakda futbol tarixini o'zgartirishi mumkin.» — Pep Guardiola" },
-      { type: "text", content: "22 yoshli himoyachi ikkita guruh o'yinida ham deyarli benuqson o'ynadi. Uning tezligi, pozitsiyani tanlash qobiliyati va havo duelidagi kuchi raqiblarni hayratda qoldirmoqda." },
+      { type: "subtitle", content: "Pep Guardiola nima deydi?" },
+      { type: "quote", content: "«Xusanov — dunyodagi eng yaxshi yosh himoyachilardan biri. U kelajakda futbol tarixini o'zgartirishi mumkin. Men uni Manchester Sitiga olib kelganimdan faxrlanaman.» — Pep Guardiola" },
+      { type: "text", content: "Guardiola Xusanovni 2025 yilning yozida Lens klubidan 45 million evroga sotib olgan edi. Ko'pchilik bu transferni qimmat deb baholagan bo'lsa-da, Xusanov o'zining birinchi mavsumidayoq APL da eng yaxshi himoyachilardan biriga aylandi." },
+      { type: "text", content: "Manchester Siti bosh murabbiyi qo'shimcha qilib shunday dedi: «Abduqodir juda tez o'rganadi. U har bir mashg'ulotda, har bir o'yinda yaxshilanib bormoqda. Uning aqli, tezligi va kuchi — bu kombinatsiya juda kam uchraydi. U bizning kelajagimiz.»" },
+      { type: "subtitle", content: "O'zbekiston himoyasining tayanchiga aylandi" },
+      { type: "text", content: "Terma jamoa bosh murabbiyi Srečko Katanec ham Xusanovning muhimligini ta'kidladi. Birinchi o'yinda Argentina hujumchilariga qarshi ajoyib o'ynagan Xusanov, ikkinchi o'yinda Kolumbiya hujumiga ham muvaffaqiyatli qarshilik ko'rsatdi." },
+      { type: "image", content: photoImg1, caption: "Xusanov Argentina o'yinida Messiga qarshi pozitsiyada" },
+      { type: "text", content: "Xusanovning o'yin uslubi zamonaviy himoyachi talablariga to'liq javob beradi. U nafaqat himoya qiladi, balki hujumni ham boshlaydi. Uning uzun uzatmalari va dribling qobiliyati jamoa uchun qo'shimcha qurol hisoblanadi." },
+      { type: "subtitle", content: "Telegram kanalimiz reportaji" },
+      { type: "text", content: "Bizning rasmiy Telegram kanalimizda Xusanovning eng yaxshi momentlari to'plami e'lon qilindi. Quyidagi videoda uning turnirdagi barcha muhim epizodlari jamlangan:" },
+      { type: "telegram", content: "https://t.me/uaborontv/3251" },
+      { type: "subtitle", content: "Xusanov haqida dunyoning fikri" },
+      { type: "text", content: "Nafaqat Guardiola, balki jahonning boshqa yetakchi murabbiylari ham Xusanovni yuqori baholashmoqda. Carlo Ancelotti uni «kelajakning Sergio Ramosi» deb atadi, Jürgen Klopp esa «men ko'rgan eng intellektual yosh himoyachi» deb ta'rifladi." },
+      { type: "table", content: "", tableData: {
+        headers: ["Murabbiy", "Xusanov haqida fikr"],
+        rows: [
+          ["Carlo Ancelotti", "«Kelajakning Sergio Ramosi. Xarakterli, kuchli va aqlli.»"],
+          ["Jürgen Klopp", "«Men ko'rgan eng intellektual yosh himoyachi.»"],
+          ["Xavi Ernandes", "«U 22 da 30 yoshli himoyachidek o'ynaydi.»"],
+          ["Mikel Arteta", "«Xusanov bilan o'ynash — har bir hujumchi uchun dahshat.»"],
+        ]
+      }},
+      { type: "subtitle", content: "Ijtimoiy tarmoqlarda reaksiya" },
+      { type: "text", content: "Xusanovning ajoyib o'yini nafaqat sport OAVlarida, balki ijtimoiy tarmoqlarda ham katta aks-sado berdi. Instagram'da uning o'yin momentlari millionlab ko'rishlar to'pladi:" },
+      { type: "instagram", content: "https://www.instagram.com/reel/DGYExQoNMNw/" },
+      { type: "text", content: "Shuningdek, Twitter'da #Khusanov hashtagi bir necha soat davomida trending bo'ldi. Dunyoning turli burchaklaridan futbol muxlislari Xusanovning mahoratiga qoyil qolishganini bildirdi." },
+      { type: "subtitle", content: "Keyingi o'yinda nima kutilmoqda?" },
+      { type: "text", content: "O'zbekiston terma jamoasi keyingi o'yinini Kolumbiyaga qarshi o'tkazadi. Bu o'yin guruhdan chiqish uchun hal qiluvchi ahamiyatga ega. Xusanov Kolumbiya hujumchilari — ayniqsa Luis Diaz va Rafael Santos Borrega qarshi yana bir ajoyib o'yin ko'rsatishi kutilmoqda." },
+      { type: "text", content: "O'yin 14 iyun kuni mahalliy vaqt bilan 18:00 da boshlanadi. MetLife Stadium'da bo'ladigan bu o'yinga 80 mingdan ortiq tomoshabin kutilmoqda. O'zbekiston muxlislari allaqachon chipta sotib olishni boshlashdi va stadionni to'liq to'ldirish rejasi bor." },
+      { type: "quote", content: "«Biz har bir o'yinda tarixni yozmoqdamiz. Kolumbiya o'yini — bizning eng muhim imtihonimiz bo'ladi. Lekin biz tayyor.» — Abduqodir Xusanov" },
+      { type: "image", content: galleryImg2, caption: "O'zbekiston terma jamoasi guruh suratida — JCh-2026" },
+      { type: "text", content: "Xusanovning bu turnirdagi yutuqlari nafaqat uning shaxsiy muvaffaqiyati, balki O'zbekiston futbolining rivojlanishi uchun muhim qadam hisoblanadi. U yosh futbolchilarga ilhom berib, O'zbekistondan ham jahon darajasidagi futbolchilar yetishib chiqishi mumkinligini isbotlamoqda." },
     ],
   },
 };
@@ -235,6 +278,80 @@ const ArticlePage = () => {
                             {block.content}
                           </p>
                         </blockquote>
+                      );
+                    }
+                    if (block.type === "table" && block.tableData) {
+                      return (
+                        <div key={i} className="my-6 overflow-x-auto rounded-xl border border-border">
+                          <table className="w-full text-[13px]">
+                            <thead>
+                              <tr className="bg-muted/60">
+                                {block.tableData.headers.map((h, hi) => (
+                                  <th key={hi} className={`px-4 py-3 font-bold text-foreground ${hi === 0 ? "text-left" : "text-center"} border-b border-border`}>
+                                    {h}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {block.tableData.rows.map((row, ri) => (
+                                <tr key={ri} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+                                  {row.map((cell, ci) => (
+                                    <td key={ci} className={`px-4 py-2.5 ${ci === 0 ? "text-left font-medium text-foreground" : "text-center text-muted-foreground"}`}>
+                                      {cell}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      );
+                    }
+                    if (block.type === "telegram") {
+                      return (
+                        <div key={i} className="my-6 flex justify-center">
+                          <div className="w-full max-w-[85%] rounded-xl overflow-hidden border border-border bg-muted/20">
+                            <div className="flex items-center gap-2 px-4 py-3 bg-[#2AABEE]/10 border-b border-border">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.28-.02-.12.02-2.02 1.28-5.7 3.77-.54.37-1.03.55-1.47.54-.48-.01-1.4-.27-2.09-.49-.84-.28-1.51-.42-1.45-.89.03-.25.38-.5 1.04-.78 4.07-1.77 6.79-2.94 8.15-3.5 3.88-1.62 4.69-1.9 5.21-1.91.12 0 .37.03.54.17.14.12.18.28.2.45-.01.06.01.24 0 .37z" fill="#2AABEE"/></svg>
+                              <span className="text-[12px] font-bold text-foreground">Telegram Video</span>
+                            </div>
+                            <div className="p-4">
+                              <div className="aspect-video rounded-lg bg-muted flex items-center justify-center">
+                                <a href={block.content} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+                                  <div className="w-14 h-14 rounded-full bg-[#2AABEE] flex items-center justify-center shadow-lg">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                                  </div>
+                                  <span className="text-[12px] font-semibold">Telegramda ko'rish →</span>
+                                </a>
+                              </div>
+                              <p className="text-[11px] text-muted-foreground mt-3 text-center">Xusanovning JCh-2026 dagi eng yaxshi momentlari</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    if (block.type === "instagram") {
+                      return (
+                        <div key={i} className="my-6 flex justify-center">
+                          <div className="w-full max-w-[85%] rounded-xl overflow-hidden border border-border bg-muted/20">
+                            <div className="flex items-center gap-2 px-4 py-3 border-b border-border" style={{ background: "linear-gradient(135deg, rgba(131,58,180,0.08), rgba(253,29,29,0.08), rgba(252,176,69,0.08))" }}>
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stopColor="#FFDC80"/><stop offset="25%" stopColor="#F77737"/><stop offset="50%" stopColor="#E1306C"/><stop offset="75%" stopColor="#C13584"/><stop offset="100%" stopColor="#833AB4"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#ig-grad)" strokeWidth="2"/><circle cx="12" cy="12" r="4" stroke="url(#ig-grad)" strokeWidth="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="url(#ig-grad)"/></svg>
+                              <span className="text-[12px] font-bold text-foreground">Instagram Reels</span>
+                            </div>
+                            <div className="p-4">
+                              <div className="aspect-[9/16] max-h-[480px] rounded-lg bg-muted flex items-center justify-center mx-auto" style={{ maxWidth: "270px" }}>
+                                <a href={block.content} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+                                  <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg" style={{ background: "linear-gradient(135deg, #833AB4, #E1306C, #F77737)" }}>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                                  </div>
+                                  <span className="text-[12px] font-semibold">Instagramda ko'rish →</span>
+                                </a>
+                              </div>
+                              <p className="text-[11px] text-muted-foreground mt-3 text-center">Xusanovning eng yaxshi himoya momentlari 🔥</p>
+                            </div>
+                          </div>
+                        </div>
                       );
                     }
                     return null;

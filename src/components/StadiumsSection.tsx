@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { stadiums } from "@/data/mockData";
 import stadium1 from "@/assets/stadium-1.jpg";
 import stadium2 from "@/assets/stadium-2.jpg";
@@ -10,7 +11,7 @@ const StadiumsSection = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Stadionlar</span>
-        <a href="#" className="more-link">Barchasi →</a>
+        <Link to="/stadiums" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

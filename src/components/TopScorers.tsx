@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { topScorers } from "@/data/mockData";
 
 const TopScorers = () => {
@@ -5,7 +6,7 @@ const TopScorers = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Bombardirlar</span>
-        <a href="#" className="more-link">To'liq →</a>
+        <Link to="/standings" className="more-link">To'liq →</Link>
       </div>
 
       <table className="w-full text-[13px] font-body">

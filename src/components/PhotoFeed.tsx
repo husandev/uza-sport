@@ -23,6 +23,7 @@ import gallery6 from "@/assets/gallery-6.jpg";
 import gallery7 from "@/assets/gallery-7.jpg";
 import gallery8 from "@/assets/gallery-8.jpg";
 import { Camera, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const photos = [
   { src: photo1, caption: "O'zbekiston — Argentina o'yinidan", likes: 342 },
@@ -61,7 +62,7 @@ const PhotoFeed = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Fotogalereya</span>
-        <a href="#" className="more-link">Barchasi →</a>
+        <Link to="/photos" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="flex gap-2.5">

@@ -9,7 +9,7 @@ const NewsFeed = () => {
       <div className="px-4 pt-2 pb-2">
         <div className="section-title">
           <span>So'ngi yangiliklar</span>
-          <a href="#" className="more-link">Barchasi →</a>
+          <Link to="/news" className="more-link">Barchasi →</Link>
         </div>
       </div>
 

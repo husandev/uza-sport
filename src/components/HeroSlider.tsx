@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, MessageSquare, Flame, Clock, TrendingUp } from "lucide-react";
+import { Link } from "react-router-dom";
 import { heroSlides } from "@/data/mockData";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -190,13 +191,15 @@ const HeroSlider = () => {
                     <ChevronRight size={20} />
                   </motion.button>
                 </div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-5 py-2.5 bg-highlight text-foreground font-heading font-bold text-[13px] uppercase tracking-wide rounded-xl shadow-lg shadow-highlight/30 hover:shadow-highlight/50 transition-shadow"
-                >
-                  Batafsil →
-                </motion.button>
+                <Link to={`/article/${heroSlides[current].id}`}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-5 py-2.5 bg-highlight text-foreground font-heading font-bold text-[13px] uppercase tracking-wide rounded-xl shadow-lg shadow-highlight/30 hover:shadow-highlight/50 transition-shadow"
+                  >
+                    Batafsil →
+                  </motion.button>
+                </Link>
                 <div className="flex items-center gap-4 text-primary-foreground/50 text-[13px] font-body">
                   <span className="flex items-center gap-1.5">
                     <Flame size={14} className="text-highlight" /> {slide.fires}

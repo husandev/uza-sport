@@ -1,4 +1,5 @@
 import { Flame, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 import { newsFeed } from "@/data/mockData";
 
 const NewsFeed = () => {
@@ -15,7 +16,7 @@ const NewsFeed = () => {
       {/* News list */}
       <div className="px-1.5 pb-3">
         {newsFeed.map((item) => (
-          <div key={item.id} className="news-item group">
+          <Link key={item.id} to={`/article/${((item.id - 1) % 3) + 1}`} className="news-item group block">
             <h3 className="line-clamp-2">{item.title}</h3>
             <div className="flex items-center gap-3 mt-1.5">
               <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium font-body">
@@ -28,7 +29,7 @@ const NewsFeed = () => {
                 </span>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

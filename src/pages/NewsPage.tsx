@@ -70,7 +70,7 @@ const allNews = Array.from({ length: 30 }, (_, i) => ({
   fires: Math.floor(Math.random() * 90) + 3,
 }));
 
-const PER_PAGE = 10;
+const PER_PAGE = 15;
 
 const NewsPage = () => {
   const [page, setPage] = useState(1);

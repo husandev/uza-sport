@@ -25,14 +25,14 @@ const Digit = ({ value, label }: { value: number; label: string }) => (
         animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
         exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="block text-[28px] sm:text-[32px] font-black tabular-nums leading-none"
+        className="block text-[22px] sm:text-[26px] font-bold tabular-nums leading-none"
         style={{ color: "hsl(var(--primary))", textShadow: "0 0 20px hsl(var(--primary) / 0.15)" }}
       >
         {String(value).padStart(2, "0")}
       </motion.span>
     </AnimatePresence>
     <span
-      className="text-[7px] sm:text-[8px] font-bold uppercase tracking-[0.2em] mt-1.5"
+      className="text-[7px] sm:text-[8px] font-semibold uppercase tracking-[0.2em] mt-1"
       style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}
     >
       {label}
@@ -83,11 +83,11 @@ const MatchCountdown = () => {
       <div className="relative z-10">
         {/* Header */}
         <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-          <p className="text-[9px] font-bold uppercase tracking-[0.15em]" style={{ color: "hsl(var(--muted-foreground) / 0.45)" }}>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.15em]" style={{ color: "hsl(var(--muted-foreground) / 0.45)" }}>
             ⚽ FIFA World Cup 2026
           </p>
           <motion.div
-            className="px-2.5 py-0.5 rounded-full text-[10px] font-bold"
+            className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold"
             style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
             whileHover={{ scale: 1.05 }}
           >
@@ -112,8 +112,8 @@ const MatchCountdown = () => {
               <img src={flagUzb} alt="O'zbekiston" className="w-full h-full object-cover" />
             </motion.div>
             <div className="text-center">
-              <p className="text-[11px] font-extrabold leading-tight" style={{ color: "hsl(var(--foreground))" }}>O'zbekiston</p>
-              <p className="text-[8px] font-bold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>UZB</p>
+              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>O'zbekiston</p>
+              <p className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>UZB</p>
             </div>
           </motion.div>
 
@@ -123,7 +123,7 @@ const MatchCountdown = () => {
             animate={{ scale: [1, 1.06, 1] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="text-[9px] font-black" style={{ color: "hsl(var(--muted-foreground))" }}>VS</span>
+            <span className="text-[9px] font-bold" style={{ color: "hsl(var(--muted-foreground))" }}>VS</span>
           </motion.div>
 
           <motion.div
@@ -141,8 +141,8 @@ const MatchCountdown = () => {
               <img src={flagCol} alt="Kolumbiya" className="w-full h-full object-cover" />
             </motion.div>
             <div className="text-center">
-              <p className="text-[11px] font-extrabold leading-tight" style={{ color: "hsl(var(--foreground))" }}>Kolumbiya</p>
-              <p className="text-[8px] font-bold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>COL</p>
+              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>Kolumbiya</p>
+              <p className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>COL</p>
             </div>
           </motion.div>
         </div>
@@ -150,7 +150,7 @@ const MatchCountdown = () => {
         {/* Countdown bar */}
         <div className="px-3 pb-2.5">
           <div
-            className="relative rounded-xl py-3 flex items-center justify-center overflow-hidden"
+            className="relative rounded-xl py-2.5 flex items-center justify-center overflow-hidden"
             style={{
               background: "linear-gradient(145deg, hsl(var(--muted)), hsl(220 15% 95%))",
               border: "1px solid hsl(var(--border))",

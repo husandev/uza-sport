@@ -10,7 +10,7 @@ const navItems = [
   { label: "Maqolalar", href: "/articles" },
   { label: "Natijalar", href: "/results" },
   { label: "Jadval", href: "/standings" },
-  { label: "Jamoalar", href: "#" },
+  { label: "Jamoalar", href: "/teams" },
   { label: "Stadionlar", href: "#" },
   { label: "Video", href: "#" },
   { label: "Foto", href: "#" },

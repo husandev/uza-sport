@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import uzaLogo from "@/assets/uza-logo-solo.png";
 import FootballAnim from "./FootballAnim";
 
@@ -60,14 +60,14 @@ const Header = () => {
       {/* Top white bar */}
       <div className="bg-card">
         <div className="container flex items-center justify-between h-12">
-          <a href="/" className="flex items-center gap-2.5">
+          <Link to="/" className="flex items-center gap-2.5">
             <img src={uzaLogo} alt="UZA.uz" className="h-5" />
             <div className="h-5 w-px bg-border" />
             <FootballAnim />
             <span className="text-base font-heading font-extrabold text-foreground tracking-tight leading-none">
               WC2026
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center gap-2">
             {/* Social icons */}
@@ -207,13 +207,13 @@ const Header = () => {
 
           <nav className="hidden lg:flex items-center">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.href}
                 className={`nav-link ${pathname === item.href || (item.href === "/" && pathname === "/") ? "active" : ""}`}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -223,9 +223,9 @@ const Header = () => {
       {mobileOpen && (
         <nav className="lg:hidden nav-bar border-t border-primary-foreground/10 pb-1">
           {navItems.map((item) => (
-            <a key={item.label} href={item.href} className="nav-link block">
+            <Link key={item.label} to={item.href} className="nav-link block" onClick={() => setMobileOpen(false)}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
       )}

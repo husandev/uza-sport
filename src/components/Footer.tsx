@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import uzaLogo from "@/assets/uza-logo-solo.png";
 
 const Footer = () => {
@@ -15,10 +16,10 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-4 text-[12px] text-primary-foreground/50 font-body">
-            <a href="#" className="hover:text-primary-foreground transition-colors">Yangiliklar</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Jadval</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Telegram</a>
-            <a href="#" className="hover:text-primary-foreground transition-colors">Instagram</a>
+            <Link to="/news" className="hover:text-primary-foreground transition-colors">Yangiliklar</Link>
+            <Link to="/results" className="hover:text-primary-foreground transition-colors">Jadval</Link>
+            <a href="https://t.me" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Telegram</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Instagram</a>
             <span className="text-primary-foreground/25">© 2026 UZA.uz</span>
           </div>
         </div>

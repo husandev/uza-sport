@@ -1,8 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Trophy, MapPin, Shirt, Target, ArrowRight, Quote, Calendar, Award, Flag } from "lucide-react";
-import Header from "@/components/Header";
-import MatchTicker from "@/components/MatchTicker";
-import Footer from "@/components/Footer";
 import NewsFeed from "@/components/NewsFeed";
 
 import { heroFootballers } from "@/data/mockData";
@@ -153,10 +150,7 @@ const FootballerPage = () => {
   const otherPlayers = heroFootballers.filter((p) => p.id !== playerId).slice(0, 8);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <MatchTicker />
-
+    <>
       <div className="max-w-6xl mx-auto px-4 pt-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
@@ -365,8 +359,7 @@ const FootballerPage = () => {
         </div>
       </div>
 
-      <Footer />
-    </div>
+    </>
   );
 };
 

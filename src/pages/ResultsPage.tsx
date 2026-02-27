@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import GroupStandings from "@/components/GroupStandings";
 import { Circle, Timer, CheckCircle2 } from "lucide-react";
 
@@ -109,8 +107,8 @@ const ResultsPage = () => {
     : matchDays.filter((md) => md.round === selectedRound);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <>
+
 
       <div className="container pt-4 pb-8">
         <div className="mb-5">
@@ -259,8 +257,7 @@ const ResultsPage = () => {
         </div>
       </div>
 
-      <Footer />
-    </div>
+    </>
   );
 };
 

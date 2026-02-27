@@ -1,8 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, Clock, User, Share2, Facebook, Twitter, MessageCircle, ChevronRight, Eye } from "lucide-react";
-import Header from "@/components/Header";
-import MatchTicker from "@/components/MatchTicker";
-import Footer from "@/components/Footer";
 import NewsFeed from "@/components/NewsFeed";
 import HeroFootballers from "@/components/HeroFootballers";
 import heroImg1 from "@/assets/hero-1.jpg";
@@ -178,13 +175,9 @@ const ArticlePage = () => {
 
   if (!article) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="container py-20 text-center">
-          <h1 className="text-2xl font-bold text-foreground">Maqola topilmadi</h1>
-          <Link to="/" className="text-primary mt-4 inline-block hover:underline">← Bosh sahifaga qaytish</Link>
-        </div>
-        <Footer />
+      <div className="container py-20 text-center">
+        <h1 className="text-2xl font-bold text-foreground">Maqola topilmadi</h1>
+        <Link to="/" className="text-primary mt-4 inline-block hover:underline">← Bosh sahifaga qaytish</Link>
       </div>
     );
   }
@@ -198,10 +191,7 @@ const ArticlePage = () => {
   const filtered = relatedPosts.filter((p) => p.id !== id).slice(0, 8);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <MatchTicker />
-
+    <>
       <div className="max-w-6xl mx-auto px-4 pt-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
@@ -490,7 +480,6 @@ const ArticlePage = () => {
         </div>
       </div>
 
-      <Footer />
 
       {/* Lightbox */}
       {lightbox && createPortal(
@@ -576,7 +565,7 @@ const ArticlePage = () => {
         </div>,
         document.body
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,3 @@
-import Header from "@/components/Header";
-import MatchTicker from "@/components/MatchTicker";
 import MatchCountdown from "@/components/MatchCountdown";
 import HeroSlider from "@/components/HeroSlider";
 import NewsFeed from "@/components/NewsFeed";
@@ -12,14 +10,10 @@ import HeroFootballers from "@/components/HeroFootballers";
 import StadiumsSection from "@/components/StadiumsSection";
 import TeamsSection from "@/components/TeamsSection";
 import SidebarArticles from "@/components/SidebarArticles";
-import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <MatchTicker />
-
+    <>
       <div className="container pt-0 pb-4 space-y-4">
         {/* Hero Slider */}
         <HeroSlider />
@@ -77,9 +71,7 @@ const Index = () => {
         <TeamsSection />
         <PhotoFeed />
       </div>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

@@ -214,10 +214,10 @@ const ArticlePage = () => {
                     }
                     if (block.type === "image") {
                       return (
-                        <figure key={i} className="my-6 -mx-5 sm:-mx-7">
-                          <img src={block.content} alt={block.caption || ""} className="w-full h-auto object-cover" />
+                        <figure key={i} className="my-6 flex flex-col items-center">
+                          <img src={block.content} alt={block.caption || ""} className="max-w-[85%] h-auto rounded-xl" />
                           {block.caption && (
-                            <figcaption className="text-[11px] text-muted-foreground mt-2 text-center italic px-5">
+                            <figcaption className="text-[11px] text-muted-foreground mt-2.5 text-center italic">
                               📸 {block.caption}
                             </figcaption>
                           )}

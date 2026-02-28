@@ -535,3 +535,55 @@ Recent commits pattern:
 
 *Bu fayl har bir yangi task qo'shilganda yangilanishi shart.*
 *Oxirgi yangilanish: Next.js migratsiya — barcha 14 route ishlayapti.*
+
+## 20. API VA TANSTACK QUERY
+
+### Environment variables:
+- `.env.local` — lokal (git ignore, `*.local` bor .gitignore da)
+- `.env.example` — namuna (git da saqlanadi, haqiqiy qiymat yo'q)
+- API URL: `process.env.NEXT_PUBLIC_API_URL`
+
+### Base API client (`src/lib/api.ts`):
+```ts
+import { api } from "@/lib/api";
+
+// GET
+const data = await api.get<ResponseType>("/endpoint");
+
+// POST
+const result = await api.post<ResponseType>("/endpoint", { key: "value" });
+// PUT / PATCH / DELETE ham mavjud
+```
+
+### Query hooks (`src/hooks/queries/`):
+- Barcha API hooklar `src/hooks/queries/` papkasida
+- Har endpoint uchun alohida fayl: `useNews.ts`, `useArticles.ts` va h.k.
+- `src/hooks/queries/index.ts` dan re-export qilish
+
+### Hook yozish pattern:
+```ts
+// src/hooks/queries/useNews.ts
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+
+export function useNews() {
+  return useQuery({
+    queryKey: ["news"],
+    queryFn: () => api.get<NewsItem[]>("/news"),
+  });
+}
+```
+
+### QueryClient konfiguratsiyasi (Providers.tsx):
+- staleTime: 5 daqiqa
+- retry: 1
+- refetchOnWindowFocus: false
+- DevTools: ReactQueryDevtools (faqat dev da ko'rinadi)
+
+### Mock → API o'tish:
+Komponentda mockData ni hook bilan almashtir, import ni keyin olib tashlash mumkin.
+
+---
+
+*Bu fayl har bir yangi task qo'shilganda yangilanishi shart.*
+*Oxirgi yangilanish: TanStack Query + API infratuzilmasi qo'shildi.*

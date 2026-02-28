@@ -32,7 +32,7 @@ const PhotoArticles = () => {
               <div key={article.id} className="cursor-pointer group">
                 <div className="aspect-[4/3] overflow-hidden rounded-xl mb-2.5 bg-muted">
                   <img
-                    src={images[(ri * 3 + ci) % images.length]}
+                    src={images[(ri * 3 + ci) % images.length].src}
                     alt=""
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />

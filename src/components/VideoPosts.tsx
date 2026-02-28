@@ -1,5 +1,5 @@
 import { Play, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { videoPosts } from "@/data/mockData";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -13,14 +13,14 @@ const VideoPosts = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Video</span>
-        <Link to="/videos" className="more-link">Barchasi →</Link>
+        <Link href="/videos" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {videoPosts.map((video, i) => (
-          <Link key={video.id} to={`/video/${video.id}`} className="cursor-pointer group">
+          <Link key={video.id} href={`/video/${video.id}`} className="cursor-pointer group">
             <div className="aspect-video rounded-xl overflow-hidden relative mb-2.5 bg-muted">
-              <img src={thumbs[i]} alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+              <img src={thumbs[i].src} alt="" className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
               <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
                   <Play size={18} className="text-primary-foreground ml-0.5" fill="currentColor" />

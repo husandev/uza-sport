@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useEffect, useState, useCallback } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { matchTickerData } from "@/data/mockData";

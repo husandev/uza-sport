@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import flagUzb from "@/assets/flag-uzbekistan.webp";
@@ -58,9 +60,10 @@ const ColonSeparator = () => (
 );
 
 const MatchCountdown = () => {
-  const [t, setT] = useState(getTimeLeft());
+  const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
+    setT(getTimeLeft());
     const id = setInterval(() => setT(getTimeLeft()), 1000);
     return () => clearInterval(id);
   }, []);
@@ -110,7 +113,7 @@ const MatchCountdown = () => {
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img src={flagUzb} alt="O'zbekiston" className="w-full h-full object-cover" />
+              <img src={flagUzb.src} alt="O'zbekiston" className="w-full h-full object-cover" />
             </motion.div>
             <div className="text-center">
               <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>O'zbekiston</p>
@@ -139,7 +142,7 @@ const MatchCountdown = () => {
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img src={flagCol} alt="Kolumbiya" className="w-full h-full object-cover" />
+              <img src={flagCol.src} alt="Kolumbiya" className="w-full h-full object-cover" />
             </motion.div>
             <div className="text-center">
               <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>Kolumbiya</p>

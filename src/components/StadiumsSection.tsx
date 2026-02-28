@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { stadiums } from "@/data/mockData";
 import stadium1 from "@/assets/stadium-1.jpg";
 import stadium2 from "@/assets/stadium-2.jpg";
@@ -11,15 +11,15 @@ const StadiumsSection = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Stadionlar</span>
-        <Link to="/stadiums" className="more-link">Barchasi →</Link>
+        <Link href="/stadiums" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         {stadiums.slice(0, 6).map((stadium, i) => (
-          <Link key={stadium.id} to={`/stadium/${stadium.id}`} className="cursor-pointer group">
+          <Link key={stadium.id} href={`/stadium/${stadium.id}`} className="cursor-pointer group">
             <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-muted">
               <img
-                src={imgs[i]}
+                src={imgs[i].src}
                 alt=""
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />

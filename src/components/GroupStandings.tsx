@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { groupStandings } from "@/data/mockData";
 
 const GroupStandings = () => {
@@ -6,7 +6,7 @@ const GroupStandings = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Turnir jadvali</span>
-        <Link to="/standings" className="more-link">To'liq →</Link>
+        <Link href="/standings" className="more-link">To'liq →</Link>
       </div>
 
       <div className="space-y-4 overflow-y-auto pr-1 scrollbar-thin">

@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/article/[id]/page": "app/article/[id]/page.js",
+  "/footballer/[id]/page": "app/footballer/[id]/page.js",
+  "/articles/page": "app/articles/page.js",
+  "/news/page": "app/news/page.js",
+  "/photos/page": "app/photos/page.js",
+  "/results/page": "app/results/page.js",
+  "/page": "app/page.js",
+  "/stadium/[id]/page": "app/stadium/[id]/page.js",
+  "/stadiums/page": "app/stadiums/page.js",
+  "/standings/page": "app/standings/page.js",
+  "/teams/page": "app/teams/page.js",
+  "/team/[id]/page": "app/team/[id]/page.js",
+  "/videos/page": "app/videos/page.js",
+  "/video/[id]/page": "app/video/[id]/page.js"
+}

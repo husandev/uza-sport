@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { heroFootballers } from "@/data/mockData";
 import { Trophy, ArrowRight } from "lucide-react";
 import footballer1 from "@/assets/footballer-1.png";
@@ -26,10 +26,10 @@ const HeroFootballers = () => {
       </div>
 
       {/* Featured player - large card */}
-      <Link to={`/footballer/${featured.id}`} className="relative rounded-xl overflow-hidden cursor-pointer group mb-3 block">
+      <Link href={`/footballer/${featured.id}`} className="relative rounded-xl overflow-hidden cursor-pointer group mb-3 block">
         <div className="aspect-[3/4] w-full">
           <img
-            src={portraits[0]}
+            src={portraits[0].src}
             alt={featured.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -57,14 +57,14 @@ const HeroFootballers = () => {
       <div className="space-y-2">
         {rest.map((player, i) => (
           <Link
-            to={`/footballer/${player.id}`}
+            href={`/footballer/${player.id}`}
             key={player.id}
             className="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-muted/50 transition-colors group"
           >
             {/* Portrait thumbnail */}
             <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-border group-hover:ring-primary transition-colors">
               <img
-                src={portraits[i + 1]}
+                src={portraits[i + 1].src}
                 alt={player.name}
                 className="w-full h-full object-cover"
               />
@@ -91,7 +91,7 @@ const HeroFootballers = () => {
 
       {/* Button */}
       <Link
-        to="/teams"
+        href="/teams"
         className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-background border border-border text-foreground text-[13px] font-heading font-bold hover:bg-muted transition-colors"
       >
         Barchasi <ArrowRight size={14} />

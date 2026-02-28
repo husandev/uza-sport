@@ -1,5 +1,5 @@
 import { Flame } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { sidebarArticles } from "@/data/mockData";
 import photo1 from "@/assets/photo-1.jpg";
 import photo2 from "@/assets/photo-2.jpg";
@@ -20,7 +20,7 @@ const SidebarArticles = () => {
       <div className="px-5 pt-2 pb-2">
         <div className="section-title">
           <span>Maqolalar</span>
-          <Link to="/articles" className="more-link">Barchasi →</Link>
+          <Link href="/articles" className="more-link">Barchasi →</Link>
         </div>
       </div>
 
@@ -28,13 +28,13 @@ const SidebarArticles = () => {
         {sidebarArticles.map((article, i) => (
           <Link
             key={article.id}
-            to={`/article/${((article.id - 1) % 3) + 1}`}
+            href={`/article/${((article.id - 1) % 3) + 1}`}
             className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group block"
           >
             {/* Left: image */}
             <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
               <img
-                src={images[i % images.length]}
+                src={images[i % images.length].src}
                 alt={article.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />

@@ -1,6 +1,9 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
-import { useLocation, Link } from "react-router-dom";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import uzaLogo from "@/assets/uza-logo-solo.png";
 import FootballAnim from "./FootballAnim";
 
@@ -32,7 +35,7 @@ const quickLinks = [
 ];
 
 const Header = () => {
-  const { pathname } = useLocation();
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,8 +63,8 @@ const Header = () => {
       {/* Top white bar */}
       <div className="bg-card">
         <div className="container flex items-center justify-between h-12">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src={uzaLogo} alt="UZA.uz" className="h-5" />
+          <Link href="/" className="flex items-center gap-2.5">
+            <img src={uzaLogo.src} alt="UZA.uz" className="h-5" />
             <div className="h-5 w-px bg-border" />
             <FootballAnim />
             <span className="text-base font-heading font-extrabold text-foreground tracking-tight leading-none">
@@ -209,7 +212,7 @@ const Header = () => {
             {navItems.map((item) => (
               <Link
                 key={item.label}
-                to={item.href}
+                href={item.href}
                 className={`nav-link ${pathname === item.href || (item.href === "/" && pathname === "/") ? "active" : ""}`}
               >
                 {item.label}
@@ -223,7 +226,7 @@ const Header = () => {
       {mobileOpen && (
         <nav className="lg:hidden nav-bar border-t border-primary-foreground/10 pb-1">
           {navItems.map((item) => (
-            <Link key={item.label} to={item.href} className="nav-link block" onClick={() => setMobileOpen(false)}>
+            <Link key={item.label} href={item.href} className="nav-link block" onClick={() => setMobileOpen(false)}>
               {item.label}
             </Link>
           ))}

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Camera, ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Play, Pause, Maximize2 } from "lucide-react";
@@ -43,7 +45,7 @@ const PhotoLightbox = ({
     try {
       if (!document.fullscreenElement) { await containerRef.current.requestFullscreen(); setIsFullscreen(true); }
       else { await document.exitFullscreen(); setIsFullscreen(false); }
-    } catch { console.log("Fullscreen not supported"); }
+    } catch { /* fullscreen not supported */ }
   }, []);
 
   useEffect(() => {

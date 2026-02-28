@@ -1,7 +1,9 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, MessageSquare, Flame, Clock, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { heroSlides } from "@/data/mockData";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -102,7 +104,7 @@ const HeroSlider = () => {
           >
             {/* Ken Burns zoom + subtle parallax */}
             <motion.img
-              src={images[current]}
+              src={images[current].src}
               alt=""
               className="w-full h-full object-cover"
               initial={{ scale: 1, y: 0 }}
@@ -191,7 +193,7 @@ const HeroSlider = () => {
                     <ChevronRight size={20} />
                   </motion.button>
                 </div>
-                <Link to={`/article/${heroSlides[current].id}`}>
+                <Link href={`/article/${heroSlides[current].id}`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -228,15 +230,15 @@ const HeroSlider = () => {
               className="relative flex-1 cursor-pointer group overflow-hidden border-b border-primary-foreground/10 last:border-b-0"
             >
               <img
-                src={ns.image}
+                src={ns.image.src}
                 alt=""
                 className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-foreground/20 group-hover:from-foreground/70 transition-all" />
-              
+
               {/* Hover accent bar */}
               <div className="absolute top-0 left-0 w-[3px] h-full bg-highlight scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
-              
+
               <div className="absolute bottom-0 left-0 right-0 p-3">
                 <span className="text-[9px] text-highlight font-heading font-bold uppercase tracking-widest">
                   {ns.category}

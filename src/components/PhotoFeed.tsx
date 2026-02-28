@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
 import photo1 from "@/assets/photo-1.jpg";
 import photo2 from "@/assets/photo-2.jpg";
@@ -24,34 +26,34 @@ import gallery6 from "@/assets/gallery-6.jpg";
 import gallery7 from "@/assets/gallery-7.jpg";
 import gallery8 from "@/assets/gallery-8.jpg";
 import { Camera } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import PhotoLightbox from "@/components/PhotoLightbox";
 
 const photos = [
-  { src: photo1, caption: "O'zbekiston — Argentina o'yinidan" },
-  { src: stadium1, caption: "MetLife stadioni" },
-  { src: hero1, caption: "Terma jamoa safga tizilmoqda" },
-  { src: gallery1, caption: "Muxlislar bayramda" },
-  { src: photo2, caption: "Stadion tayyorligi" },
-  { src: footballer1, caption: "Shomurodov intervyuda" },
-  { src: hero2, caption: "Goldan keyingi shodlik" },
-  { src: gallery2, caption: "Kechki mashg'ulot" },
-  { src: stadium2, caption: "Rose Bowl stadioni" },
-  { src: gallery3, caption: "G'alaba kubogi" },
-  { src: photo3, caption: "Muxlislar kutib olishi" },
-  { src: gallery4, caption: "Zarba lahzasi" },
-  { src: hero3, caption: "Yarim final lahzalari" },
-  { src: footballer2, caption: "Xusanov mashg'ulotda" },
-  { src: gallery5, caption: "O'yin yuqoridan" },
-  { src: hero4, caption: "Muxlislar bayroqlari" },
-  { src: gallery6, caption: "Jamoa ruhi" },
-  { src: stadium3, caption: "AT&T stadioni" },
-  { src: footballer3, caption: "Urunov o'yin oldidan" },
-  { src: gallery7, caption: "Stadion quyosh botishida" },
-  { src: photo4, caption: "Terma jamoa mashg'uloti" },
-  { src: gallery8, caption: "Futbol to'pi" },
-  { src: hero5, caption: "Volontyorlar tayyorlanmoqda" },
-  { src: footballer4, caption: "Shukurov g'alabani nishonlamoqda" },
+  { src: photo1.src, caption: "O'zbekiston — Argentina o'yinidan" },
+  { src: stadium1.src, caption: "MetLife stadioni" },
+  { src: hero1.src, caption: "Terma jamoa safga tizilmoqda" },
+  { src: gallery1.src, caption: "Muxlislar bayramda" },
+  { src: photo2.src, caption: "Stadion tayyorligi" },
+  { src: footballer1.src, caption: "Shomurodov intervyuda" },
+  { src: hero2.src, caption: "Goldan keyingi shodlik" },
+  { src: gallery2.src, caption: "Kechki mashg'ulot" },
+  { src: stadium2.src, caption: "Rose Bowl stadioni" },
+  { src: gallery3.src, caption: "G'alaba kubogi" },
+  { src: photo3.src, caption: "Muxlislar kutib olishi" },
+  { src: gallery4.src, caption: "Zarba lahzasi" },
+  { src: hero3.src, caption: "Yarim final lahzalari" },
+  { src: footballer2.src, caption: "Xusanov mashg'ulotda" },
+  { src: gallery5.src, caption: "O'yin yuqoridan" },
+  { src: hero4.src, caption: "Muxlislar bayroqlari" },
+  { src: gallery6.src, caption: "Jamoa ruhi" },
+  { src: stadium3.src, caption: "AT&T stadioni" },
+  { src: footballer3.src, caption: "Urunov o'yin oldidan" },
+  { src: gallery7.src, caption: "Stadion quyosh botishida" },
+  { src: photo4.src, caption: "Terma jamoa mashg'uloti" },
+  { src: gallery8.src, caption: "Futbol to'pi" },
+  { src: hero5.src, caption: "Volontyorlar tayyorlanmoqda" },
+  { src: footballer4.src, caption: "Shukurov g'alabani nishonlamoqda" },
 ];
 
 const PhotoFeed = () => {
@@ -78,7 +80,7 @@ const PhotoFeed = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Fotogalereya</span>
-        <Link to="/photos" className="more-link">Barchasi →</Link>
+        <Link href="/photos" className="more-link">Barchasi →</Link>
       </div>
 
       <div className="flex gap-2.5">

@@ -1,10 +1,20 @@
 "use client";
 import { useState } from "react";
-import { topScorers } from "@/data/mockData";
 import { Trophy, Target, Users } from "lucide-react";
-import { StandingsResponse } from "@/hooks/queries/useStandings";
+import { StandingsResponse, ScorersResponse } from "@/hooks/queries/useStandings";
 
-const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
+const formatDate = (iso: string) => {
+  const d = new Date(iso);
+  const months = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+};
+
+interface Props {
+  data: StandingsResponse | null;
+  scorers: ScorersResponse | null;
+}
+
+const StandingsPage = ({ data, scorers }: Props) => {
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   const groups = data?.standings
@@ -31,6 +41,9 @@ const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
 
   const allGroups = groups.map((g) => g.group);
   const filtered = selectedGroup ? groups.filter((g) => g.group === selectedGroup) : groups;
+
+  const season = data?.season ?? null;
+  const scorerList = scorers?.scorers ?? [];
 
   return (
     <div className="container pt-4 pb-8">
@@ -93,13 +106,13 @@ const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
                         <tr className="text-muted-foreground text-[11px] border-b border-border/50 bg-muted/30">
                           <th className="text-left pl-5 py-2.5 font-semibold w-8">#</th>
                           <th className="text-left py-2.5 font-semibold">Jamoa</th>
-                          <th className="text-center py-2.5 font-semibold w-10">O'</th>
-                          <th className="text-center py-2.5 font-semibold w-10">G'</th>
-                          <th className="text-center py-2.5 font-semibold w-10">D</th>
-                          <th className="text-center py-2.5 font-semibold w-10">M</th>
-                          <th className="text-center py-2.5 font-semibold w-14">Gollar</th>
-                          <th className="text-center py-2.5 font-semibold w-10">FT</th>
-                          <th className="text-center pr-5 py-2.5 font-bold w-12">O</th>
+                          <th title="O'yinlar soni" className="text-center py-2.5 font-semibold w-10 cursor-help">O'</th>
+                          <th title="G'alabalar" className="text-center py-2.5 font-semibold w-10 cursor-help">G'</th>
+                          <th title="Duranglar" className="text-center py-2.5 font-semibold w-10 cursor-help">D</th>
+                          <th title="Mag'lubiyatlar" className="text-center py-2.5 font-semibold w-10 cursor-help">M</th>
+                          <th title="Gol nisbati (uchun:qarshi)" className="text-center py-2.5 font-semibold w-14 cursor-help">Gollar</th>
+                          <th title="Farq tafsiloti" className="text-center py-2.5 font-semibold w-10 cursor-help">FT</th>
+                          <th title="Ochkolar" className="text-center pr-5 py-2.5 font-bold w-12 cursor-help">O</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -171,33 +184,44 @@ const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
               <span className="text-[14px] font-bold text-foreground">Eng yaxshi hujumchilar</span>
             </div>
             <div className="divide-y divide-border/30">
-              {topScorers.map((scorer) => {
-                const isUzb = scorer.flag === "🇺🇿";
-                return (
-                  <div
-                    key={scorer.pos}
-                    className={`px-5 py-3 flex items-center gap-3 hover:bg-muted/40 transition-colors cursor-pointer ${
-                      isUzb ? "bg-primary/5" : ""
-                    }`}
-                  >
-                    <span className={`text-[12px] w-5 text-center font-bold ${
-                      scorer.pos <= 3 ? "text-primary" : "text-muted-foreground"
-                    }`}>
-                      {scorer.pos}
-                    </span>
-                    <span className="text-base">{scorer.flag}</span>
-                    <div className="flex-1 min-w-0">
-                      <span className={`text-[13px] font-semibold ${isUzb ? "text-primary" : "text-foreground"}`}>
-                        {scorer.name}
+              {scorerList.length === 0 ? (
+                <div className="px-5 py-6 text-center text-[13px] text-muted-foreground">
+                  Turnir boshlanmagan — gollar yo'q
+                </div>
+              ) : (
+                scorerList.map((scorer, i) => {
+                  const isUzb = scorer.team.tla === "UZB";
+                  return (
+                    <div
+                      key={scorer.player.id}
+                      className={`px-5 py-3 flex items-center gap-3 hover:bg-muted/40 transition-colors ${
+                        isUzb ? "bg-primary/5" : ""
+                      }`}
+                    >
+                      <span className={`text-[12px] w-5 text-center font-bold ${
+                        i < 3 ? "text-primary" : "text-muted-foreground"
+                      }`}>
+                        {i + 1}
                       </span>
+                      {scorer.team.crest && (
+                        <img src={scorer.team.crest} alt={scorer.team.name} className="w-5 h-5 object-contain" />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className={`text-[13px] font-semibold truncate ${isUzb ? "text-primary" : "text-foreground"}`}>
+                          {scorer.player.name}
+                        </div>
+                        <div className="text-[11px] text-muted-foreground">{scorer.team.shortName}</div>
+                      </div>
+                      <div className="flex items-center gap-3 text-[12px]">
+                        <span className="font-bold text-foreground">{scorer.goals} ⚽</span>
+                        {scorer.assists !== null && (
+                          <span className="text-muted-foreground">{scorer.assists} 🅰️</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-[12px]">
-                      <span className="font-bold text-foreground">{scorer.goals} ⚽</span>
-                      <span className="text-muted-foreground">{scorer.assists} 🅰️</span>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </div>
 
@@ -222,12 +246,27 @@ const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
               </div>
               <div className="flex justify-between border-t border-border/30 pt-3">
                 <span className="text-muted-foreground">Boshlanishi</span>
-                <span className="font-semibold text-foreground">11 iyun 2026</span>
+                <span className="font-semibold text-foreground">
+                  {season ? formatDate(season.startDate) : "11 iyun 2026"}
+                </span>
               </div>
               <div className="flex justify-between border-t border-border/30 pt-3">
                 <span className="text-muted-foreground">Final</span>
-                <span className="font-semibold text-foreground">19 iyul 2026</span>
+                <span className="font-semibold text-foreground">
+                  {season ? formatDate(season.endDate) : "19 iyul 2026"}
+                </span>
               </div>
+              {season?.winner && (
+                <div className="flex justify-between border-t border-border/30 pt-3">
+                  <span className="text-muted-foreground">Chempion</span>
+                  <span className="flex items-center gap-1.5 font-semibold text-foreground">
+                    {season.winner.crest && (
+                      <img src={season.winner.crest} alt={season.winner.name} className="w-4 h-4 object-contain" />
+                    )}
+                    {season.winner.name}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between border-t border-border/30 pt-3">
                 <span className="text-muted-foreground">Mezbonlar</span>
                 <span className="font-semibold text-foreground">🇺🇸🇲🇽🇨🇦</span>
@@ -243,6 +282,7 @@ const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
               <div className="flex items-center gap-2"><span className="font-semibold text-foreground">G'</span> — G'alabalar</div>
               <div className="flex items-center gap-2"><span className="font-semibold text-foreground">D</span> — Duranglar</div>
               <div className="flex items-center gap-2"><span className="font-semibold text-foreground">M</span> — Mag'lubiyatlar</div>
+              <div className="flex items-center gap-2"><span className="font-semibold text-foreground">Gollar</span> — Gol nisbati (uchun:qarshi)</div>
               <div className="flex items-center gap-2"><span className="font-semibold text-foreground">FT</span> — Farq tafsiloti</div>
               <div className="flex items-center gap-2"><span className="font-semibold text-foreground">O</span> — Ochkolar</div>
             </div>

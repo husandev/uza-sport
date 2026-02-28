@@ -26,7 +26,27 @@ export interface Standing {
   table: StandingTeam[];
 }
 
+export interface Season {
+  startDate: string;
+  endDate: string;
+  currentMatchday: number;
+  winner: { name: string; crest: string } | null;
+}
+
+export interface Scorer {
+  player: { id: number; name: string; nationality: string };
+  team: { id: number; name: string; shortName: string; tla: string; crest: string };
+  goals: number;
+  assists: number | null;
+  penalties: number | null;
+}
+
+export interface ScorersResponse {
+  scorers: Scorer[];
+}
+
 export interface StandingsResponse {
+  season: Season;
   standings: Standing[];
 }
 

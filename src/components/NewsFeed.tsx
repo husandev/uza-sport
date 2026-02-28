@@ -1,8 +1,16 @@
+"use client";
+
 import { Flame, Clock } from "lucide-react";
 import Link from "next/link";
+import { useLastPosts } from "@/hooks/queries/usePosts";
+import { formatPublishTime } from "@/lib/utils";
 import { newsFeed } from "@/data/mockData";
 
 const NewsFeed = () => {
+  const { data, isLoading, isError } = useLastPosts();
+
+  const items = data ?? [];
+
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
       {/* Header */}
@@ -15,7 +23,7 @@ const NewsFeed = () => {
 
       {/* News list */}
       <div className="px-1.5 pb-3">
-        {newsFeed.map((item) => (
+        {isLoading && newsFeed.map((item) => (
           <Link key={item.id} href={`/article/${((item.id - 1) % 3) + 1}`} className="news-item group block">
             <h3 className="line-clamp-2">{item.title}</h3>
             <div className="flex items-center gap-3 mt-1.5">
@@ -26,6 +34,35 @@ const NewsFeed = () => {
               {item.fires > 0 && (
                 <span className="fire-count">
                   <Flame size={11} /> {item.fires}
+                </span>
+              )}
+            </div>
+          </Link>
+        ))}
+
+        {isError && newsFeed.map((item) => (
+          <Link key={item.id} href={`/article/${((item.id - 1) % 3) + 1}`} className="news-item group block">
+            <h3 className="line-clamp-2">{item.title}</h3>
+            <div className="flex items-center gap-3 mt-1.5">
+              <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium font-body">
+                <Clock size={10} />
+                {item.time}
+              </span>
+            </div>
+          </Link>
+        ))}
+
+        {!isLoading && !isError && items.map((item) => (
+          <Link key={item.id} href={`/article/${item.id}`} className="news-item group block">
+            <h3 className="line-clamp-2">{item.title}</h3>
+            <div className="flex items-center gap-3 mt-1.5">
+              <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium font-body">
+                <Clock size={10} />
+                {formatPublishTime(item.publish_time)}
+              </span>
+              {item.category?.title && (
+                <span className="text-[11px] text-primary font-medium font-body">
+                  {item.category.title}
                 </span>
               )}
             </div>

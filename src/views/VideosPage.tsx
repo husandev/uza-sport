@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import GroupStandings from "@/components/GroupStandings";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -36,7 +37,7 @@ const videoArticles = [
 
 const PER_PAGE = 12;
 
-const VideosPage = () => {
+const VideosPage = ({ standings }: { standings: StandingsResponse | null }) => {
   const [page, setPage] = useState(1);
   const totalPages = Math.ceil(videoArticles.length / PER_PAGE);
   const paginated = videoArticles.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -136,7 +137,7 @@ const VideosPage = () => {
         </div>
 
         <div className="lg:col-span-4 space-y-4">
-          <GroupStandings />
+          <GroupStandings data={standings} />
         </div>
       </div>
     </div>

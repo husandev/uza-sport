@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import GroupStandings from "@/components/GroupStandings";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { Flame, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import photo1 from "@/assets/photo-1.jpg";
@@ -67,7 +68,7 @@ const allArticles = Array.from({ length: 30 }, (_, i) => ({
 
 const PER_PAGE = 15;
 
-const ArticlesPage = () => {
+const ArticlesPage = ({ standings }: { standings: StandingsResponse | null }) => {
   const [page, setPage] = useState(1);
   const totalPages = Math.ceil(allArticles.length / PER_PAGE);
   const paginated = allArticles.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -165,7 +166,7 @@ const ArticlesPage = () => {
 
           {/* Right: Tournament standings */}
           <div className="lg:col-span-4 space-y-4">
-            <GroupStandings />
+            <GroupStandings data={standings} />
           </div>
         </div>
       </div>

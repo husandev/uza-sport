@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useStandings } from "@/hooks/queries/useStandings";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
 
-const GroupStandings = () => {
-  const { data, isLoading, isError } = useStandings();
+interface Props {
+  data?: StandingsResponse | null;
+}
 
+const GroupStandings = ({ data = null }: Props) => {
   const groups = data?.standings
     .filter((s) => s.type === "TOTAL")
     .map((s) => ({
@@ -33,15 +35,11 @@ const GroupStandings = () => {
         <Link href="/standings" className="more-link">To'liq →</Link>
       </div>
 
-      {isLoading && (
-        <div className="py-8 text-center text-[13px] text-muted-foreground">Yuklanmoqda...</div>
-      )}
-
-      {isError && (
+      {!data && (
         <div className="py-8 text-center text-[13px] text-muted-foreground">Ma'lumot yuklanmadi</div>
       )}
 
-      {!isLoading && !isError && (
+      {data && (
         <div className="space-y-4 overflow-y-auto pr-1 scrollbar-thin">
           {groups.map((g) => (
             <div key={g.group}>

@@ -2,10 +2,9 @@
 import { useState } from "react";
 import { topScorers } from "@/data/mockData";
 import { Trophy, Target, Users } from "lucide-react";
-import { useStandings } from "@/hooks/queries/useStandings";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
 
-const StandingsPage = () => {
-  const { data, isLoading, isError } = useStandings();
+const StandingsPage = ({ data }: { data: StandingsResponse | null }) => {
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   const groups = data?.standings
@@ -45,19 +44,13 @@ const StandingsPage = () => {
         {/* Left: Full standings */}
         <div className="lg:col-span-8 space-y-4">
 
-          {isLoading && (
-            <div className="bg-card rounded-2xl shadow-sm p-10 text-center text-[14px] text-muted-foreground">
-              Yuklanmoqda...
-            </div>
-          )}
-
-          {isError && (
+          {!data && (
             <div className="bg-card rounded-2xl shadow-sm p-10 text-center text-[14px] text-muted-foreground">
               Ma'lumot yuklanmadi. Qaytadan urinib ko'ring.
             </div>
           )}
 
-          {!isLoading && !isError && (
+          {data && (
             <>
               {/* Group filter */}
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1">

@@ -1,5 +1,7 @@
 import ArticlesPage from "@/views/ArticlesPage";
+import { getStandings } from "@/lib/football";
 
-export default function ArticlesRoute() {
-  return <ArticlesPage />;
+export default async function ArticlesRoute() {
+  const standings = await getStandings();
+  return <ArticlesPage standings={standings} />;
 }

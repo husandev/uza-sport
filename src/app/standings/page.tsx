@@ -1,5 +1,7 @@
 import StandingsPage from "@/views/StandingsPage";
+import { getStandings } from "@/lib/football";
 
-export default function StandingsRoute() {
-  return <StandingsPage />;
+export default async function StandingsRoute() {
+  const data = await getStandings();
+  return <StandingsPage data={data} />;
 }

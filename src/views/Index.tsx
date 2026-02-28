@@ -11,7 +11,9 @@ import StadiumsSection from "@/components/StadiumsSection";
 import TeamsSection from "@/components/TeamsSection";
 import SidebarArticles from "@/components/SidebarArticles";
 
-const Index = () => {
+import { StandingsResponse } from "@/hooks/queries/useStandings";
+
+const Index = ({ standings }: { standings: StandingsResponse | null }) => {
   return (
     <>
       <div className="container pt-0 pb-4 space-y-4">
@@ -50,7 +52,7 @@ const Index = () => {
 
           {/* Right: Standings + Scorers + Players + Articles */}
           <div className="lg:col-span-3 space-y-4">
-            <GroupStandings />
+            <GroupStandings data={standings} />
             {/* Banner */}
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
               <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>

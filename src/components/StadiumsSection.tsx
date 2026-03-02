@@ -20,6 +20,7 @@ const StadiumsSection = () => {
             <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-muted">
               <img
                 src={imgs[i].src}
+                loading="lazy"
                 alt=""
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />

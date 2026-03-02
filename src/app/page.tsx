@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import Index from "@/views/Index";
 import { getStandings, getFixtures } from "@/lib/football";
 import { teamNamesUzByName } from "@/data/teamNamesUzByName";
 import { NextMatchData } from "@/components/MatchCountdown";
+
+export const metadata: Metadata = {
+  title: "Bosh sahifa — O'zbekiston va JCh-2026",
+  description: "O'zbekiston terma jamoasi va Jahon chempionati 2026 so'nggi yangiliklar, natijalar va jadval.",
+};
 
 const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
 

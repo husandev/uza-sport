@@ -30,6 +30,7 @@ const HeroFootballers = () => {
         <div className="aspect-[3/4] w-full">
           <img
             src={portraits[0].src}
+            loading="lazy"
             alt={featured.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
@@ -65,6 +66,7 @@ const HeroFootballers = () => {
             <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-border group-hover:ring-primary transition-colors">
               <img
                 src={portraits[i + 1].src}
+                loading="lazy"
                 alt={player.name}
                 className="w-full h-full object-cover"
               />

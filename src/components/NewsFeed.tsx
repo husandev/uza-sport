@@ -1,19 +1,16 @@
 "use client";
 
-import { Flame, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import Link from "next/link";
 import { useLastPosts } from "@/hooks/queries/usePosts";
 import { formatPublishTime } from "@/lib/utils";
-import { newsFeed } from "@/data/mockData";
 
 const NewsFeed = () => {
-  const { data, isLoading, isError } = useLastPosts();
-
+  const { data, isLoading } = useLastPosts();
   const items = data ?? [];
 
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
-      {/* Header */}
       <div className="px-4 pt-2 pb-2">
         <div className="section-title">
           <span>So'ngi yangiliklar</span>
@@ -21,39 +18,17 @@ const NewsFeed = () => {
         </div>
       </div>
 
-      {/* News list */}
       <div className="px-1.5 pb-3">
-        {isLoading && newsFeed.map((item) => (
-          <Link key={item.id} href={`/article/${((item.id - 1) % 3) + 1}`} className="news-item group block">
-            <h3 className="line-clamp-2">{item.title}</h3>
-            <div className="flex items-center gap-3 mt-1.5">
-              <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium font-body">
-                <Clock size={10} />
-                {item.time}
-              </span>
-              {item.fires > 0 && (
-                <span className="fire-count">
-                  <Flame size={11} /> {item.fires}
-                </span>
-              )}
-            </div>
-          </Link>
+        {isLoading && Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="news-item animate-pulse">
+            <div className="h-4 bg-muted rounded w-full mb-1.5" />
+            <div className="h-4 bg-muted rounded w-3/4" />
+            <div className="h-3 bg-muted rounded w-1/4 mt-1.5" />
+          </div>
         ))}
 
-        {isError && newsFeed.map((item) => (
-          <Link key={item.id} href={`/article/${((item.id - 1) % 3) + 1}`} className="news-item group block">
-            <h3 className="line-clamp-2">{item.title}</h3>
-            <div className="flex items-center gap-3 mt-1.5">
-              <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium font-body">
-                <Clock size={10} />
-                {item.time}
-              </span>
-            </div>
-          </Link>
-        ))}
-
-        {!isLoading && !isError && items.map((item) => (
-          <Link key={item.id} href={`/article/${item.id}`} className="news-item group block">
+        {!isLoading && items.map((item) => (
+          <Link key={item.id} href={`/article/${item.slug}`} className="news-item group block">
             <h3 className="line-clamp-2">{item.title}</h3>
             <div className="flex items-center gap-3 mt-1.5">
               <span className="flex items-center gap-1 text-[11px] text-muted-foreground font-medium font-body">

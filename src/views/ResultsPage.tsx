@@ -38,7 +38,7 @@ function getLiveLabel(fixture: AFFixture) {
   const { short, elapsed } = fixture.fixture.status;
   if (short === "HT") return "Tanaffus";
   if (elapsed !== null) return `${elapsed}'`;
-  return "LIVE";
+  return "JONLI";
 }
 
 function getDateKey(iso: string) {
@@ -143,7 +143,7 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
                             <div className="flex flex-col items-center gap-0.5">
                               <span className="flex items-center gap-1 text-[10px] font-bold text-destructive uppercase">
                                 <Circle size={6} className="fill-destructive animate-pulse" />
-                                LIVE
+                                JONLI
                               </span>
                               <span className="text-[11px] font-semibold text-destructive">
                                 {getLiveLabel(f)}
@@ -197,7 +197,7 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
 
                       {/* Venue */}
                       {f.fixture.venue.name && (
-                        <div className="mt-2 ml-[76px] text-[11px] text-muted-foreground font-body">
+                        <div className="mt-2 ml-[60px] sm:ml-[76px] text-[11px] text-muted-foreground font-body">
                           🏟️ {f.fixture.venue.name}
                         </div>
                       )}

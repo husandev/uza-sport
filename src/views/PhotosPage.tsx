@@ -139,7 +139,7 @@ const PhotosPage = () => {
                         }}
                       >
                         <Camera size={20} className="opacity-40" />
-                        <span className="opacity-40">No photo</span>
+                        <span className="opacity-40">Surat yo'q</span>
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
                         <span className="text-[12px] font-medium text-white flex items-center gap-1.5 font-body">

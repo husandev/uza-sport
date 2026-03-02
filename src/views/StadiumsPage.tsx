@@ -64,6 +64,7 @@ const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) =>
                   <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden">
                     <img
                       src={images[(i + (page - 1) * PER_PAGE) % images.length]}
+                      loading="lazy"
                       alt={stadium.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />

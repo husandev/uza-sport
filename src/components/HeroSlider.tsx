@@ -144,8 +144,8 @@ const HeroSlider = () => {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <span className="inline-flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest bg-live text-primary-foreground rounded-lg mb-4 sm:mb-5 font-heading shadow-lg shadow-live/30">
@@ -154,14 +154,14 @@ const HeroSlider = () => {
                 </span>
               </motion.div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="text-primary-foreground text-xl sm:text-3xl lg:text-[44px] font-heading font-extrabold leading-[1.1] mb-3 sm:mb-4 max-w-[620px] drop-shadow-xl line-clamp-2 sm:line-clamp-none"
-              >
-                {slide.title}
-              </motion.h2>
+                <motion.h2
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+                 className="text-primary-foreground text-3xl lg:text-[44px] font-heading font-extrabold leading-[1.1] mb-4 max-w-[620px] drop-shadow-xl line-clamp-4"
+                >
+                  {slide.title}
+                </motion.h2>
 
               <motion.div
                 initial={{ width: 0 }}
@@ -174,7 +174,7 @@ const HeroSlider = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.5 }}
-                className="text-primary-foreground/70 text-[13px] sm:text-[15px] mb-3 sm:mb-5 max-w-[520px] font-body leading-relaxed hidden sm:block line-clamp-2"
+              className="text-primary-foreground/70 text-[15px] mb-5 max-w-[520px] font-body leading-relaxed line-clamp-4"
               >
                 {slide.description}
               </motion.p>
@@ -276,7 +276,7 @@ const HeroSlider = () => {
           <div className="flex items-center justify-between px-4 sm:px-6 lg:px-10 py-3 bg-foreground/70 backdrop-blur-xl">
             <div className="flex items-center gap-2">
               {slides.map((_, i) => (
-                <button key={i} onClick={() => goTo(i)} aria-label={`${i + 1}-slaydga o'tish`} aria-current={i === current ? "true" : undefined} className="relative group/dot">
+                <button key={i} onClick={() => goTo(i)} className="relative group/dot">
                   <div className={`rounded-full transition-all duration-500 ${
                     i === current
                       ? "w-10 h-2.5 bg-highlight shadow-lg shadow-highlight/40"

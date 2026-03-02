@@ -1,19 +1,35 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
+// 8 soniya timeout — API javob bermasa kutmaymiz
+const TIMEOUT_MS = 8000;
+
 async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...options?.headers,
-    },
-    ...options,
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-  if (!res.ok) {
-    throw new Error(`API Error: ${res.status} ${res.statusText}`);
+  try {
+    const res = await fetch(`${BASE_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...options?.headers,
+      },
+      signal: controller.signal, // spread dan keyin — caller override qila olmaydi
+    });
+
+    if (!res.ok) {
+      throw new Error(`API Error: ${res.status}`);
+    }
+
+    return res.json();
+  } catch (err) {
+    if (err instanceof Error && err.name === "AbortError") {
+      throw new Error("Request timeout");
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
   }
-
-  return res.json();
 }
 
 export const api = {

@@ -5,36 +5,7 @@ import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { useVideos } from "@/hooks/queries";
-
-function formatTime(publishTime: string): string {
-  const date = new Date(publishTime.replace(" ", "T"));
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffHour = Math.floor(diffMs / 3600000);
-  const diffDay = Math.floor(diffMs / 86400000);
-  if (diffMin < 60) return `${diffMin} daqiqa oldin`;
-  if (diffHour < 24)
-    return `Bugun, ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-  if (diffDay === 1)
-    return `Kecha, ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-  return `${diffDay} kun oldin`;
-}
-
-function getPageNumbers(current: number, total: number): (number | "...")[] {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
-  const pages: (number | "...")[] = [1];
-  if (current > 3) pages.push("...");
-  for (
-    let p = Math.max(2, current - 1);
-    p <= Math.min(total - 1, current + 1);
-    p++
-  )
-    pages.push(p);
-  if (current < total - 2) pages.push("...");
-  pages.push(total);
-  return pages;
-}
+import { formatPublishTime, getPageNumbers } from "@/lib/utils";
 
 const VideosPage = ({ standings }: { standings: StandingsResponse | null }) => {
   const [page, setPage] = useState(1);
@@ -65,7 +36,7 @@ const VideosPage = ({ standings }: { standings: StandingsResponse | null }) => {
                     key={i}
                     className="px-5 sm:px-6 py-5 flex gap-5 animate-pulse"
                   >
-                    <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl bg-muted" />
+                    <div className="w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl bg-muted" />
                     <div className="flex-1 space-y-2 pt-2">
                       <div className="h-3 bg-muted rounded w-1/4" />
                       <div className="h-5 bg-muted rounded w-full" />
@@ -79,10 +50,11 @@ const VideosPage = ({ standings }: { standings: StandingsResponse | null }) => {
                   href={`/video/${video.slug}`}
                   className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                 >
-                  <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted">
+                  <div className="w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted">
                     {video.files?.thumbnails?.normal?.src && (
                       <img
                         src={video.files.thumbnails.normal.src}
+                        loading="lazy"
                         alt={video.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -98,10 +70,10 @@ const VideosPage = ({ standings }: { standings: StandingsResponse | null }) => {
                     </div>
                   </div>
 
-                  <div className="flex-1 min-w-0 h-[130px] overflow-hidden flex flex-col justify-between">
+                  <div className="flex-1 min-w-0 flex flex-col justify-between overflow-hidden">
                     <div>
                       <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-2 font-body">
-                        <span>{formatTime(video.publish_time)}</span>
+                        <span>{formatPublishTime(video.publish_time)}</span>
                         {video.category?.title && (
                           <>
                             <span className="text-muted-foreground/40">|</span>
@@ -111,7 +83,7 @@ const VideosPage = ({ standings }: { standings: StandingsResponse | null }) => {
                           </>
                         )}
                       </div>
-                      <h3 className="text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                      <h3 className="text-[15px] sm:text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
                         {video.title}
                       </h3>
                       {video.description && video.description !== "_" && (

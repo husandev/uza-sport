@@ -125,7 +125,7 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
                   {match.isLive ? (
                     <span className="text-highlight font-bold text-[11px] flex items-center gap-1">
                       <span className="live-dot" />
-                      {match.minute ?? "LIVE"}
+                      {match.minute ?? "JONLI"}
                     </span>
                   ) : match.isFinished ? (
                     <span className="text-primary-foreground/50 text-[10px] font-body">tugadi</span>
@@ -136,15 +136,15 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
 
                 <div className="flex flex-col text-[12px] leading-snug gap-0.5 font-body">
                   <div className="flex items-center gap-2">
-                    <img src={match.homeLogo} alt={match.home} className="w-4 h-4 object-contain" />
-                    <span className="text-primary-foreground/90 font-semibold min-w-[80px]">{match.home}</span>
+                    <img src={match.homeLogo} loading="lazy" alt={match.home} className="w-4 h-4 object-contain" />
+                    <span className="text-primary-foreground/90 font-semibold min-w-[60px] sm:min-w-[80px]">{match.home}</span>
                     <span className={`font-bold min-w-[12px] text-center ${match.isLive ? "text-highlight" : "text-primary-foreground"}`}>
                       {match.hScore ?? "–"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <img src={match.awayLogo} alt={match.away} className="w-4 h-4 object-contain" />
-                    <span className="text-primary-foreground/90 font-semibold min-w-[80px]">{match.away}</span>
+                    <img src={match.awayLogo} loading="lazy" alt={match.away} className="w-4 h-4 object-contain" />
+                    <span className="text-primary-foreground/90 font-semibold min-w-[60px] sm:min-w-[80px]">{match.away}</span>
                     <span className={`font-bold min-w-[12px] text-center ${match.isLive ? "text-highlight" : "text-primary-foreground"}`}>
                       {match.aScore ?? "–"}
                     </span>

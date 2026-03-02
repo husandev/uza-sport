@@ -74,7 +74,7 @@ const GroupStandings = ({ data = null }: Props) => {
                       <td className="py-1.5">
                         <span className="flex items-center gap-1.5">
                           {team.crest && (
-                            <img src={team.crest} alt={team.name} className="w-4 h-4 object-contain" />
+                            <img src={team.crest} loading="lazy" alt={team.name} className="w-4 h-4 object-contain" />
                           )}
                           <span className="text-[12px]">{team.name}</span>
                         </span>

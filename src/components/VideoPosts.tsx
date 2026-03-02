@@ -34,6 +34,7 @@ const VideoPosts = () => {
               {video.files?.thumbnails?.normal?.src && (
                 <img
                   src={video.files.thumbnails.normal.src}
+                  loading="lazy"
                   alt={video.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />

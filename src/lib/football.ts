@@ -5,14 +5,23 @@ const BASE_URL = "https://v3.football.api-sports.io";
 const HEADERS = { "x-apisports-key": process.env.API_FOOTBALL_KEY! };
 const CACHE = { next: { revalidate: 3600 } };
 
+// Promise.race timeout — Next.js fetch cache saqlanadi (AbortSignal cache ni o'chiradi)
+const SERVER_TIMEOUT_MS = 5000;
+
 const LEAGUE_ID = 1;   // FIFA World Cup
 const SEASON = 2022;   // TODO: 2026 ga o'zgartir (paid plan kerak yoki turnir boshlanganida)
 
+function withTimeout<T>(promise: Promise<T>): Promise<T> {
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error("timeout")), SERVER_TIMEOUT_MS)
+  );
+  return Promise.race([promise, timeout]);
+}
+
 export async function getStandings(): Promise<StandingsResponse | null> {
   try {
-    const res = await fetch(
-      `${BASE_URL}/standings?league=${LEAGUE_ID}&season=${SEASON}`,
-      { headers: HEADERS, ...CACHE }
+    const res = await withTimeout(
+      fetch(`${BASE_URL}/standings?league=${LEAGUE_ID}&season=${SEASON}`, { headers: HEADERS, ...CACHE })
     );
     if (!res.ok) return null;
     return res.json();
@@ -24,9 +33,8 @@ export async function getStandings(): Promise<StandingsResponse | null> {
 // Live fixtures — 60 soniya kesh (tez o'zgaradi)
 export async function getLiveFixtures(): Promise<FixturesResponse | null> {
   try {
-    const res = await fetch(
-      `${BASE_URL}/fixtures?live=all&league=${LEAGUE_ID}`,
-      { headers: HEADERS, next: { revalidate: 60 } }
+    const res = await withTimeout(
+      fetch(`${BASE_URL}/fixtures?live=all&league=${LEAGUE_ID}`, { headers: HEADERS, next: { revalidate: 60 } })
     );
     if (!res.ok) return null;
     return res.json();
@@ -37,9 +45,8 @@ export async function getLiveFixtures(): Promise<FixturesResponse | null> {
 
 export async function getFixtures(): Promise<FixturesResponse | null> {
   try {
-    const res = await fetch(
-      `${BASE_URL}/fixtures?league=${LEAGUE_ID}&season=${SEASON}`,
-      { headers: HEADERS, ...CACHE }
+    const res = await withTimeout(
+      fetch(`${BASE_URL}/fixtures?league=${LEAGUE_ID}&season=${SEASON}`, { headers: HEADERS, ...CACHE })
     );
     if (!res.ok) return null;
     return res.json();
@@ -50,9 +57,8 @@ export async function getFixtures(): Promise<FixturesResponse | null> {
 
 export async function getScorers(): Promise<ScorersResponse | null> {
   try {
-    const res = await fetch(
-      `${BASE_URL}/players/topscorers?league=${LEAGUE_ID}&season=${SEASON}`,
-      { headers: HEADERS, ...CACHE }
+    const res = await withTimeout(
+      fetch(`${BASE_URL}/players/topscorers?league=${LEAGUE_ID}&season=${SEASON}`, { headers: HEADERS, ...CACHE })
     );
     if (!res.ok) return null;
     return res.json();

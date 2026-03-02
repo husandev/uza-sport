@@ -1,31 +1,17 @@
 "use client";
-import { Flame } from "lucide-react";
 import Link from "next/link";
 import { useSportPosts } from "@/hooks/queries";
+import { formatPublishTime } from "@/lib/utils";
 
-function formatTime(publish_time: string): string {
-  const date = new Date(publish_time);
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffHour = Math.floor(diffMs / 3600000);
-  const diffDay = Math.floor(diffMs / 86400000);
-
-  if (diffMin < 60) return `${diffMin} daqiqa oldin`;
-  if (diffHour < 24) return `Bugun, ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-  if (diffDay === 1) return `Kecha, ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-  return `${diffDay} kun oldin`;
-}
-
-const SidebarArticles = () => {
-  const { data, isLoading } = useSportPosts("uz", 10);
+const SidebarArticles = ({ title = "Maqolalar" }: { title?: string }) => {
+  const { data, isLoading } = useSportPosts("oz", 10);
   const posts = data?.data ?? [];
 
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 pt-2 pb-2">
         <div className="section-title">
-          <span>Maqolalar</span>
+          <span>{title}</span>
           <Link href="/articles" className="more-link">Barchasi →</Link>
         </div>
       </div>
@@ -45,7 +31,7 @@ const SidebarArticles = () => {
         {posts.map((post) => (
           <Link
             key={post.id}
-            href={`/article/${post.id}`}
+            href={`/article/${post.slug}`}
             className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group block"
           >
             {/* Left: image */}
@@ -53,6 +39,7 @@ const SidebarArticles = () => {
               <img
                 src={post.files?.thumbnails?.normal?.src}
                 alt={post.title}
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
@@ -61,7 +48,7 @@ const SidebarArticles = () => {
             <div className="flex-1 min-w-0 h-[95px] overflow-hidden flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-1.5 font-body">
-                  <span>{formatTime(post.publish_time)}</span>
+                  <span>{formatPublishTime(post.publish_time)}</span>
                   {post.category?.title && (
                     <>
                       <span className="text-muted-foreground/40">|</span>

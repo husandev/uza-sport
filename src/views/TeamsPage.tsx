@@ -78,9 +78,10 @@ const TeamsPage = ({ standings }: { standings: StandingsResponse | null }) => {
                     className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                   >
                     {/* Image */}
-                    <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden">
+                    <div className="w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl overflow-hidden">
                       <img
                         src={images[(i + (page - 1) * PER_PAGE) % images.length]}
+                        loading="lazy"
                         alt={team.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -96,7 +97,7 @@ const TeamsPage = ({ standings }: { standings: StandingsResponse | null }) => {
                         </div>
                         <div className="flex items-center gap-2.5 mb-1">
                           <span className="text-xl">{team.flag}</span>
-                          <h3 className="text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                          <h3 className="text-[15px] sm:text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
                             {team.title}
                           </h3>
                         </div>

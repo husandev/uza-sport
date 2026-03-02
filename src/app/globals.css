@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&family=Oswald:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -58,9 +56,14 @@
     @apply border-border;
   }
 
+  /* Hide native browser clear button on search inputs (we have a custom one) */
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 15px;
     line-height: 1.6;
     letter-spacing: -0.011em;
@@ -71,7 +74,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     letter-spacing: -0.025em;
     line-height: 1.2;
   }
@@ -104,7 +107,7 @@
   /* Section styling */
   .section-title {
     @apply text-sm font-bold uppercase tracking-wide py-2 mb-2;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -129,7 +132,7 @@
 
   .section-title .more-link {
     @apply text-xs font-medium normal-case tracking-normal;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     color: hsl(var(--link));
   }
 
@@ -151,7 +154,7 @@
   }
 
   .news-item h3 {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     @apply text-sm font-semibold leading-snug;
     color: hsl(var(--foreground));
     transition: color 0.2s;
@@ -178,7 +181,7 @@
 
   .nav-link {
     @apply px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), sans-serif;
     color: hsl(var(--primary-foreground) / 0.85);
     transition: all 0.2s;
   }
@@ -226,4 +229,66 @@
 @keyframes fade-in {
   0% { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Article body — API dan kelgan HTML kontent stillari */
+.article-body {
+  font-size: 14px;
+  line-height: 1.85;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+.article-body p {
+  margin-bottom: 1rem;
+}
+
+.article-body h2,
+.article-body h3 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: hsl(var(--foreground));
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-body img {
+  max-width: 85%;
+  height: auto;
+  border-radius: 0.75rem;
+  margin: 1.5rem auto;
+  display: block;
+}
+
+.article-body blockquote {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: hsl(var(--muted) / 0.4);
+  border-left: 3px solid hsl(var(--primary));
+}
+
+.article-body blockquote p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: hsl(var(--foreground) / 0.8);
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.article-body a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.article-body li {
+  margin-bottom: 0.25rem;
 }

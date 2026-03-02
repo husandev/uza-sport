@@ -128,7 +128,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
                               <td className="py-3">
                                 <div className="flex items-center gap-2.5">
                                   {team.crest && (
-                                    <img src={team.crest} alt={team.name} className="w-5 h-5 object-contain" />
+                                    <img src={team.crest} loading="lazy" alt={team.name} className="w-5 h-5 object-contain" />
                                   )}
                                   <span className={`text-[13px] ${team.isUzb ? "font-bold text-primary" : "font-medium text-foreground"}`}>
                                     {team.name}
@@ -197,7 +197,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
                         {i + 1}
                       </span>
                       {stat?.team.logo && (
-                        <img src={stat.team.logo} alt={stat.team.name} className="w-5 h-5 object-contain" />
+                        <img src={stat.team.logo} loading="lazy" alt={stat.team.name} className="w-5 h-5 object-contain" />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className={`text-[13px] font-semibold truncate ${isUzb ? "text-primary" : "text-foreground"}`}>

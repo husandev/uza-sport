@@ -118,7 +118,7 @@ const PhotoLightbox = ({
           {imgError && (
             <div className="flex flex-col items-center justify-center w-[85vw] max-w-[600px] h-[50vh] gap-3 text-white/40">
               <Camera size={48} />
-              <span className="text-sm font-body">No photo</span>
+              <span className="text-sm font-body">Surat yo'q</span>
             </div>
           )}
           <img

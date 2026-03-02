@@ -1,17 +1,50 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import Header from "@/components/Header";
 import MatchTicker, { TickerMatch } from "@/components/MatchTicker";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { getFixtures, getLiveFixtures } from "@/lib/football";
 import { teamNamesUzByName } from "@/data/teamNamesUzByName";
 import { AFFixture } from "@/hooks/queries/useFixtures";
 
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
 export const metadata: Metadata = {
-  title: "UZA WC2026 — JCh-2026 maxsus loyihasi",
-  description: "O'zbekiston terma jamoasi va Jahon chempionati 2026 haqida barcha yangiliklar",
+  metadataBase: new URL("https://wc2026.uza.uz"),
+  title: {
+    default: "UZA WC2026 — Jahon chempionati 2026",
+    template: "%s | UZA WC2026",
+  },
+  description:
+    "O'zbekiston terma jamoasi va FIFA Jahon chempionati 2026 haqida barcha yangiliklar, natijalar, jadval va statistika.",
+  keywords: ["Jahon chempionati 2026", "O'zbekiston terma jamoasi", "WC2026", "FIFA", "futbol", "JCh-2026"],
+  authors: [{ name: "UZA.uz" }],
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    locale: "uz_UZ",
+    url: "https://wc2026.uza.uz",
+    siteName: "UZA WC2026",
+    title: "UZA WC2026 — Jahon chempionati 2026",
+    description:
+      "O'zbekiston terma jamoasi va FIFA Jahon chempionati 2026 haqida barcha yangiliklar, natijalar, jadval va statistika.",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "UZA WC2026" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UZA WC2026 — Jahon chempionati 2026",
+    description:
+      "O'zbekiston terma jamoasi va FIFA Jahon chempionati 2026 haqida barcha yangiliklar.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "BT", "P", "INT", "SUSP", "LIVE"];
@@ -71,15 +104,23 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="uz">
+    <html lang="uz" className={inter.variable}>
       <body>
         <Providers>
           <div className="min-h-screen bg-background">
-            <Header />
-            <MatchTicker matches={matches} />
+            <ErrorBoundary>
+              <Header />
+            </ErrorBoundary>
+            <ErrorBoundary>
+              <MatchTicker matches={matches} />
+            </ErrorBoundary>
             <ScrollToTop />
-            <main>{children}</main>
-            <Footer />
+            <main>
+              <ErrorBoundary>{children}</ErrorBoundary>
+            </main>
+            <ErrorBoundary>
+              <Footer />
+            </ErrorBoundary>
           </div>
         </Providers>
       </body>

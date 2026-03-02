@@ -114,7 +114,12 @@ const Header = () => {
                   <div className="fixed inset-0 bg-foreground/30 backdrop-blur-md z-40" onClick={() => setSearchOpen(false)} />
 
                   {/* Search panel - centered command palette style */}
-                  <div className="fixed left-1/2 top-[15%] -translate-x-1/2 z-50 w-[90vw] max-w-[520px]">
+                  <div
+                    className="fixed left-1/2 top-[15%] -translate-x-1/2 z-50 w-[90vw] max-w-[520px]"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Qidiruv"
+                  >
                     <div className="bg-card rounded-2xl shadow-2xl border border-border overflow-hidden">
                       {/* Input */}
                       <div className="flex items-center gap-3 px-5 py-4">
@@ -123,10 +128,11 @@ const Header = () => {
                         </div>
                         <input
                           ref={inputRef}
-                          type="text"
+                          type="search"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Nima qidirmoqdasiz?"
+                          aria-label="Saytda qidirish"
                           className="flex-1 bg-transparent outline-none text-base font-body text-foreground placeholder:text-muted-foreground/60"
                         />
                         {searchQuery ? (
@@ -204,6 +210,8 @@ const Header = () => {
           <button
             className="lg:hidden text-primary-foreground p-2.5"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Menyuni yopish" : "Menyuni ochish"}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>

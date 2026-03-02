@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Calendar, Clock, Eye, Share2, Facebook, Twitter, MessageCircle, ArrowRight } from "lucide-react";
 import { groupStandings } from "@/data/mockData";
 import GroupStandings from "@/components/GroupStandings";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { useState } from "react";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -50,7 +51,7 @@ const buildArticle = (team: typeof allTeams[0], idx: number) => ({
 
 const relatedTeams = allTeams.slice(0, 6);
 
-const TeamArticlePage = () => {
+const TeamArticlePage = ({ standings }: { standings: StandingsResponse | null }) => {
   const params = useParams(); const id = params.id as string;
   const idx = parseInt(id || "0");
   const team = allTeams[idx];
@@ -138,7 +139,7 @@ const TeamArticlePage = () => {
         </div>
 
         <div className="lg:col-span-4 space-y-4">
-          <GroupStandings />
+          <GroupStandings data={standings} />
         </div>
       </div>
     </div>

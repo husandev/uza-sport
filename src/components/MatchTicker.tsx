@@ -2,9 +2,22 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-import { matchTickerData } from "@/data/mockData";
 
-const MatchTicker = () => {
+export interface TickerMatch {
+  id: number;
+  home: string;
+  away: string;
+  homeLogo: string;
+  awayLogo: string;
+  hScore: number | null;
+  aScore: number | null;
+  isLive: boolean;
+  isFinished: boolean;
+  minute: string | null;
+  time: string;
+}
+
+const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -68,15 +81,15 @@ const MatchTicker = () => {
     if (!el) return;
     pauseAutoScrollRef.current = true;
     if (atEnd) {
-      // At the end — scroll back to start
       el.scrollTo({ left: 0, behavior: "smooth" });
     } else {
-      // Not at end — scroll right
       const maxScroll = el.scrollWidth - el.clientWidth;
       const nextLeft = Math.min(el.scrollLeft + 300, maxScroll);
       el.scrollTo({ left: nextLeft, behavior: "smooth" });
     }
   };
+
+  if (matches.length === 0) return null;
 
   return (
     <div className="ticker-wrapper relative">
@@ -103,18 +116,18 @@ const MatchTicker = () => {
           }}
         >
           <div ref={innerRef} className="flex items-stretch gap-0 w-max">
-            {matchTickerData[0].matches.map((match) => (
+            {matches.map((match) => (
               <div
                 key={match.id}
                 className="flex items-center gap-3 px-4 py-2.5 border-r border-primary-foreground/10 cursor-pointer hover:bg-primary-foreground/5 transition-colors"
               >
                 <div className="flex flex-col items-center w-12">
-                  {match.live ? (
+                  {match.isLive ? (
                     <span className="text-highlight font-bold text-[11px] flex items-center gap-1">
                       <span className="live-dot" />
-                      {match.minute}
+                      {match.minute ?? "LIVE"}
                     </span>
-                  ) : match.hScore !== null ? (
+                  ) : match.isFinished ? (
                     <span className="text-primary-foreground/50 text-[10px] font-body">tugadi</span>
                   ) : (
                     <span className="text-primary-foreground/70 text-[11px] font-medium font-body">{match.time}</span>
@@ -123,16 +136,16 @@ const MatchTicker = () => {
 
                 <div className="flex flex-col text-[12px] leading-snug gap-0.5 font-body">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm">{match.hFlag}</span>
+                    <img src={match.homeLogo} alt={match.home} className="w-4 h-4 object-contain" />
                     <span className="text-primary-foreground/90 font-semibold min-w-[80px]">{match.home}</span>
-                    <span className={`font-bold min-w-[12px] text-center ${match.live ? "text-highlight" : "text-primary-foreground"}`}>
+                    <span className={`font-bold min-w-[12px] text-center ${match.isLive ? "text-highlight" : "text-primary-foreground"}`}>
                       {match.hScore ?? "–"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm">{match.aFlag}</span>
+                    <img src={match.awayLogo} alt={match.away} className="w-4 h-4 object-contain" />
                     <span className="text-primary-foreground/90 font-semibold min-w-[80px]">{match.away}</span>
-                    <span className={`font-bold min-w-[12px] text-center ${match.live ? "text-highlight" : "text-primary-foreground"}`}>
+                    <span className={`font-bold min-w-[12px] text-center ${match.isLive ? "text-highlight" : "text-primary-foreground"}`}>
                       {match.aScore ?? "–"}
                     </span>
                   </div>
@@ -142,7 +155,7 @@ const MatchTicker = () => {
           </div>
         </div>
 
-        {/* Right arrow — only when more content exists */}
+        {/* Right arrow */}
         {(canScrollRight || atEnd) && (
           <button
             onClick={handleArrowClick}

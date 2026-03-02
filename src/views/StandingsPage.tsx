@@ -2,12 +2,7 @@
 import { useState } from "react";
 import { Trophy, Target, Users } from "lucide-react";
 import { StandingsResponse, ScorersResponse } from "@/hooks/queries/useStandings";
-
-const formatDate = (iso: string) => {
-  const d = new Date(iso);
-  const months = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-};
+import { teamNamesUzByName } from "@/data/teamNamesUzByName";
 
 interface Props {
   data: StandingsResponse | null;
@@ -17,33 +12,30 @@ interface Props {
 const StandingsPage = ({ data, scorers }: Props) => {
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
-  const groups = data?.standings
-    .filter((s) => s.type === "TOTAL")
-    .map((s) => ({
-      group: s.group.replace("Group ", ""),
-      teams: s.table
-        .filter((t) => t.team.name !== null)
-        .map((t) => ({
-          pos: t.position,
-          crest: t.team.crest,
-          name: t.team.shortName ?? t.team.name ?? "—",
-          tla: t.team.tla ?? "",
-          p: t.playedGames,
-          w: t.won,
-          d: t.draw,
-          l: t.lost,
-          gollar: `${t.goalsFor}:${t.goalsAgainst}`,
-          gd: t.goalDifference >= 0 ? `+${t.goalDifference}` : `${t.goalDifference}`,
-          pts: t.points,
-          isUzb: t.team.tla === "UZB",
-        })),
-    })) ?? [];
+  const groups = data?.response[0]?.league.standings.map((groupArr) => ({
+    group: groupArr[0]?.group.replace("Group ", "") ?? "",
+    teams: groupArr
+      .filter((t) => t.team.name !== null)
+      .map((t) => ({
+        pos: t.rank,
+        crest: t.team.logo,
+        name: teamNamesUzByName[t.team.name] ?? t.team.name,
+        teamName: t.team.name,
+        p: t.all.played,
+        w: t.all.win,
+        d: t.all.draw,
+        l: t.all.lose,
+        gollar: `${t.all.goals.for}:${t.all.goals.against}`,
+        gd: t.goalsDiff >= 0 ? `+${t.goalsDiff}` : `${t.goalsDiff}`,
+        pts: t.points,
+        isUzb: t.team.name === "Uzbekistan",
+      })),
+  })) ?? [];
 
   const allGroups = groups.map((g) => g.group);
   const filtered = selectedGroup ? groups.filter((g) => g.group === selectedGroup) : groups;
 
-  const season = data?.season ?? null;
-  const scorerList = scorers?.scorers ?? [];
+  const scorerList = scorers?.response.slice(0, 10) ?? [];
 
   return (
     <div className="container pt-4 pb-8">
@@ -120,7 +112,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
                           const isQualify = i < 2;
                           return (
                             <tr
-                              key={`${g.group}-${team.pos}-${team.name}`}
+                              key={`${g.group}-${team.pos}-${team.teamName}`}
                               className={`border-t border-border/30 hover:bg-muted/40 transition-colors cursor-pointer ${
                                 team.isUzb ? "bg-primary/5" : ""
                               }`}
@@ -190,7 +182,8 @@ const StandingsPage = ({ data, scorers }: Props) => {
                 </div>
               ) : (
                 scorerList.map((scorer, i) => {
-                  const isUzb = scorer.team.tla === "UZB";
+                  const stat = scorer.statistics[0];
+                  const isUzb = stat?.team.name === "Uzbekistan";
                   return (
                     <div
                       key={scorer.player.id}
@@ -203,19 +196,21 @@ const StandingsPage = ({ data, scorers }: Props) => {
                       }`}>
                         {i + 1}
                       </span>
-                      {scorer.team.crest && (
-                        <img src={scorer.team.crest} alt={scorer.team.name} className="w-5 h-5 object-contain" />
+                      {stat?.team.logo && (
+                        <img src={stat.team.logo} alt={stat.team.name} className="w-5 h-5 object-contain" />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className={`text-[13px] font-semibold truncate ${isUzb ? "text-primary" : "text-foreground"}`}>
                           {scorer.player.name}
                         </div>
-                        <div className="text-[11px] text-muted-foreground">{scorer.team.shortName}</div>
+                        <div className="text-[11px] text-muted-foreground">
+                          {stat ? (teamNamesUzByName[stat.team.name] ?? stat.team.name) : ""}
+                        </div>
                       </div>
                       <div className="flex items-center gap-3 text-[12px]">
-                        <span className="font-bold text-foreground">{scorer.goals} ⚽</span>
-                        {scorer.assists !== null && (
-                          <span className="text-muted-foreground">{scorer.assists} 🅰️</span>
+                        <span className="font-bold text-foreground">{stat?.goals.total ?? 0} ⚽</span>
+                        {stat?.goals.assists !== null && stat?.goals.assists !== undefined && (
+                          <span className="text-muted-foreground">{stat.goals.assists} 🅰️</span>
                         )}
                       </div>
                     </div>
@@ -246,27 +241,12 @@ const StandingsPage = ({ data, scorers }: Props) => {
               </div>
               <div className="flex justify-between border-t border-border/30 pt-3">
                 <span className="text-muted-foreground">Boshlanishi</span>
-                <span className="font-semibold text-foreground">
-                  {season ? formatDate(season.startDate) : "11 iyun 2026"}
-                </span>
+                <span className="font-semibold text-foreground">11 iyun 2026</span>
               </div>
               <div className="flex justify-between border-t border-border/30 pt-3">
                 <span className="text-muted-foreground">Final</span>
-                <span className="font-semibold text-foreground">
-                  {season ? formatDate(season.endDate) : "19 iyul 2026"}
-                </span>
+                <span className="font-semibold text-foreground">19 iyul 2026</span>
               </div>
-              {season?.winner && (
-                <div className="flex justify-between border-t border-border/30 pt-3">
-                  <span className="text-muted-foreground">Chempion</span>
-                  <span className="flex items-center gap-1.5 font-semibold text-foreground">
-                    {season.winner.crest && (
-                      <img src={season.winner.crest} alt={season.winner.name} className="w-4 h-4 object-contain" />
-                    )}
-                    {season.winner.name}
-                  </span>
-                </div>
-              )}
               <div className="flex justify-between border-t border-border/30 pt-3">
                 <span className="text-muted-foreground">Mezbonlar</span>
                 <span className="font-semibold text-foreground">🇺🇸🇲🇽🇨🇦</span>

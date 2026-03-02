@@ -585,5 +585,39 @@ Komponentda mockData ni hook bilan almashtir, import ni keyin olib tashlash mumk
 
 ---
 
+---
+
+## 21. FOOTBALL API (API-Football v3)
+
+### Endpointlar (`src/lib/football.ts` — server-side only):
+- Base URL: `https://v3.football.api-sports.io`
+- Auth header: `x-apisports-key` (env: `API_FOOTBALL_KEY`)
+- Standings: `GET /standings?league=1&season=2026`
+- Top scorers: `GET /players/topscorers?league=1&season=2026`
+- League ID = 1 (FIFA World Cup), Season = 2026
+
+### Response tuzilmasi:
+```ts
+// Standings
+response[0].league.standings[][]  // array of arrays (har biri = 1 guruh)
+// Har entry:
+{ rank, team: { id, name, logo }, points, goalsDiff, group,
+  all: { played, win, draw, lose, goals: { for, against } } }
+
+// Top scorers
+response[] → { player: { id, name }, statistics: [{ team: { name, logo }, goals: { total, assists } }] }
+```
+
+### Jamoa nomlarini o'zbeklashtirish:
+- `src/data/teamNamesUzByName.ts` — ingliz nomi → o'zbekcha (API-Football uchun)
+- `src/data/teamNamesUz.ts` — TLA → o'zbekcha (football-data.org uchun, arxiv)
+- Uzbekistanni aniqlash: `team.name === "Uzbekistan"`
+
+### Data oqimi:
+Server component (`src/app/*/page.tsx`) → `getStandings()` / `getScorers()` → props orqali view ga → `GroupStandings` / `StandingsPage` ga uzatiladi.
+TanStack Query hook ishlatilmaydi (server-side SSR).
+
+---
+
 *Bu fayl har bir yangi task qo'shilganda yangilanishi shart.*
-*Oxirgi yangilanish: TanStack Query + API infratuzilmasi qo'shildi.*
+*Oxirgi yangilanish: API-Football v3 ga o'tildi (football-data.org o'chirildi).*

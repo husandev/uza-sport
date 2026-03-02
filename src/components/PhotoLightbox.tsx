@@ -22,12 +22,31 @@ const PhotoLightbox = ({
   const [zoom, setZoom] = useState(1);
   const [playing, setPlaying] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const activeThumbRef = useRef<HTMLButtonElement>(null);
   const photo = photos[index];
 
-  useEffect(() => { setZoom(1); setImgLoaded(false); }, [index]);
+  useEffect(() => {
+    setZoom(1);
+    setImgLoaded(false);
+    setImgError(false);
+    // Check if image is already cached by the browser
+    const t = setTimeout(() => {
+      if (imgRef.current?.complete && imgRef.current?.naturalWidth > 0) {
+        setImgLoaded(true);
+      }
+    }, 0);
+    return () => clearTimeout(t);
+  }, [index]);
+
+  // Auto-scroll thumbnail strip to keep active thumb visible
+  useEffect(() => {
+    activeThumbRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [index]);
 
   useEffect(() => {
     if (playing) {
@@ -91,8 +110,28 @@ const PhotoLightbox = ({
         </button>
 
         <div className="relative flex items-center justify-center" onClick={(e) => e.stopPropagation()} style={{ animation: "lightbox-fade-in 0.25s ease-out" }}>
-          {!imgLoaded && <div className="absolute inset-0 flex items-center justify-center"><div className="w-10 h-10 rounded-full border-2 border-white/20 border-t-white/80 animate-spin" /></div>}
-          <img key={index} src={photo.src} alt={photo.caption} className="max-w-[85vw] max-h-[72vh] rounded-lg transition-transform duration-200 ease-out select-none" style={{ transform: `scale(${zoom})`, opacity: imgLoaded ? 1 : 0 }} onLoad={() => setImgLoaded(true)} draggable={false} />
+          {!imgLoaded && !imgError && (
+            <div className="flex items-center justify-center w-[85vw] max-w-[600px] h-[50vh]">
+              <div className="w-10 h-10 rounded-full border-2 border-white/20 border-t-white/80 animate-spin" />
+            </div>
+          )}
+          {imgError && (
+            <div className="flex flex-col items-center justify-center w-[85vw] max-w-[600px] h-[50vh] gap-3 text-white/40">
+              <Camera size={48} />
+              <span className="text-sm font-body">No photo</span>
+            </div>
+          )}
+          <img
+            ref={imgRef}
+            key={index}
+            src={photo.src}
+            alt={photo.caption}
+            className="max-w-[85vw] max-h-[72vh] rounded-lg transition-transform duration-200 ease-out select-none"
+            style={{ transform: `scale(${zoom})`, opacity: imgLoaded && !imgError ? 1 : 0, position: imgError ? "absolute" : "relative" }}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => { setImgError(true); setImgLoaded(true); }}
+            draggable={false}
+          />
         </div>
 
         <button onClick={(e) => { e.stopPropagation(); setPlaying(false); onNext(); }} className="absolute right-3 sm:right-5 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/25 transition-colors">
@@ -107,9 +146,22 @@ const PhotoLightbox = ({
         </div>
         <div className="flex items-center justify-center gap-1.5 mt-3 overflow-x-auto max-w-full pb-1">
           {photos.map((p, i) => (
-            <button key={i} onClick={() => setPlaying(false)} onClickCapture={() => { const event = new CustomEvent("lightbox-goto", { detail: i }); window.dispatchEvent(event); }}
-              className={`w-10 h-10 rounded-md overflow-hidden flex-shrink-0 border-2 transition-all duration-200 ${i === index ? "border-white scale-110" : "border-transparent opacity-50 hover:opacity-80"}`}>
-              <img src={p.src} alt="" className="w-full h-full object-cover" />
+            <button key={i} ref={i === index ? activeThumbRef : undefined} onClick={() => setPlaying(false)} onClickCapture={() => { const event = new CustomEvent("lightbox-goto", { detail: i }); window.dispatchEvent(event); }}
+              className={`w-10 h-10 rounded-md overflow-hidden flex-shrink-0 border-2 transition-all duration-200 bg-white/10 ${i === index ? "border-white scale-110" : "border-transparent opacity-50 hover:opacity-80"}`}>
+              <img
+                src={p.src}
+                alt=""
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.style.display = "none";
+                  const placeholder = target.nextElementSibling as HTMLElement | null;
+                  if (placeholder) placeholder.style.display = "flex";
+                }}
+              />
+              <span className="w-full h-full items-center justify-center text-white/40 text-[8px]" style={{ display: "none" }}>
+                <Camera size={12} />
+              </span>
             </button>
           ))}
         </div>

@@ -12,8 +12,9 @@ import TeamsSection from "@/components/TeamsSection";
 import SidebarArticles from "@/components/SidebarArticles";
 
 import { StandingsResponse } from "@/hooks/queries/useStandings";
+import { NextMatchData } from "@/components/MatchCountdown";
 
-const Index = ({ standings }: { standings: StandingsResponse | null }) => {
+const Index = ({ standings, nextMatch }: { standings: StandingsResponse | null; nextMatch?: NextMatchData | null }) => {
   return (
     <>
       <div className="container pt-0 pb-4 space-y-4">
@@ -43,7 +44,7 @@ const Index = ({ standings }: { standings: StandingsResponse | null }) => {
 
           {/* Center: Articles carousel + Video + Stadiums */}
           <div className="lg:col-span-6 space-y-4">
-            <MatchCountdown />
+            <MatchCountdown nextMatch={nextMatch} />
             <SidebarArticles />
             
             <VideoPosts />

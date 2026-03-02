@@ -1,264 +1,226 @@
 "use client";
 import { useState } from "react";
 import GroupStandings from "@/components/GroupStandings";
-import { Circle, Timer, CheckCircle2 } from "lucide-react";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
+import { FixturesResponse, AFFixture } from "@/hooks/queries/useFixtures";
+import { teamNamesUzByName } from "@/data/teamNamesUzByName";
+import { Circle } from "lucide-react";
 
-type Match = {
-  id: number;
-  home: string;
-  away: string;
-  hFlag: string;
-  aFlag: string;
-  hScore: number | null;
-  aScore: number | null;
-  time: string;
-  live: boolean;
-  minute?: string;
-  stadium?: string;
-};
+const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "BT", "P", "INT", "SUSP", "LIVE"];
+const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
 
-type MatchDay = {
-  round: string;
-  date: string;
-  group?: string;
-  matches: Match[];
-};
+const months = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
 
-const matchDays: MatchDay[] = [
-  {
-    round: "1-tur",
-    date: "11 iyun 2026",
-    group: "A guruh",
-    matches: [
-      { id: 1, home: "Meksika", away: "JAR", hFlag: "🇲🇽", aFlag: "🇿🇦", hScore: 2, aScore: 1, time: "tugadi", live: false, stadium: "Azteca Stadium" },
-      { id: 2, home: "Janubiy Koreya", away: "UEFA pleyoff D", hFlag: "🇰🇷", aFlag: "🏳️", hScore: 0, aScore: 0, time: "tugadi", live: false, stadium: "Rose Bowl" },
-    ],
-  },
-  {
-    round: "1-tur",
-    date: "11 iyun 2026",
-    group: "B guruh",
-    matches: [
-      { id: 3, home: "Kanada", away: "UEFA pleyoff A", hFlag: "🇨🇦", aFlag: "🏳️", hScore: 3, aScore: 0, time: "tugadi", live: false, stadium: "BMO Field" },
-      { id: 4, home: "Shveytsariya", away: "Qatar", hFlag: "🇨🇭", aFlag: "🇶🇦", hScore: 1, aScore: 1, time: "tugadi", live: false, stadium: "MetLife Stadium" },
-    ],
-  },
-  {
-    round: "1-tur",
-    date: "12 iyun 2026",
-    group: "K guruh",
-    matches: [
-      { id: 5, home: "Portugaliya", away: "Kolumbiya", hFlag: "🇵🇹", aFlag: "🇨🇴", hScore: 2, aScore: 2, time: "tugadi", live: false, stadium: "Lincoln Financial Field" },
-      { id: 6, home: "O'zbekiston", away: "FIFA pleyoff 1", hFlag: "🇺🇿", aFlag: "🏳️", hScore: 3, aScore: 1, time: "tugadi", live: false, stadium: "Hard Rock Stadium" },
-    ],
-  },
-  {
-    round: "2-tur",
-    date: "15 iyun 2026",
-    group: "K guruh",
-    matches: [
-      { id: 7, home: "O'zbekiston", away: "Argentina", hFlag: "🇺🇿", aFlag: "🇦🇷", hScore: 1, aScore: 2, time: "2-taym", live: true, minute: "67'", stadium: "MetLife Stadium" },
-    ],
-  },
-  {
-    round: "2-tur",
-    date: "15 iyun 2026",
-    group: "E guruh",
-    matches: [
-      { id: 8, home: "Belgiya", away: "Xorvatiya", hFlag: "🇧🇪", aFlag: "🇭🇷", hScore: 1, aScore: 0, time: "1-taym", live: true, minute: "34'", stadium: "SoFi Stadium" },
-      { id: 9, home: "Portugaliya", away: "Urugvay", hFlag: "🇵🇹", aFlag: "🇺🇾", hScore: 0, aScore: 0, time: "1-taym", live: true, minute: "12'", stadium: "Lumen Field" },
-    ],
-  },
-  {
-    round: "2-tur",
-    date: "15 iyun 2026",
-    group: "C guruh",
-    matches: [
-      { id: 10, home: "Fransiya", away: "Ispaniya", hFlag: "🇫🇷", aFlag: "🇪🇸", hScore: 3, aScore: 1, time: "tugadi", live: false, stadium: "AT&T Stadium" },
-      { id: 11, home: "Angliya", away: "Italiya", hFlag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", aFlag: "🇮🇹", hScore: 2, aScore: 2, time: "tugadi", live: false, stadium: "NRG Stadium" },
-    ],
-  },
-  {
-    round: "2-tur",
-    date: "16 iyun 2026",
-    group: "D guruh",
-    matches: [
-      { id: 12, home: "AQSh", away: "Paragvay", hFlag: "🇺🇸", aFlag: "🇵🇾", hScore: null, aScore: null, time: "23:00", live: false, stadium: "MetLife Stadium" },
-      { id: 13, home: "Avstraliya", away: "UEFA pleyoff C", hFlag: "🇦🇺", aFlag: "🏳️", hScore: null, aScore: null, time: "20:00", live: false, stadium: "Levi's Stadium" },
-    ],
-  },
-  {
-    round: "2-tur",
-    date: "16 iyun 2026",
-    group: "F guruh",
-    matches: [
-      { id: 14, home: "Braziliya", away: "Germaniya", hFlag: "🇧🇷", aFlag: "🇩🇪", hScore: null, aScore: null, time: "02:00", live: false, stadium: "Rose Bowl" },
-      { id: 15, home: "Meksika", away: "Kamerun", hFlag: "🇲🇽", aFlag: "🇨🇲", hScore: null, aScore: null, time: "20:00", live: false, stadium: "Azteca Stadium" },
-    ],
-  },
-];
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
 
-const rounds = ["Barcha turlar", "1-tur", "2-tur", "3-tur"];
+function formatTime(iso: string) {
+  const d = new Date(iso);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
 
-const ResultsPage = () => {
-  const [selectedRound, setSelectedRound] = useState("Barcha turlar");
+function formatRound(round: string) {
+  if (round.startsWith("Group Stage - ")) return `${round.replace("Group Stage - ", "")}-tur`;
+  const map: Record<string, string> = {
+    "Round of 32": "1/32 final",
+    "Round of 16": "1/8 final",
+    "Quarter-finals": "Chorak final",
+    "Semi-finals": "Yarim final",
+    "3rd Place Final": "Bronza uchun",
+    "Final": "Final",
+  };
+  return map[round] ?? round;
+}
 
-  const filtered = selectedRound === "Barcha turlar"
-    ? matchDays
-    : matchDays.filter((md) => md.round === selectedRound);
+function getLiveLabel(fixture: AFFixture) {
+  const { short, elapsed } = fixture.fixture.status;
+  if (short === "HT") return "Tanaffus";
+  if (elapsed !== null) return `${elapsed}'`;
+  return "LIVE";
+}
+
+function getDateKey(iso: string) {
+  return iso.slice(0, 10);
+}
+
+interface Props {
+  standings: StandingsResponse | null;
+  fixtures: FixturesResponse | null;
+}
+
+const ResultsPage = ({ standings, fixtures }: Props) => {
+  const allFixtures = fixtures?.response ?? [];
+
+  // Collect unique rounds in order
+  const roundOrder = Array.from(new Set(allFixtures.map((f) => f.league.round)));
+
+  const [selectedRound, setSelectedRound] = useState<string | null>(null);
+
+  const activeRound = selectedRound ?? roundOrder[0] ?? null;
+
+  const filtered = activeRound
+    ? allFixtures.filter((f) => f.league.round === activeRound)
+    : allFixtures;
+
+  // Group by date
+  const byDate: Record<string, AFFixture[]> = {};
+  filtered.forEach((f) => {
+    const key = getDateKey(f.fixture.date);
+    if (!byDate[key]) byDate[key] = [];
+    byDate[key].push(f);
+  });
+  const dateGroups = Object.entries(byDate).sort(([a], [b]) => a.localeCompare(b));
 
   return (
-    <>
-
-
-      <div className="container pt-4 pb-8">
-        <div className="mb-5">
-          <div className="section-title">
-            <span>Natijalar va taqvim</span>
-          </div>
+    <div className="container pt-4 pb-8">
+      <div className="mb-5">
+        <div className="section-title">
+          <span>Natijalar va taqvim</span>
         </div>
+      </div>
 
-        {/* Round filter tabs */}
+      {/* Round filter tabs */}
+      {roundOrder.length > 0 && (
         <div className="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1">
-          {rounds.map((r) => (
+          {roundOrder.map((r) => (
             <button
               key={r}
               onClick={() => setSelectedRound(r)}
               className={`px-4 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap transition-colors ${
-                r === selectedRound
+                r === activeRound
                   ? "bg-primary text-primary-foreground"
                   : "bg-card text-muted-foreground hover:bg-muted border border-border"
               }`}
             >
-              {r}
+              {formatRound(r)}
             </button>
           ))}
         </div>
+      )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          {/* Left: Match results */}
-          <div className="lg:col-span-8 space-y-4">
-            {filtered.map((day, dayIdx) => (
-              <div key={dayIdx} className="bg-card rounded-2xl shadow-sm overflow-hidden">
-                {/* Day/Group header */}
-                <div className="px-5 py-3 border-b border-border flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-bold text-foreground">{day.date}</span>
-                    {day.group && (
-                      <>
-                        <span className="text-muted-foreground/40">|</span>
-                        <span className="text-[12px] font-semibold text-primary">{day.group}</span>
-                      </>
-                    )}
-                  </div>
-                  <span className="text-[11px] font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
-                    {day.round}
-                  </span>
-                </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* Left: Match results */}
+        <div className="lg:col-span-8 space-y-4">
+          {!fixtures && (
+            <div className="bg-card rounded-2xl shadow-sm p-12 text-center">
+              <p className="text-muted-foreground text-[14px]">Ma'lumot yuklanmadi</p>
+            </div>
+          )}
 
-                {/* Matches */}
-                <div className="divide-y divide-border/50">
-                  {day.matches.map((match) => {
-                    const isFinished = match.time === "tugadi";
-                    const isLive = match.live;
-                    const isScheduled = !isFinished && !isLive;
+          {dateGroups.map(([dateKey, dayFixtures]) => (
+            <div key={dateKey} className="bg-card rounded-2xl shadow-sm overflow-hidden">
+              {/* Day header */}
+              <div className="px-5 py-3 border-b border-border flex items-center justify-between">
+                <span className="text-[13px] font-bold text-foreground">
+                  {formatDate(dayFixtures[0].fixture.date)}
+                </span>
+                <span className="text-[11px] font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
+                  {formatRound(dayFixtures[0].league.round)}
+                </span>
+              </div>
 
-                    return (
-                      <div
-                        key={match.id}
-                        className={`px-5 py-4 hover:bg-muted/30 transition-colors cursor-pointer ${
-                          isLive ? "bg-destructive/5" : ""
-                        }`}
-                      >
-                        <div className="flex items-center gap-4">
-                          {/* Status indicator */}
-                          <div className="w-[60px] flex-shrink-0 text-center">
-                            {isLive && (
-                              <div className="flex flex-col items-center gap-0.5">
-                                <span className="flex items-center gap-1 text-[10px] font-bold text-destructive uppercase">
-                                  <Circle size={6} className="fill-destructive animate-pulse" />
-                                  LIVE
-                                </span>
-                                <span className="text-[11px] font-semibold text-destructive">{match.minute}</span>
-                              </div>
-                            )}
-                            {isFinished && (
-                              <span className="text-[11px] font-medium text-muted-foreground">Tugadi</span>
-                            )}
-                            {isScheduled && (
-                              <span className="text-[13px] font-bold text-foreground">{match.time}</span>
-                            )}
-                          </div>
+              {/* Matches */}
+              <div className="divide-y divide-border/50">
+                {dayFixtures.map((f) => {
+                  const status = f.fixture.status.short;
+                  const isLive = LIVE_STATUSES.includes(status);
+                  const isFinished = FINISHED_STATUSES.includes(status);
+                  const isScheduled = !isLive && !isFinished;
+                  const homeName = teamNamesUzByName[f.teams.home.name] ?? f.teams.home.name;
+                  const awayName = teamNamesUzByName[f.teams.away.name] ?? f.teams.away.name;
 
-                          {/* Teams & Score */}
-                          <div className="flex-1 min-w-0">
-                            {/* Home team */}
-                            <div className="flex items-center justify-between mb-1.5">
-                              <div className="flex items-center gap-2.5 min-w-0">
-                                <span className="text-base">{match.hFlag}</span>
-                                <span className={`text-[14px] font-semibold truncate ${
-                                  isFinished && match.hScore !== null && match.aScore !== null && match.hScore > match.aScore
-                                    ? "text-foreground"
-                                    : "text-foreground/80"
-                                }`}>
-                                  {match.home}
-                                </span>
-                              </div>
-                              <span className={`text-[18px] font-extrabold tabular-nums min-w-[28px] text-right ${
-                                isLive ? "text-destructive" : match.hScore !== null ? "text-foreground" : "text-muted-foreground"
-                              }`}>
-                                {match.hScore !== null ? match.hScore : "-"}
+                  return (
+                    <div
+                      key={f.fixture.id}
+                      className={`px-5 py-4 hover:bg-muted/30 transition-colors cursor-pointer ${isLive ? "bg-destructive/5" : ""}`}
+                    >
+                      <div className="flex items-center gap-4">
+                        {/* Status */}
+                        <div className="w-[60px] flex-shrink-0 text-center">
+                          {isLive && (
+                            <div className="flex flex-col items-center gap-0.5">
+                              <span className="flex items-center gap-1 text-[10px] font-bold text-destructive uppercase">
+                                <Circle size={6} className="fill-destructive animate-pulse" />
+                                LIVE
+                              </span>
+                              <span className="text-[11px] font-semibold text-destructive">
+                                {getLiveLabel(f)}
                               </span>
                             </div>
-                            {/* Away team */}
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2.5 min-w-0">
-                                <span className="text-base">{match.aFlag}</span>
-                                <span className={`text-[14px] font-semibold truncate ${
-                                  isFinished && match.hScore !== null && match.aScore !== null && match.aScore > match.hScore
-                                    ? "text-foreground"
-                                    : "text-foreground/80"
-                                }`}>
-                                  {match.away}
-                                </span>
-                              </div>
-                              <span className={`text-[18px] font-extrabold tabular-nums min-w-[28px] text-right ${
-                                isLive ? "text-destructive" : match.aScore !== null ? "text-foreground" : "text-muted-foreground"
-                              }`}>
-                                {match.aScore !== null ? match.aScore : "-"}
-                              </span>
-                            </div>
-                          </div>
+                          )}
+                          {isFinished && (
+                            <span className="text-[11px] font-medium text-muted-foreground">Tugadi</span>
+                          )}
+                          {isScheduled && (
+                            <span className="text-[13px] font-bold text-foreground">{formatTime(f.fixture.date)}</span>
+                          )}
                         </div>
 
-                        {/* Stadium */}
-                        {match.stadium && (
-                          <div className="mt-2 ml-[76px] text-[11px] text-muted-foreground font-body">
-                            🏟️ {match.stadium}
+                        {/* Teams & Score */}
+                        <div className="flex-1 min-w-0">
+                          {/* Home */}
+                          <div className="flex items-center justify-between mb-1.5">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <img src={f.teams.home.logo} alt={homeName} className="w-5 h-5 object-contain flex-shrink-0" />
+                              <span className={`text-[14px] font-semibold truncate ${
+                                isFinished && f.teams.home.winner ? "text-foreground" : "text-foreground/80"
+                              }`}>
+                                {homeName}
+                              </span>
+                            </div>
+                            <span className={`text-[18px] font-extrabold tabular-nums min-w-[28px] text-right ${
+                              isLive ? "text-destructive" : f.goals.home !== null ? "text-foreground" : "text-muted-foreground"
+                            }`}>
+                              {f.goals.home !== null ? f.goals.home : "-"}
+                            </span>
                           </div>
-                        )}
+                          {/* Away */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <img src={f.teams.away.logo} alt={awayName} className="w-5 h-5 object-contain flex-shrink-0" />
+                              <span className={`text-[14px] font-semibold truncate ${
+                                isFinished && f.teams.away.winner ? "text-foreground" : "text-foreground/80"
+                              }`}>
+                                {awayName}
+                              </span>
+                            </div>
+                            <span className={`text-[18px] font-extrabold tabular-nums min-w-[28px] text-right ${
+                              isLive ? "text-destructive" : f.goals.away !== null ? "text-foreground" : "text-muted-foreground"
+                            }`}>
+                              {f.goals.away !== null ? f.goals.away : "-"}
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
 
-            {filtered.length === 0 && (
-              <div className="bg-card rounded-2xl shadow-sm p-12 text-center">
-                <p className="text-muted-foreground text-[14px]">Bu turda hali o'yinlar yo'q</p>
+                      {/* Venue */}
+                      {f.fixture.venue.name && (
+                        <div className="mt-2 ml-[76px] text-[11px] text-muted-foreground font-body">
+                          🏟️ {f.fixture.venue.name}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-            )}
-          </div>
+            </div>
+          ))}
 
-          {/* Right: Standings */}
-          <div className="lg:col-span-4 space-y-4">
-            <GroupStandings />
-          </div>
+          {fixtures && dateGroups.length === 0 && (
+            <div className="bg-card rounded-2xl shadow-sm p-12 text-center">
+              <p className="text-muted-foreground text-[14px]">Bu turda hali o'yinlar yo'q</p>
+            </div>
+          )}
+        </div>
+
+        {/* Right: Standings */}
+        <div className="lg:col-span-4 space-y-4">
+          <GroupStandings data={standings} />
         </div>
       </div>
-
-    </>
+    </div>
   );
 };
 

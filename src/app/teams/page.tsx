@@ -1,5 +1,7 @@
 import TeamsPage from "@/views/TeamsPage";
+import { getStandings } from "@/lib/football";
 
-export default function TeamsRoute() {
-  return <TeamsPage />;
+export default async function TeamsRoute() {
+  const standings = await getStandings();
+  return <TeamsPage standings={standings} />;
 }

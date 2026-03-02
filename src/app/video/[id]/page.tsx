@@ -1,5 +1,7 @@
 import VideoArticlePage from "@/views/VideoArticlePage";
+import { getStandings } from "@/lib/football";
 
-export default function VideoRoute() {
-  return <VideoArticlePage />;
+export default async function VideoRoute() {
+  const standings = await getStandings();
+  return <VideoArticlePage standings={standings} />;
 }

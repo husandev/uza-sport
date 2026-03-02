@@ -2,31 +2,30 @@
 
 import Link from "next/link";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
+import { teamNamesUzByName } from "@/data/teamNamesUzByName";
 
 interface Props {
   data?: StandingsResponse | null;
 }
 
 const GroupStandings = ({ data = null }: Props) => {
-  const groups = data?.standings
-    .filter((s) => s.type === "TOTAL")
-    .map((s) => ({
-      group: s.group.replace("Group ", ""),
-      teams: s.table
-        .filter((t) => t.team.name !== null)
-        .map((t) => ({
-          pos: t.position,
-          name: t.team.shortName ?? t.team.name ?? "—",
-          crest: t.team.crest,
-          p: t.playedGames,
-          w: t.won,
-          d: t.draw,
-          l: t.lost,
-          gd: t.goalDifference >= 0 ? `+${t.goalDifference}` : `${t.goalDifference}`,
-          pts: t.points,
-          isUzb: t.team.tla === "UZB",
-        })),
-    })) ?? [];
+  const groups = data?.response[0]?.league.standings.map((groupArr) => ({
+    group: groupArr[0]?.group.replace("Group ", "") ?? "",
+    teams: groupArr
+      .filter((t) => t.team.name !== null)
+      .map((t) => ({
+        pos: t.rank,
+        name: teamNamesUzByName[t.team.name] ?? t.team.name,
+        crest: t.team.logo,
+        p: t.all.played,
+        w: t.all.win,
+        d: t.all.draw,
+        l: t.all.lose,
+        gd: t.goalsDiff >= 0 ? `+${t.goalsDiff}` : `${t.goalsDiff}`,
+        pts: t.points,
+        isUzb: t.team.name === "Uzbekistan",
+      })),
+  })) ?? [];
 
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">

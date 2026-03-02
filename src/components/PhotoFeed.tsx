@@ -1,65 +1,35 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import photo1 from "@/assets/photo-1.jpg";
-import photo2 from "@/assets/photo-2.jpg";
-import photo3 from "@/assets/photo-3.jpg";
-import photo4 from "@/assets/photo-4.jpg";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
-import hero5 from "@/assets/hero-5.jpg";
-import stadium1 from "@/assets/stadium-1.jpg";
-import stadium2 from "@/assets/stadium-2.jpg";
-import stadium3 from "@/assets/stadium-3.jpg";
-import footballer1 from "@/assets/footballer-1.png";
-import footballer2 from "@/assets/footballer-2.jpg";
-import footballer3 from "@/assets/footballer-3.jpg";
-import footballer4 from "@/assets/footballer-4.jpg";
-import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/gallery-2.jpg";
-import gallery3 from "@/assets/gallery-3.jpg";
-import gallery4 from "@/assets/gallery-4.jpg";
-import gallery5 from "@/assets/gallery-5.jpg";
-import gallery6 from "@/assets/gallery-6.jpg";
-import gallery7 from "@/assets/gallery-7.jpg";
-import gallery8 from "@/assets/gallery-8.jpg";
-import { Camera } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Camera, Loader2 } from "lucide-react";
 import Link from "next/link";
 import PhotoLightbox from "@/components/PhotoLightbox";
+import type { PhotosResponse } from "@/hooks/queries/usePhotos";
 
-const photos = [
-  { src: photo1.src, caption: "O'zbekiston — Argentina o'yinidan" },
-  { src: stadium1.src, caption: "MetLife stadioni" },
-  { src: hero1.src, caption: "Terma jamoa safga tizilmoqda" },
-  { src: gallery1.src, caption: "Muxlislar bayramda" },
-  { src: photo2.src, caption: "Stadion tayyorligi" },
-  { src: footballer1.src, caption: "Shomurodov intervyuda" },
-  { src: hero2.src, caption: "Goldan keyingi shodlik" },
-  { src: gallery2.src, caption: "Kechki mashg'ulot" },
-  { src: stadium2.src, caption: "Rose Bowl stadioni" },
-  { src: gallery3.src, caption: "G'alaba kubogi" },
-  { src: photo3.src, caption: "Muxlislar kutib olishi" },
-  { src: gallery4.src, caption: "Zarba lahzasi" },
-  { src: hero3.src, caption: "Yarim final lahzalari" },
-  { src: footballer2.src, caption: "Xusanov mashg'ulotda" },
-  { src: gallery5.src, caption: "O'yin yuqoridan" },
-  { src: hero4.src, caption: "Muxlislar bayroqlari" },
-  { src: gallery6.src, caption: "Jamoa ruhi" },
-  { src: stadium3.src, caption: "AT&T stadioni" },
-  { src: footballer3.src, caption: "Urunov o'yin oldidan" },
-  { src: gallery7.src, caption: "Stadion quyosh botishida" },
-  { src: photo4.src, caption: "Terma jamoa mashg'uloti" },
-  { src: gallery8.src, caption: "Futbol to'pi" },
-  { src: hero5.src, caption: "Volontyorlar tayyorlanmoqda" },
-  { src: footballer4.src, caption: "Shukurov g'alabani nishonlamoqda" },
-];
+async function fetchPhotos(): Promise<PhotosResponse> {
+  const res = await fetch(
+    "https://api.uza.uz/api/v1/photo-bank?category_id=36&per_page=24&sort=-photo_bank.id%20&_f=json&_l=oz&page=1"
+  );
+  if (!res.ok) throw new Error(`API Error: ${res.status}`);
+  return res.json();
+}
 
 const PhotoFeed = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const columns: typeof photos[] = [[], [], [], []];
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["photos-feed"],
+    queryFn: fetchPhotos,
+  });
+
+  const photos =
+    data?.data.map((item) => ({
+      src: item.files.thumbnails.normal.src,
+      caption: item.files.description,
+    })) ?? [];
+
+  const columns: { src: string; caption: string }[][] = [[], [], [], []];
   photos.forEach((photo, i) => {
     columns[i % 4].push(photo);
   });
@@ -67,8 +37,14 @@ const PhotoFeed = () => {
   const getFlatIndex = (colIdx: number, rowIdx: number) => rowIdx * 4 + colIdx;
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-  const goPrev = useCallback(() => setLightboxIndex((i) => (i !== null ? (i - 1 + photos.length) % photos.length : null)), []);
-  const goNext = useCallback(() => setLightboxIndex((i) => (i !== null ? (i + 1) % photos.length : null)), []);
+  const goPrev = useCallback(
+    () => setLightboxIndex((i) => (i !== null ? (i - 1 + photos.length) % photos.length : null)),
+    [photos.length]
+  );
+  const goNext = useCallback(
+    () => setLightboxIndex((i) => (i !== null ? (i + 1) % photos.length : null)),
+    [photos.length]
+  );
 
   useEffect(() => {
     const handler = (e: Event) => setLightboxIndex((e as CustomEvent).detail);
@@ -80,41 +56,74 @@ const PhotoFeed = () => {
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">
       <div className="section-title">
         <span>Fotogalereya</span>
-        <Link href="/photos" className="more-link">Barchasi →</Link>
+        <Link href="/photos" className="more-link">
+          Barchasi →
+        </Link>
       </div>
 
-      <div className="flex gap-2.5">
-        {columns.map((col, colIdx) => (
-          <div key={colIdx} className="flex-1 flex flex-col gap-2.5">
-            {col.map((photo, i) => (
-              <div
-                key={i}
-                className="relative rounded-xl overflow-hidden cursor-pointer group"
-                onClick={() => setLightboxIndex(getFlatIndex(colIdx, i))}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.caption}
-                  className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    aspectRatio:
-                      (colIdx + i) % 3 === 0
-                        ? "3/4"
-                        : (colIdx + i) % 3 === 1
-                        ? "1/1"
-                        : "4/3",
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                  <span className="text-[11px] font-medium text-white flex items-center gap-1.5 font-body mb-1">
-                    <Camera size={11} /> {photo.caption}
-                  </span>
+      {isLoading ? (
+        <div className="flex justify-center py-12">
+          <Loader2 className="animate-spin text-primary" size={28} />
+        </div>
+      ) : isError ? (
+        <div className="text-center py-12 text-muted-foreground text-[13px]">
+          Xatolik yuz berdi.
+        </div>
+      ) : (
+        <div className="flex gap-2.5">
+          {columns.map((col, colIdx) => (
+            <div key={colIdx} className="flex-1 flex flex-col gap-2.5">
+              {col.map((photo, i) => (
+                <div
+                  key={i}
+                  className="relative rounded-xl overflow-hidden cursor-pointer group"
+                  onClick={() => setLightboxIndex(getFlatIndex(colIdx, i))}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.caption}
+                    className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    style={{
+                      aspectRatio:
+                        (colIdx + i) % 3 === 0
+                          ? "3/4"
+                          : (colIdx + i) % 3 === 1
+                          ? "1/1"
+                          : "4/3",
+                    }}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      target.style.display = "none";
+                      const placeholder = target.nextElementSibling as HTMLElement | null;
+                      if (placeholder) placeholder.style.display = "flex";
+                    }}
+                  />
+                  <div
+                    className="w-full bg-muted items-center justify-center text-muted-foreground flex-col gap-1 text-[11px]"
+                    style={{
+                      display: "none",
+                      aspectRatio:
+                        (colIdx + i) % 3 === 0
+                          ? "3/4"
+                          : (colIdx + i) % 3 === 1
+                          ? "1/1"
+                          : "4/3",
+                    }}
+                  >
+                    <Camera size={16} className="opacity-40" />
+                    <span className="opacity-40">No photo</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                    <span className="text-[11px] font-medium text-white flex items-center gap-1.5 font-body mb-1">
+                      <Camera size={11} /> {photo.caption}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
 
       {lightboxIndex !== null && (
         <PhotoLightbox

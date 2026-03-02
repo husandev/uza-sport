@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Calendar, Clock, Eye, Share2, Facebook, Twitter, MessageCircle, Play } from "lucide-react";
 import GroupStandings from "@/components/GroupStandings";
+import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { useState } from "react";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -47,7 +48,7 @@ const buildBody = (v: typeof videoArticles[0], idx: number) => [
   { type: "image" as const, content: images[(idx + 2) % images.length], caption: "O'yin lahzalaridan" },
 ];
 
-const VideoArticlePage = () => {
+const VideoArticlePage = ({ standings }: { standings: StandingsResponse | null }) => {
   const params = useParams(); const id = params.id as string;
   const idx = parseInt(id || "1") - 1;
   const video = videoArticles[idx];
@@ -151,7 +152,7 @@ const VideoArticlePage = () => {
         </div>
 
         <div className="lg:col-span-4 space-y-4">
-          <GroupStandings />
+          <GroupStandings data={standings} />
         </div>
       </div>
     </div>

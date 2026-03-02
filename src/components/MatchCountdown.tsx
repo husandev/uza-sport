@@ -5,10 +5,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import flagUzb from "@/assets/flag-uzbekistan.webp";
 import flagCol from "@/assets/flag-colombia.png";
 
-const MATCH_DATE = new Date("2026-06-14T18:00:00");
+export interface NextMatchData {
+  date: string;
+  homeName: string;
+  awayName: string;
+  homeLogo: string;
+  awayLogo: string;
+  venue: string | null;
+  round: string;
+}
 
-function getTimeLeft() {
-  const diff = MATCH_DATE.getTime() - Date.now();
+const FALLBACK_DATE = new Date("2026-06-14T18:00:00");
+const MONTHS = ["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"];
+
+function getTimeLeft(matchDate: Date) {
+  const diff = matchDate.getTime() - Date.now();
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
     days: Math.floor(diff / 86400000),
@@ -16,6 +27,23 @@ function getTimeLeft() {
     minutes: Math.floor((diff / 60000) % 60),
     seconds: Math.floor((diff / 1000) % 60),
   };
+}
+
+function formatDay(iso: string) {
+  const d = new Date(iso);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]}`;
+}
+
+function formatFooter(iso: string, round: string) {
+  const d = new Date(iso);
+  const roundLabel = round.startsWith("Group Stage") ? "Guruh bosqichi"
+    : round === "Round of 16" ? "1/8 final"
+    : round === "Quarter-finals" ? "Chorak final"
+    : round === "Semi-finals" ? "Yarim final"
+    : round === "Final" ? "Final"
+    : round;
+  const time = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  return `📅 ${d.getDate()} ${MONTHS[d.getMonth()]}, ${d.getFullYear()} · 🕕 ${time} · ${roundLabel}`;
 }
 
 const Digit = ({ value, label }: { value: number; label: string }) => (
@@ -59,14 +87,26 @@ const ColonSeparator = () => (
   </div>
 );
 
-const MatchCountdown = () => {
+const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => {
+  const matchDate = nextMatch ? new Date(nextMatch.date) : FALLBACK_DATE;
+
   const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    setT(getTimeLeft());
-    const id = setInterval(() => setT(getTimeLeft()), 1000);
+    setT(getTimeLeft(matchDate));
+    const id = setInterval(() => setT(getTimeLeft(matchDate)), 1000);
     return () => clearInterval(id);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextMatch?.date]);
+
+  const homeName = nextMatch?.homeName ?? "O'zbekiston";
+  const awayName = nextMatch?.awayName ?? "Kolumbiya";
+  const homeLogo = nextMatch?.homeLogo ?? null;
+  const awayLogo = nextMatch?.awayLogo ?? null;
+  const dayLabel = nextMatch ? formatDay(nextMatch.date) : "14 Iyun";
+  const footerLabel = nextMatch
+    ? formatFooter(nextMatch.date, nextMatch.round)
+    : "📅 14 Iyun, 2026 · 🕕 18:00 · Guruh bosqichi";
 
   return (
     <div
@@ -95,12 +135,13 @@ const MatchCountdown = () => {
             style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
             whileHover={{ scale: 1.05 }}
           >
-            14 Iyun
+            {dayLabel}
           </motion.div>
         </div>
 
         {/* Teams row */}
         <div className="px-4 pb-3 flex items-center justify-between">
+          {/* Home */}
           <motion.div
             className="flex flex-col items-center gap-1.5 flex-1"
             initial={{ opacity: 0, x: -15 }}
@@ -113,11 +154,14 @@ const MatchCountdown = () => {
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img src={flagUzb.src} alt="O'zbekiston" className="w-full h-full object-cover" />
+              {homeLogo ? (
+                <img src={homeLogo} alt={homeName} className="w-full h-full object-contain p-0.5" />
+              ) : (
+                <img src={flagUzb.src} alt={homeName} className="w-full h-full object-cover" />
+              )}
             </motion.div>
             <div className="text-center">
-              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>O'zbekiston</p>
-              <p className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>UZB</p>
+              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>{homeName}</p>
             </div>
           </motion.div>
 
@@ -130,6 +174,7 @@ const MatchCountdown = () => {
             <span className="text-[9px] font-bold" style={{ color: "hsl(var(--muted-foreground))" }}>VS</span>
           </motion.div>
 
+          {/* Away */}
           <motion.div
             className="flex flex-col items-center gap-1.5 flex-1"
             initial={{ opacity: 0, x: 15 }}
@@ -142,11 +187,14 @@ const MatchCountdown = () => {
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img src={flagCol.src} alt="Kolumbiya" className="w-full h-full object-cover" />
+              {awayLogo ? (
+                <img src={awayLogo} alt={awayName} className="w-full h-full object-contain p-0.5" />
+              ) : (
+                <img src={flagCol.src} alt={awayName} className="w-full h-full object-cover" />
+              )}
             </motion.div>
             <div className="text-center">
-              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>Kolumbiya</p>
-              <p className="text-[8px] font-semibold uppercase tracking-wider" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>COL</p>
+              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>{awayName}</p>
             </div>
           </motion.div>
         </div>
@@ -187,7 +235,7 @@ const MatchCountdown = () => {
         {/* Footer */}
         <div className="px-4 pb-3 flex items-center justify-center">
           <span className="text-[10px] font-medium" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>
-            📅 14 Iyun, 2026 · 🕕 18:00 · Guruh bosqichi
+            {footerLabel}
           </span>
         </div>
       </div>

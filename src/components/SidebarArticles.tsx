@@ -1,20 +1,26 @@
+"use client";
 import { Flame } from "lucide-react";
 import Link from "next/link";
-import { sidebarArticles } from "@/data/mockData";
-import photo1 from "@/assets/photo-1.jpg";
-import photo2 from "@/assets/photo-2.jpg";
-import photo3 from "@/assets/photo-3.jpg";
-import photo4 from "@/assets/photo-4.jpg";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
-import hero3 from "@/assets/hero-3.jpg";
-import hero4 from "@/assets/hero-4.jpg";
-import hero5 from "@/assets/hero-5.jpg";
-import stadium1 from "@/assets/stadium-1.jpg";
+import { useSportPosts } from "@/hooks/queries";
 
-const images = [photo1, photo2, photo3, photo4, hero1, hero2, hero3, hero4, hero5, stadium1];
+function formatTime(publish_time: string): string {
+  const date = new Date(publish_time);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHour = Math.floor(diffMs / 3600000);
+  const diffDay = Math.floor(diffMs / 86400000);
+
+  if (diffMin < 60) return `${diffMin} daqiqa oldin`;
+  if (diffHour < 24) return `Bugun, ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+  if (diffDay === 1) return `Kecha, ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+  return `${diffDay} kun oldin`;
+}
 
 const SidebarArticles = () => {
+  const { data, isLoading } = useSportPosts("uz", 10);
+  const posts = data?.data ?? [];
+
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 pt-2 pb-2">
@@ -25,44 +31,50 @@ const SidebarArticles = () => {
       </div>
 
       <div className="divide-y divide-border">
-        {sidebarArticles.map((article, i) => (
+        {isLoading && Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="px-5 py-4 flex gap-4 animate-pulse">
+            <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl bg-muted" />
+            <div className="flex-1 space-y-2 pt-1">
+              <div className="h-3 bg-muted rounded w-1/3" />
+              <div className="h-4 bg-muted rounded w-full" />
+              <div className="h-4 bg-muted rounded w-4/5" />
+            </div>
+          </div>
+        ))}
+
+        {posts.map((post) => (
           <Link
-            key={article.id}
-            href={`/article/${((article.id - 1) % 3) + 1}`}
+            key={post.id}
+            href={`/article/${post.id}`}
             className="px-5 py-4 flex gap-4 cursor-pointer hover:bg-muted/40 transition-colors group block"
           >
             {/* Left: image */}
             <div className="w-[140px] h-[95px] flex-shrink-0 rounded-xl overflow-hidden">
               <img
-                src={images[i % images.length].src}
-                alt={article.title}
+                src={post.files?.thumbnails?.normal?.src}
+                alt={post.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
 
             {/* Right: text */}
-            <div className="flex-1 min-w-0 flex flex-col justify-between">
+            <div className="flex-1 min-w-0 h-[95px] overflow-hidden flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-1.5 font-body">
-                  <span>{article.time}</span>
-                  {article.category && (
+                  <span>{formatTime(post.publish_time)}</span>
+                  {post.category?.title && (
                     <>
                       <span className="text-muted-foreground/40">|</span>
-                      <span className="text-primary font-medium">{article.category}</span>
+                      <span className="text-primary font-medium">{post.category.title}</span>
                     </>
                   )}
                 </div>
-                <h3 className="text-[19px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-3">
-                  {article.title}
+                <h3 className="text-[19px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                  {post.title}
                 </h3>
-              </div>
-              <div className="flex items-center gap-3 mt-2 text-[11px] text-muted-foreground font-body">
-                <span>{article.subtitle}</span>
-                {article.fires > 0 && (
-                  <span className="flex items-center gap-0.5 text-primary">
-                    <Flame size={10} /> {article.fires}
-                  </span>
-                )}
+                <p className="text-[12px] text-muted-foreground mt-1 line-clamp-2 font-body">
+                  {post.description}
+                </p>
               </div>
             </div>
           </Link>

@@ -136,7 +136,7 @@ export const teamNamesUz: Record<string, string> = {
   TPE: "Tayvan",
 
   // Alternative TLA codes (football-data.org specific)
-  RSA: "Janubiy Afrika",
+  RSA: "Jan. Afrika",
   CHL: "Chili",
   PRY: "Paragvay",
   PHL: "Filippin",
@@ -161,7 +161,7 @@ export const teamNamesUz: Record<string, string> = {
   MLI: "Mali",
   TUN: "Tunis",
   ALG: "Jazoir",
-  ZAF: "Janubiy Afrika",
+  ZAF: "Jan. Afrika",
   COD: "Kongo DR",
   COG: "Kongo",
   GNB: "Gvineya-Bisau",

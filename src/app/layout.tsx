@@ -7,9 +7,10 @@ import MatchTicker, { TickerMatch } from "@/components/MatchTicker";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { getFixtures, getLiveFixtures } from "@/lib/football";
-import { teamNamesUzByName } from "@/data/teamNamesUzByName";
+import { getFixtures, getLiveFixtures, LIVE_STATUSES, FINISHED_STATUSES } from "@/lib/football";
 import { AFFixture } from "@/hooks/queries/useFixtures";
+import { translateTeamName } from "@/data/teamNamesUzByName";
+import { formatMatchTime } from "@/lib/utils";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -25,7 +26,14 @@ export const metadata: Metadata = {
   },
   description:
     "O'zbekiston terma jamoasi va FIFA Jahon chempionati 2026 haqida barcha yangiliklar, natijalar, jadval va statistika.",
-  keywords: ["Jahon chempionati 2026", "O'zbekiston terma jamoasi", "WC2026", "FIFA", "futbol", "JCh-2026"],
+  keywords: [
+    "Jahon chempionati 2026",
+    "O'zbekiston terma jamoasi",
+    "WC2026",
+    "FIFA",
+    "futbol",
+    "JCh-2026",
+  ],
   authors: [{ name: "UZA.uz" }],
   robots: { index: true, follow: true },
   openGraph: {
@@ -36,7 +44,9 @@ export const metadata: Metadata = {
     title: "UZA WC2026 — Jahon chempionati 2026",
     description:
       "O'zbekiston terma jamoasi va FIFA Jahon chempionati 2026 haqida barcha yangiliklar, natijalar, jadval va statistika.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "UZA WC2026" }],
+    images: [
+      { url: "/og-image.jpg", width: 1200, height: 630, alt: "UZA WC2026" },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -47,28 +57,21 @@ export const metadata: Metadata = {
   },
 };
 
-const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "BT", "P", "INT", "SUSP", "LIVE"];
-const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
-
-function formatTickerTime(iso: string) {
-  const d = new Date(iso);
-  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-}
-
 function toTickerMatch(f: AFFixture): TickerMatch {
   const status = f.fixture.status.short;
   return {
     id: f.fixture.id,
-    home: teamNamesUzByName[f.teams.home.name] ?? f.teams.home.name,
-    away: teamNamesUzByName[f.teams.away.name] ?? f.teams.away.name,
+    home: translateTeamName(f.teams.home.name),
+    away: translateTeamName(f.teams.away.name),
     homeLogo: f.teams.home.logo,
     awayLogo: f.teams.away.logo,
     hScore: f.goals.home,
     aScore: f.goals.away,
     isLive: LIVE_STATUSES.includes(status),
     isFinished: FINISHED_STATUSES.includes(status),
-    minute: f.fixture.status.elapsed !== null ? `${f.fixture.status.elapsed}'` : null,
-    time: formatTickerTime(f.fixture.date),
+    minute:
+      f.fixture.status.elapsed !== null ? `${f.fixture.status.elapsed}'` : null,
+    time: formatMatchTime(f.fixture.date),
   };
 }
 

@@ -445,7 +445,39 @@ module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };
 
 ---
 
-## 16b. YOZISH QOIDALARI (Code Quality)
+## 16b. KOD SIFATI TAMOYILLARI (DRY / SOLID / KISS)
+
+### DRY — Don't Repeat Yourself
+Bir xil kod ikki joyda bo'lmasligi kerak. Takrorlanish ko'rilsa — ajratib chiqarish shart.
+
+- **Konstantalar** (`LIVE_STATUSES`, `FINISHED_STATUSES` va h.k.) — `src/lib/football.ts` ga, keyin import
+- **Utility funksiyalar** (`formatMatchDate`, `formatMatchTime` va h.k.) — `src/lib/utils.ts` ga
+- **Takroriy UI blok** (card, skeleton, pagination) — `src/components/` ga alohida komponent
+- **Bir xil API hook** — `src/hooks/queries/` da bir marta yozib, keyin import
+
+### SOLID (amaliy qoidalar)
+- **S — Single Responsibility**: Har komponent bitta narsani qiladi. `PostCard` faqat karta ko'rsatadi, `Pagination` faqat sahifalaydi.
+- **O — Open/Closed**: Komponentga yangi xatti-harakat `props` orqali qo'shiladi (`showPlayIcon`, `count`), ichki mantiqni o'zgartirmasdan.
+- **L — Liskov**: Props interfeysi stabilligi — komponent o'rnini boshqasi bosa oladi.
+- **I — Interface Segregation**: Props minimal va zarur bo'lsin. Optional props `?` bilan.
+- **D — Dependency Inversion**: Komponent konkret ma'lumotga emas, `props` orqali abstraksiyaga bog'liq.
+
+### KISS — Keep It Simple, Stupid
+Eng oddiy yechim eng yaxshi yechim.
+
+- Murakkab abstraktsiya yaratma — 3 ta o'xshash qator > keraksiz helper
+- Prop drilling 2 darajadan oshsa Context ishlatish mumkin, lekin avval sodda yechimni sinab ko'r
+- Yangi pattern kiritishdan oldin: "Bu loyiha uchun haqiqatan kerakmi?" — deb so'ra
+
+### Amalda qo'llash (Checklist)
+Yangi kod yozishdan oldin:
+- [ ] Bu mantiq boshqa joyda ham bormi? → `utils.ts` yoki alohida komponentga ko'chir (DRY)
+- [ ] Bu komponent bitta narsani qilyaptimi? → Yo'q bo'lsa, ajrat (SOLID-S)
+- [ ] Eng oddiy yechim ishlatildimi? → Murakkab bo'lsa, soddalashtir (KISS)
+
+---
+
+## 16c. YOZISH QOIDALARI (Code Quality)
 
 ### DO:
 - Har yangi komponent `"use client"` dan boshlash (agar hooks/events bo'lsa)
@@ -534,7 +566,7 @@ Recent commits pattern:
 ---
 
 *Bu fayl har bir yangi task qo'shilganda yangilanishi shart.*
-*Oxirgi yangilanish: Next.js migratsiya — barcha 14 route ishlayapti.*
+*Oxirgi yangilanish: DRY/SOLID/KISS tamoyillari qo'shildi + Pagination/PostCard/PostListSkeleton komponentlar, LIVE_STATUSES/FINISHED_STATUSES/formatMatchDate/formatMatchTime markazlashtirildi.*
 
 ## 20. API VA TANSTACK QUERY
 
@@ -613,6 +645,25 @@ response[] → { player: { id, name }, statistics: [{ team: { name, logo }, goal
 - `src/data/teamNamesUz.ts` — TLA → o'zbekcha (football-data.org uchun, arxiv)
 - Uzbekistanni aniqlash: `team.name === "Uzbekistan"`
 
+### TARJIMA FUNKSIYALARI (MAJBURIY):
+API dan kelgan nomlarni **to'g'ridan-to'g'ri object lookup bilan emas**, quyidagi funksiyalar orqali tarjima qil:
+
+```ts
+// ❌ XATO — ishlatma:
+teamNamesUzByName[name] ?? name
+
+// ✅ TO'G'RI — har doim shu funksiyalarni ishlatish:
+import { translateTeamName } from "@/data/teamNamesUzByName";
+import { translateRoundName } from "@/data/GroupNameUzTranslate";
+import { translateVenueName } from "@/data/StadiumUzTranslate";
+
+translateTeamName(name)   // jamoa nomi (fuzzy match: to'g'ri, case-insensitive, partial)
+translateRoundName(name)  // tur nomi: "Quarter-finals" → "Chorak final", "Group A" → "A guruh"
+translateVenueName(name)  // stadion nomi: "SoFi Stadium" → "SoFi Stadioni"
+```
+
+Yangi nom qo'shganda — faqat `teamNamesUzByName` map'ga qo'sh, funksiyani o'zgartirma.
+
 ### Data oqimi:
 Server component (`src/app/*/page.tsx`) → `getStandings()` / `getScorers()` → props orqali view ga → `GroupStandings` / `StandingsPage` ga uzatiladi.
 TanStack Query hook ishlatilmaydi (server-side SSR).
@@ -620,4 +671,4 @@ TanStack Query hook ishlatilmaydi (server-side SSR).
 ---
 
 *Bu fayl har bir yangi task qo'shilganda yangilanishi shart.*
-*Oxirgi yangilanish: API-Football v3 ga o'tildi (football-data.org o'chirildi).*
+*Oxirgi yangilanish: translateTeamName/translateRoundName/translateVenueName funksiyalari pattern — majburiy.*

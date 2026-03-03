@@ -15,6 +15,18 @@ export function getPageNumbers(current: number, total: number): (number | "...")
   return pages;
 }
 
+const MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
+
+export function formatMatchDate(iso: string) {
+  const d = new Date(iso);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+export function formatMatchTime(iso: string) {
+  const d = new Date(iso);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
+
 export function formatPublishTime(publishTime: string): string {
   const date = new Date(publishTime.replace(" ", "T"));
   const now = new Date();

@@ -4,8 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import MatchTicker, { TickerMatch } from "@/components/MatchTicker";
 import { getFixtures, getLiveFixtures } from "@/lib/football";
-import { teamNamesUzByName } from "@/data/teamNamesUzByName";
 import { AFFixture } from "@/hooks/queries/useFixtures";
+import { translateTeamName } from "@/data/teamNamesUzByName";
 export const metadata: Metadata = {
   title: "UZA WC2026 — JCh-2026 maxsus loyihasi",
   description:
@@ -34,8 +34,8 @@ function toTickerMatch(f: AFFixture): TickerMatch {
   const status = f.fixture.status.short;
   return {
     id: f.fixture.id,
-    home: teamNamesUzByName[f.teams.home.name] ?? f.teams.home.name,
-    away: teamNamesUzByName[f.teams.away.name] ?? f.teams.away.name,
+    home: translateTeamName(f.teams.home.name),
+    away: translateTeamName(f.teams.away.name),
     homeLogo: f.teams.home.logo,
     awayLogo: f.teams.away.logo,
     hScore: f.goals.home,

@@ -3,23 +3,11 @@ import { useState } from "react";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { FixturesResponse, AFFixture } from "@/hooks/queries/useFixtures";
-import { teamNamesUzByName } from "@/data/teamNamesUzByName";
 import { Circle } from "lucide-react";
-
-const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "BT", "P", "INT", "SUSP", "LIVE"];
-const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
-
-const months = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
-
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
-
-function formatTime(iso: string) {
-  const d = new Date(iso);
-  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-}
+import { translateTeamName } from "@/data/teamNamesUzByName";
+import { translateVenueName } from "@/data/StadiumUzTranslate";
+import { LIVE_STATUSES, FINISHED_STATUSES } from "@/lib/football";
+import { formatMatchDate, formatMatchTime } from "@/lib/utils";
 
 function formatRound(round: string) {
   if (round.startsWith("Group Stage - ")) return `${round.replace("Group Stage - ", "")}-tur`;
@@ -114,7 +102,7 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
               {/* Day header */}
               <div className="px-5 py-3 border-b border-border flex items-center justify-between">
                 <span className="text-[13px] font-bold text-foreground">
-                  {formatDate(dayFixtures[0].fixture.date)}
+                  {formatMatchDate(dayFixtures[0].fixture.date)}
                 </span>
                 <span className="text-[11px] font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
                   {formatRound(dayFixtures[0].league.round)}
@@ -128,8 +116,8 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
                   const isLive = LIVE_STATUSES.includes(status);
                   const isFinished = FINISHED_STATUSES.includes(status);
                   const isScheduled = !isLive && !isFinished;
-                  const homeName = teamNamesUzByName[f.teams.home.name] ?? f.teams.home.name;
-                  const awayName = teamNamesUzByName[f.teams.away.name] ?? f.teams.away.name;
+                  const homeName = translateTeamName(f.teams.home.name);
+                  const awayName = translateTeamName(f.teams.away.name);
 
                   return (
                     <div
@@ -154,7 +142,7 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
                             <span className="text-[11px] font-medium text-muted-foreground">Tugadi</span>
                           )}
                           {isScheduled && (
-                            <span className="text-[13px] font-bold text-foreground">{formatTime(f.fixture.date)}</span>
+                            <span className="text-[13px] font-bold text-foreground">{formatMatchTime(f.fixture.date)}</span>
                           )}
                         </div>
 
@@ -198,7 +186,7 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
                       {/* Venue */}
                       {f.fixture.venue.name && (
                         <div className="mt-2 ml-[60px] sm:ml-[76px] text-[11px] text-muted-foreground font-body">
-                          🏟️ {f.fixture.venue.name}
+                          🏟️ {translateVenueName(f.fixture.venue.name)}
                         </div>
                       )}
                     </div>

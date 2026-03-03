@@ -3,3 +3,4 @@ export * from "./useStandings";
 export * from "./useFixtures";
 export * from "./usePhotos";
 export * from "./useVideos";
+export * from "./useSearch";

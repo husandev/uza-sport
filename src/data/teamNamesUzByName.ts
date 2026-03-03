@@ -25,7 +25,7 @@ export const teamNamesUzByName: Record<string, string> = {
   Romania: "Ruminiya",
   Greece: "Gretsiya",
   Turkey: "Turkiya",
-  "Türkiye": "Turkiya",
+  Türkiye: "Turkiya",
   Scotland: "Shotlandiya",
   Wales: "Uels",
   "Northern Ireland": "Shimoliy Irlandiya",
@@ -94,6 +94,7 @@ export const teamNamesUzByName: Record<string, string> = {
 
   // AFC
   Uzbekistan: "O'zbekiston",
+  Curaçao: "Kurasao",
   Japan: "Yaponiya",
   "South Korea": "Jan. Koreya",
   "Korea Republic": "Jan. Koreya",
@@ -154,7 +155,7 @@ export const teamNamesUzByName: Record<string, string> = {
   Mali: "Mali",
   Tunisia: "Tunis",
   Algeria: "Jazoir",
-  "South Africa": "Janubiy Afrika",
+  "South Africa": "Jan. Afrika",
   "DR Congo": "Kongo DR",
   "Congo DR": "Kongo DR",
   "Democratic Republic of the Congo": "Kongo DR",
@@ -210,4 +211,51 @@ export const teamNamesUzByName: Record<string, string> = {
   Vanuatu: "Vanuatu",
   Tahiti: "Taxiti",
   "New Caledonia": "Yangi Kaledoniya",
+  "Team will be confirmed": "Tez orada",
+};
+
+const normalizeTeamName = (name: string) => {
+  return name
+    .replace(/\s+/g, " ")
+    .replace(/U-?\d+/gi, "") 
+    .replace(/\bFC\b/gi, "")
+    .replace(/\bCF\b/gi, "")
+    .replace(/\bAFC\b/gi, "")
+    .replace(/\bSC\b/gi, "")
+    .replace(/\./g, "")
+    .trim();
+};
+
+export const translateTeamName = (name: string) => {
+  if (!name) return name;
+
+  const normalized = normalizeTeamName(name);
+
+  // 1. To‘g‘ridan-to‘g‘ri match
+  if (teamNamesUzByName[normalized]) {
+    return teamNamesUzByName[normalized];
+  }
+
+  // 2. Case-insensitive match
+  const foundKey = Object.keys(teamNamesUzByName).find(
+    (key) => key.toLowerCase() === normalized.toLowerCase(),
+  );
+
+  if (foundKey) {
+    return teamNamesUzByName[foundKey];
+  }
+
+  // 3. Partial match (masalan "IR Iran")
+  const partialKey = Object.keys(teamNamesUzByName).find(
+    (key) =>
+      normalized.toLowerCase().includes(key.toLowerCase()) ||
+      key.toLowerCase().includes(normalized.toLowerCase()),
+  );
+
+  if (partialKey) {
+    return teamNamesUzByName[partialKey];
+  }
+
+  // 4. Oxirgi fallback
+  return name;
 };

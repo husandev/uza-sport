@@ -3,8 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { stadiums } from "@/data/mockData";
+import Pagination from "@/components/Pagination";
 import stadium1 from "@/assets/stadium-1.jpg";
 import stadium2 from "@/assets/stadium-2.jpg";
 import stadium3 from "@/assets/stadium-3.jpg";
@@ -101,38 +101,7 @@ const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) =>
             </div>
           </div>
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-1.5 mt-5">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  className={`w-9 h-9 rounded-lg text-[13px] font-bold transition-colors ${
-                    p === page
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </div>
 
         {/* Right sidebar */}

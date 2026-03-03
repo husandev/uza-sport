@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import flagUzb from "@/assets/flag-uzbekistan.webp";
 import flagCol from "@/assets/flag-colombia.png";
+import { translateRoundName } from "@/data/GroupNameUzTranslate";
+import { formatMatchTime } from "@/lib/utils";
 
 export interface NextMatchData {
   date: string;
@@ -16,7 +18,20 @@ export interface NextMatchData {
 }
 
 const FALLBACK_DATE = new Date("2026-06-14T18:00:00");
-const MONTHS = ["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"];
+const MONTHS = [
+  "Yanvar",
+  "Fevral",
+  "Mart",
+  "Aprel",
+  "May",
+  "Iyun",
+  "Iyul",
+  "Avgust",
+  "Sentabr",
+  "Oktabr",
+  "Noyabr",
+  "Dekabr",
+];
 
 function getTimeLeft(matchDate: Date) {
   const diff = matchDate.getTime() - Date.now();
@@ -36,14 +51,7 @@ function formatDay(iso: string) {
 
 function formatFooter(iso: string, round: string) {
   const d = new Date(iso);
-  const roundLabel = round.startsWith("Group Stage") ? "Guruh bosqichi"
-    : round === "Round of 16" ? "1/8 final"
-    : round === "Quarter-finals" ? "Chorak final"
-    : round === "Semi-finals" ? "Yarim final"
-    : round === "Final" ? "Final"
-    : round;
-  const time = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-  return `📅 ${d.getDate()} ${MONTHS[d.getMonth()]}, ${d.getFullYear()} · 🕕 ${time} · ${roundLabel}`;
+  return `📅 ${d.getDate()} ${MONTHS[d.getMonth()]}, ${d.getFullYear()} · 🕕 ${formatMatchTime(iso)} · ${translateRoundName(round)}`;
 }
 
 const Digit = ({ value, label }: { value: number; label: string }) => (
@@ -56,7 +64,10 @@ const Digit = ({ value, label }: { value: number; label: string }) => (
         exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="block text-[22px] sm:text-[26px] font-bold tabular-nums leading-none"
-        style={{ color: "hsl(var(--primary))", textShadow: "0 0 20px hsl(var(--primary) / 0.15)" }}
+        style={{
+          color: "hsl(var(--primary))",
+          textShadow: "0 0 20px hsl(var(--primary) / 0.15)",
+        }}
       >
         {String(value).padStart(2, "0")}
       </motion.span>
@@ -87,7 +98,11 @@ const ColonSeparator = () => (
   </div>
 );
 
-const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => {
+const MatchCountdown = ({
+  nextMatch,
+}: {
+  nextMatch?: NextMatchData | null;
+}) => {
   const matchDate = nextMatch ? new Date(nextMatch.date) : FALLBACK_DATE;
 
   const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -96,7 +111,7 @@ const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => 
     setT(getTimeLeft(matchDate));
     const id = setInterval(() => setT(getTimeLeft(matchDate)), 1000);
     return () => clearInterval(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextMatch?.date]);
 
   const homeName = nextMatch?.homeName ?? "O'zbekiston";
@@ -115,24 +130,34 @@ const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => 
         borderRadius: "24px",
         background: "hsl(var(--card))",
         border: "1px solid hsl(var(--border))",
-        boxShadow: "0 1px 3px hsl(0 0% 0% / 0.04), 0 8px 30px hsl(0 0% 0% / 0.04)",
+        boxShadow:
+          "0 1px 3px hsl(0 0% 0% / 0.04), 0 8px 30px hsl(0 0% 0% / 0.04)",
       }}
     >
       {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
-        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
-        backgroundSize: "16px 16px",
-      }} />
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
+          backgroundSize: "16px 16px",
+        }}
+      />
 
       <div className="relative z-10">
         {/* Header */}
         <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.15em]" style={{ color: "hsl(var(--muted-foreground) / 0.45)" }}>
-            ⚽ FIFA World Cup 2026
+          <p
+            className="text-[9px] font-semibold uppercase tracking-[0.15em]"
+            style={{ color: "hsl(var(--muted-foreground) / 0.45)" }}
+          >
+            ⚽ FIFA 2026 Jahon Kubogi
           </p>
           <motion.div
             className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold"
-            style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+            style={{
+              background: "hsl(var(--primary))",
+              color: "hsl(var(--primary-foreground))",
+            }}
             whileHover={{ scale: 1.05 }}
           >
             {dayLabel}
@@ -150,28 +175,52 @@ const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => 
           >
             <motion.div
               className="w-11 h-11 rounded-full overflow-hidden"
-              style={{ boxShadow: "0 3px 12px hsl(210 60% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))" }}
+              style={{
+                boxShadow:
+                  "0 3px 12px hsl(210 60% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
+              }}
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               {homeLogo ? (
-                <img src={homeLogo} alt={homeName} className="w-full h-full object-contain p-0.5" />
+                <img
+                  src={homeLogo}
+                  alt={homeName}
+                  className="w-full h-full object-contain p-0.5"
+                />
               ) : (
-                <img src={flagUzb.src} alt={homeName} className="w-full h-full object-cover" />
+                <img
+                  src={flagUzb.src}
+                  alt={homeName}
+                  className="w-full h-full object-cover"
+                />
               )}
             </motion.div>
             <div className="text-center">
-              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>{homeName}</p>
+              <p
+                className="text-[11px] font-bold leading-tight"
+                style={{ color: "hsl(var(--foreground))" }}
+              >
+                {homeName}
+              </p>
             </div>
           </motion.div>
 
           <motion.div
             className="w-8 h-8 rounded-full flex items-center justify-center mx-1 shrink-0"
-            style={{ background: "hsl(var(--muted))", border: "1.5px solid hsl(var(--border))" }}
+            style={{
+              background: "hsl(var(--muted))",
+              border: "1.5px solid hsl(var(--border))",
+            }}
             animate={{ scale: [1, 1.06, 1] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="text-[9px] font-bold" style={{ color: "hsl(var(--muted-foreground))" }}>VS</span>
+            <span
+              className="text-[9px] font-bold"
+              style={{ color: "hsl(var(--muted-foreground))" }}
+            >
+              VS
+            </span>
           </motion.div>
 
           {/* Away */}
@@ -183,18 +232,34 @@ const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => 
           >
             <motion.div
               className="w-11 h-11 rounded-full overflow-hidden"
-              style={{ boxShadow: "0 3px 12px hsl(45 80% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))" }}
+              style={{
+                boxShadow:
+                  "0 3px 12px hsl(45 80% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
+              }}
               whileHover={{ scale: 1.08 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               {awayLogo ? (
-                <img src={awayLogo} alt={awayName} className="w-full h-full object-contain p-0.5" />
+                <img
+                  src={awayLogo}
+                  alt={awayName}
+                  className="w-full h-full object-contain p-0.5"
+                />
               ) : (
-                <img src={flagCol.src} alt={awayName} className="w-full h-full object-cover" />
+                <img
+                  src={flagCol.src}
+                  alt={awayName}
+                  className="w-full h-full object-cover"
+                />
               )}
             </motion.div>
             <div className="text-center">
-              <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>{awayName}</p>
+              <p
+                className="text-[11px] font-bold leading-tight"
+                style={{ color: "hsl(var(--foreground))" }}
+              >
+                {awayName}
+              </p>
             </div>
           </motion.div>
         </div>
@@ -205,21 +270,30 @@ const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => 
             className="relative py-2.5 flex items-center justify-center overflow-hidden"
             style={{
               borderRadius: "33rem",
-              background: "linear-gradient(145deg, hsl(var(--muted)), hsl(220 15% 95%))",
+              background:
+                "linear-gradient(145deg, hsl(var(--muted)), hsl(220 15% 95%))",
               border: "1px solid hsl(var(--border))",
-              boxShadow: "inset 0 1px 0 hsl(0 0% 100% / 0.8), 0 2px 8px hsl(0 0% 0% / 0.04)",
+              boxShadow:
+                "inset 0 1px 0 hsl(0 0% 100% / 0.8), 0 2px 8px hsl(0 0% 0% / 0.04)",
             }}
           >
             <motion.div
               className="absolute w-28 h-28 rounded-full pointer-events-none"
-              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.06), transparent 70%)", filter: "blur(20px)" }}
+              style={{
+                background:
+                  "radial-gradient(circle, hsl(var(--primary) / 0.06), transparent 70%)",
+                filter: "blur(20px)",
+              }}
               animate={{ x: [-25, 25, -25], y: [-12, 12, -12] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
-            <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
-              backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
-              backgroundSize: "12px 12px",
-            }} />
+            <div
+              className="absolute inset-0 opacity-[0.04] pointer-events-none"
+              style={{
+                backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 0.5px, transparent 0)`,
+                backgroundSize: "12px 12px",
+              }}
+            />
             <div className="relative z-10 flex items-center justify-center">
               <Digit value={t.days} label="Kun" />
               <ColonSeparator />
@@ -234,7 +308,10 @@ const MatchCountdown = ({ nextMatch }: { nextMatch?: NextMatchData | null }) => 
 
         {/* Footer */}
         <div className="px-4 pb-3 flex items-center justify-center">
-          <span className="text-[10px] font-medium" style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}>
+          <span
+            className="text-[10px] font-medium"
+            style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}
+          >
             {footerLabel}
           </span>
         </div>

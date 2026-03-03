@@ -2,8 +2,8 @@
 import { useState } from "react";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Pagination from "@/components/Pagination";
 import { groupStandings } from "@/data/mockData";
 import photo1 from "@/assets/photo-1.jpg";
 import photo2 from "@/assets/photo-2.jpg";
@@ -118,36 +118,7 @@ const TeamsPage = ({ standings }: { standings: StandingsResponse | null }) => {
               </div>
             </div>
 
-            {/* Pagination */}
-            <div className="flex items-center justify-center gap-1.5 mt-5">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  className={`w-9 h-9 rounded-lg text-[13px] font-bold transition-colors ${
-                    p === page
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted"
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
+            <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
           </div>
 
           {/* Right: Tournament standings */}

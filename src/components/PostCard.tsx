@@ -1,0 +1,73 @@
+"use client";
+import Link from "next/link";
+import { Play } from "lucide-react";
+
+interface PostCardProps {
+  href: string;
+  thumbnail?: string;
+  title: string;
+  description?: string;
+  publishTime: string;
+  category?: string;
+  showPlayIcon?: boolean;
+}
+
+export default function PostCard({
+  href,
+  thumbnail,
+  title,
+  description,
+  publishTime,
+  category,
+  showPlayIcon = false,
+}: PostCardProps) {
+  return (
+    <Link
+      href={href}
+      className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
+    >
+      <div
+        className={`w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl overflow-hidden${
+          showPlayIcon ? " relative bg-muted" : ""
+        }`}
+      >
+        {thumbnail && (
+          <img
+            src={thumbnail}
+            loading="lazy"
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        )}
+        {showPlayIcon && (
+          <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-primary/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Play size={18} className="text-primary-foreground ml-0.5" fill="currentColor" />
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="flex-1 min-w-0 flex flex-col justify-between overflow-hidden">
+        <div>
+          <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-2 font-body">
+            <span>{publishTime}</span>
+            {category && (
+              <>
+                <span className="text-muted-foreground/40">|</span>
+                <span className="text-primary font-medium">{category}</span>
+              </>
+            )}
+          </div>
+          <h3 className="text-[15px] sm:text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+            {title}
+          </h3>
+          {description && description !== "_" && (
+            <p className="text-[13px] text-muted-foreground mt-1.5 line-clamp-2 font-body">
+              {description}
+            </p>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}

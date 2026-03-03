@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import uzaLogo from "@/assets/uza-logo-solo.png";
 import FootballAnim from "./FootballAnim";
+import { useSearch } from "@/hooks/queries";
+import { formatPublishTime } from "@/lib/utils";
 
 const navItems = [
   { label: "Asosiy", href: "/" },
@@ -39,9 +41,17 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQ, setDebouncedQ] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Debounce
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQ(searchQuery.trim()), 400);
+    return () => clearTimeout(t);
+  }, [searchQuery]);
+
+  // Click outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
@@ -52,11 +62,26 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ⌘K / Ctrl+K + Escape
   useEffect(() => {
-    if (searchOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+      if (e.key === "Escape") setSearchOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
+
+  useEffect(() => {
+    if (searchOpen && inputRef.current) inputRef.current.focus();
   }, [searchOpen]);
+
+  const { data: searchData, isLoading: searchLoading } = useSearch(debouncedQ);
+  const searchResults = searchData?.data ?? [];
+  const hasQuery = searchQuery.trim().length > 0;
 
   return (
     <header className="sticky top-0 z-50">
@@ -154,47 +179,108 @@ const Header = () => {
 
                       <div className="h-px bg-border" />
 
-                      {/* Trending */}
-                      <div className="px-5 pt-4 pb-3">
-                        <p className="flex items-center gap-1.5 text-[11px] font-heading font-bold uppercase tracking-wider text-muted-foreground mb-3">
-                          <TrendingUp size={12} />
-                          Trenddagi
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {hotSearches.map((term) => (
-                            <button
-                              key={term}
-                              onClick={() => setSearchQuery(term)}
-                              className="px-3 py-1.5 text-[12px] font-body bg-muted/60 hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-200"
+                      {/* Search results or Trending */}
+                      {hasQuery ? (
+                        <div className="max-h-[360px] overflow-y-auto px-2 py-2">
+                          {/* Loading skeleton */}
+                          {searchLoading && Array.from({ length: 3 }).map((_, i) => (
+                            <div key={i} className="flex gap-3 px-3 py-2.5 animate-pulse">
+                              <div className="w-12 h-12 rounded-lg bg-muted flex-shrink-0" />
+                              <div className="flex-1 space-y-2 pt-1">
+                                <div className="h-3 bg-muted rounded w-full" />
+                                <div className="h-3 bg-muted rounded w-1/2" />
+                              </div>
+                            </div>
+                          ))}
+
+                          {/* Kam belgi */}
+                          {!searchLoading && debouncedQ.length < 2 && (
+                            <p className="py-8 text-center text-[12px] text-muted-foreground">
+                              Qidirish uchun kamida 2 ta belgi kiriting
+                            </p>
+                          )}
+
+                          {/* Natija topilmadi */}
+                          {!searchLoading && debouncedQ.length >= 2 && searchResults.length === 0 && (
+                            <div className="py-10 text-center">
+                              <Search size={28} className="mx-auto mb-2 text-muted-foreground/30" />
+                              <p className="text-[13px] text-muted-foreground">Natija topilmadi</p>
+                              <p className="text-[11px] text-muted-foreground/60 mt-1">«{debouncedQ}» bo'yicha hech narsa yo'q</p>
+                            </div>
+                          )}
+
+                          {/* Natijalar */}
+                          {!searchLoading && searchResults.map((post) => (
+                            <Link
+                              key={post.id}
+                              href={`/article/${post.slug}`}
+                              onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
+                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
                             >
-                              {term}
-                            </button>
+                              {post.files?.thumbnails?.small?.src && (
+                                <img
+                                  src={post.files.thumbnails.small.src}
+                                  alt={post.title}
+                                  className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                                />
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[13px] font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                                  {post.title}
+                                </p>
+                                <p className="text-[11px] text-muted-foreground mt-0.5">
+                                  {formatPublishTime(post.publish_time)}
+                                </p>
+                              </div>
+                              <ArrowRight size={13} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                            </Link>
                           ))}
                         </div>
-                      </div>
+                      ) : (
+                        <>
+                          {/* Trending */}
+                          <div className="px-5 pt-4 pb-3">
+                            <p className="flex items-center gap-1.5 text-[11px] font-heading font-bold uppercase tracking-wider text-muted-foreground mb-3">
+                              <TrendingUp size={12} />
+                              Trenddagi
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {hotSearches.map((term) => (
+                                <button
+                                  key={term}
+                                  onClick={() => setSearchQuery(term)}
+                                  className="px-3 py-1.5 text-[12px] font-body bg-muted/60 hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-200"
+                                >
+                                  {term}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
 
-                      <div className="h-px bg-border" />
+                          <div className="h-px bg-border" />
 
-                      {/* Quick links */}
-                      <div className="px-5 pt-3 pb-4">
-                        <p className="flex items-center gap-1.5 text-[11px] font-heading font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                          <Sparkles size={12} />
-                          Tez havolalar
-                        </p>
-                        <div className="space-y-0.5">
-                          {quickLinks.map((item) => (
-                            <button
-                              key={item.label}
-                              onClick={() => setSearchQuery(item.label)}
-                              className="flex items-center gap-3 w-full px-3 py-2.5 text-[13px] font-body text-foreground hover:bg-muted rounded-xl transition-colors text-left group"
-                            >
-                              <span className="text-base">{item.icon}</span>
-                              <span className="flex-1">{item.label}</span>
-                              <ArrowRight size={13} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                          {/* Quick links */}
+                          <div className="px-5 pt-3 pb-4">
+                            <p className="flex items-center gap-1.5 text-[11px] font-heading font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                              <Sparkles size={12} />
+                              Tez havolalar
+                            </p>
+                            <div className="space-y-0.5">
+                              {quickLinks.map((item) => (
+                                <button
+                                  key={item.label}
+                                  onClick={() => setSearchQuery(item.label)}
+                                  className="flex items-center gap-3 w-full px-3 py-2.5 text-[13px] font-body text-foreground hover:bg-muted rounded-xl transition-colors text-left group"
+                                >
+                                  <span className="text-base">{item.icon}</span>
+                                  <span className="flex-1">{item.label}</span>
+                                  <ArrowRight size={13} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </>

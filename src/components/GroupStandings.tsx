@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
-import { teamNamesUzByName } from "@/data/teamNamesUzByName";
+import { translateTeamName } from "@/data/teamNamesUzByName";
+import { translateRoundName } from "@/data/GroupNameUzTranslate";
 
 interface Props {
   data?: StandingsResponse | null;
@@ -10,12 +11,12 @@ interface Props {
 
 const GroupStandings = ({ data = null }: Props) => {
   const groups = data?.response[0]?.league.standings.map((groupArr) => ({
-    group: groupArr[0]?.group.replace("Group ", "") ?? "",
+    group: groupArr[0]?.group ?? "",
     teams: groupArr
       .filter((t) => t.team.name !== null)
       .map((t) => ({
         pos: t.rank,
-        name: teamNamesUzByName[t.team.name] ?? t.team.name,
+       name: translateTeamName(t.team.name),
         crest: t.team.logo,
         p: t.all.played,
         w: t.all.win,
@@ -44,7 +45,7 @@ const GroupStandings = ({ data = null }: Props) => {
             <div key={g.group}>
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="text-[11px] font-heading font-bold text-muted-foreground uppercase tracking-wider">
-                  {g.group} guruh
+                  {translateRoundName(g.group)}
                 </span>
                 <div className="flex-1 h-px bg-border" />
               </div>

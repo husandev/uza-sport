@@ -1,6 +1,9 @@
 import { StandingsResponse, ScorersResponse } from "@/hooks/queries/useStandings";
 import { FixturesResponse } from "@/hooks/queries/useFixtures";
 
+export const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "BT", "P", "INT", "SUSP", "LIVE"];
+export const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
+
 const BASE_URL = "https://v3.football.api-sports.io";
 const HEADERS = { "x-apisports-key": process.env.API_FOOTBALL_KEY! };
 const CACHE = { next: { revalidate: 3600 } };
@@ -9,7 +12,7 @@ const CACHE = { next: { revalidate: 3600 } };
 const SERVER_TIMEOUT_MS = 5000;
 
 const LEAGUE_ID = 1;   // FIFA World Cup
-const SEASON = 2022;   // TODO: 2026 ga o'zgartir (paid plan kerak yoki turnir boshlanganida)
+const SEASON = 2026;   // TODO: 2026 ga o'zgartir (paid plan kerak yoki turnir boshlanganida)
 
 function withTimeout<T>(promise: Promise<T>): Promise<T> {
   const timeout = new Promise<never>((_, reject) =>

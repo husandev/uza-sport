@@ -159,6 +159,7 @@ const MatchCountdown = ({
               color: "hsl(var(--primary-foreground))",
             }}
             whileHover={{ scale: 1.05 }}
+            suppressHydrationWarning
           >
             {dayLabel}
           </motion.div>
@@ -311,6 +312,7 @@ const MatchCountdown = ({
           <span
             className="text-[10px] font-medium"
             style={{ color: "hsl(var(--muted-foreground) / 0.4)" }}
+            suppressHydrationWarning
           >
             {footerLabel}
           </span>

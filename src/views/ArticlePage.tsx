@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, Share2, Facebook, Twitter, MessageCircle, Eye } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Share2, Facebook, Twitter, MessageCircle, Eye, ImageOff } from "lucide-react";
 import NewsFeed from "@/components/NewsFeed";
 import HeroFootballers from "@/components/HeroFootballers";
 import SidebarArticles from "@/components/SidebarArticles";
@@ -138,21 +138,26 @@ const ArticlePage = () => {
               </div>
 
               {/* Hero image */}
-              {heroImage && (
-                <div
-                  className="relative mx-5 sm:mx-7 mb-6 rounded-xl overflow-hidden cursor-zoom-in"
-                  onClick={() => openLightbox(heroImage, post.title)}
-                >
-                  <div className="aspect-[2/1] sm:aspect-[21/9]">
+              <div className="relative mx-5 sm:mx-7 mb-6 rounded-xl overflow-hidden">
+                {heroImage ? (
+                  <div
+                    className="aspect-[2/1] sm:aspect-[21/9] cursor-zoom-in"
+                    onClick={() => openLightbox(heroImage, post.title)}
+                  >
                     <img
                       src={heroImage}
                       alt={post.title}
                       className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                     />
+                    <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10" />
                   </div>
-                  <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10" />
-                </div>
-              )}
+                ) : (
+                  <div className="aspect-[2/1] sm:aspect-[21/9] bg-muted flex flex-col items-center justify-center gap-2">
+                    <ImageOff size={32} className="text-muted-foreground/25" />
+                    <span className="text-[12px] text-muted-foreground/40 font-medium">Rasm yo'q</span>
+                  </div>
+                )}
+              </div>
 
               <div className="px-5 sm:px-7 pb-7">
                 {/* Meta + share row */}

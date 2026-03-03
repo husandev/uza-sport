@@ -10,7 +10,6 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import { getFixtures, getLiveFixtures, LIVE_STATUSES, FINISHED_STATUSES } from "@/lib/football";
 import { AFFixture } from "@/hooks/queries/useFixtures";
 import { translateTeamName } from "@/data/teamNamesUzByName";
-import { formatMatchTime } from "@/lib/utils";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -71,7 +70,7 @@ function toTickerMatch(f: AFFixture): TickerMatch {
     isFinished: FINISHED_STATUSES.includes(status),
     minute:
       f.fixture.status.elapsed !== null ? `${f.fixture.status.elapsed}'` : null,
-    time: formatMatchTime(f.fixture.date),
+    date: f.fixture.date,
   };
 }
 

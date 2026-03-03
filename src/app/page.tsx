@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Index from "@/views/Index";
-import { getStandings, getFixtures, FINISHED_STATUSES } from "@/lib/football";
+import { getStandings, getFixtures, getScorers, FINISHED_STATUSES } from "@/lib/football";
 import { NextMatchData } from "@/components/MatchCountdown";
 import { translateTeamName } from "@/data/teamNamesUzByName";
 
@@ -11,9 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [standings, fixtures] = await Promise.all([
+  const [standings, fixtures, scorers] = await Promise.all([
     getStandings(),
     getFixtures(),
+    getScorers(),
   ]);
 
   const allList = fixtures?.response ?? [];
@@ -41,5 +42,5 @@ export default async function HomePage() {
       }
     : null;
 
-  return <Index standings={standings} nextMatch={nextMatch} />;
+  return <Index standings={standings} nextMatch={nextMatch} scorers={scorers} />;
 }

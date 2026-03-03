@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Play } from "lucide-react";
+import { Play, ImageOff } from "lucide-react";
 
 interface PostCardProps {
   href: string;
@@ -26,18 +26,19 @@ export default function PostCard({
       href={href}
       className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
     >
-      <div
-        className={`w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl overflow-hidden${
-          showPlayIcon ? " relative bg-muted" : ""
-        }`}
-      >
-        {thumbnail && (
+      <div className={`w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted`}>
+        {thumbnail ? (
           <img
             src={thumbnail}
             loading="lazy"
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-1">
+            <ImageOff size={20} className="text-muted-foreground/30" />
+            <span className="text-[10px] text-muted-foreground/30 font-medium">Rasm yo'q</span>
+          </div>
         )}
         {showPlayIcon && (
           <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center">

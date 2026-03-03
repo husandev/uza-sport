@@ -2,6 +2,14 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { formatMatchTime } from "@/lib/utils";
+
+const MONTHS_SHORT = ["Yan","Fev","Mar","Apr","May","Iyn","Iyl","Avg","Sen","Okt","Noy","Dek"];
+
+function formatShortDate(iso: string) {
+  const d = new Date(iso);
+  return `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`;
+}
 
 export interface TickerMatch {
   id: number;
@@ -14,7 +22,7 @@ export interface TickerMatch {
   isLive: boolean;
   isFinished: boolean;
   minute: string | null;
-  time: string;
+  date: string;
 }
 
 const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
@@ -130,7 +138,14 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
                   ) : match.isFinished ? (
                     <span className="text-primary-foreground/50 text-[10px] font-body">tugadi</span>
                   ) : (
-                    <span className="text-primary-foreground/70 text-[11px] font-medium font-body">{match.time}</span>
+                    <>
+                      <span className="text-primary-foreground/50 text-[9px] font-medium font-body" suppressHydrationWarning>
+                        {formatShortDate(match.date)}
+                      </span>
+                      <span className="text-primary-foreground/70 text-[11px] font-bold font-body" suppressHydrationWarning>
+                        {formatMatchTime(match.date)}
+                      </span>
+                    </>
                   )}
                 </div>
 

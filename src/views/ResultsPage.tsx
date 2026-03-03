@@ -6,8 +6,21 @@ import { FixturesResponse, AFFixture } from "@/hooks/queries/useFixtures";
 import { Circle } from "lucide-react";
 import { translateTeamName } from "@/data/teamNamesUzByName";
 import { translateVenueName } from "@/data/StadiumUzTranslate";
-import { LIVE_STATUSES, FINISHED_STATUSES } from "@/lib/football";
-import { formatMatchDate, formatMatchTime } from "@/lib/utils";
+
+const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "BT", "P", "INT", "SUSP", "LIVE"];
+const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
+
+const months = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
+
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function formatTime(iso: string) {
+  const d = new Date(iso);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
 
 function formatRound(round: string) {
   if (round.startsWith("Group Stage - ")) return `${round.replace("Group Stage - ", "")}-tur`;
@@ -30,6 +43,7 @@ function getLiveLabel(fixture: AFFixture) {
 }
 
 function getDateKey(iso: string) {
+  // UTC-da guruhlaymiz — server va client bir xil DOM tuzilma chiqaradi (hydration-safe)
   return iso.slice(0, 10);
 }
 
@@ -101,8 +115,8 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
             <div key={dateKey} className="bg-card rounded-2xl shadow-sm overflow-hidden">
               {/* Day header */}
               <div className="px-5 py-3 border-b border-border flex items-center justify-between">
-                <span className="text-[13px] font-bold text-foreground">
-                  {formatMatchDate(dayFixtures[0].fixture.date)}
+                <span className="text-[13px] font-bold text-foreground" suppressHydrationWarning>
+                  {formatDate(dayFixtures[0].fixture.date)}
                 </span>
                 <span className="text-[11px] font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-full">
                   {formatRound(dayFixtures[0].league.round)}
@@ -142,7 +156,7 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
                             <span className="text-[11px] font-medium text-muted-foreground">Tugadi</span>
                           )}
                           {isScheduled && (
-                            <span className="text-[13px] font-bold text-foreground">{formatMatchTime(f.fixture.date)}</span>
+                            <span className="text-[13px] font-bold text-foreground" suppressHydrationWarning>{formatTime(f.fixture.date)}</span>
                           )}
                         </div>
 

@@ -25,11 +25,6 @@ const LIVE_STATUSES = [
 ];
 const FINISHED_STATUSES = ["FT", "AET", "PEN", "AWD", "WO"];
 
-function formatTickerTime(iso: string) {
-  const d = new Date(iso);
-  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-}
-
 function toTickerMatch(f: AFFixture): TickerMatch {
   const status = f.fixture.status.short;
   return {
@@ -44,7 +39,7 @@ function toTickerMatch(f: AFFixture): TickerMatch {
     isFinished: FINISHED_STATUSES.includes(status),
     minute:
       f.fixture.status.elapsed !== null ? `${f.fixture.status.elapsed}'` : null,
-    time: formatTickerTime(f.fixture.date),
+    date: f.fixture.date,
   };
 }
 const  Layout = async ({ children }: { children: React.ReactNode }) => {

@@ -5,6 +5,7 @@ import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
 import { stadiums } from "@/data/mockData";
 import Pagination from "@/components/Pagination";
+import { ImageOff } from "lucide-react";
 import stadium1 from "@/assets/stadium-1.jpg";
 import stadium2 from "@/assets/stadium-2.jpg";
 import stadium3 from "@/assets/stadium-3.jpg";
@@ -61,13 +62,18 @@ const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) =>
                   className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                 >
                   {/* Image */}
-                  <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden">
+                  <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted">
                     <img
                       src={images[(i + (page - 1) * PER_PAGE) % images.length]}
                       loading="lazy"
                       alt={stadium.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => { e.currentTarget.style.display = "none"; }}
                     />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 pointer-events-none">
+                      <ImageOff size={20} className="text-muted-foreground/30" />
+                      <span className="text-[10px] text-muted-foreground/30 font-medium">Rasm yo'q</span>
+                    </div>
                   </div>
 
                   {/* Text */}

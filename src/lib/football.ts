@@ -8,11 +8,10 @@ const BASE_URL = "https://v3.football.api-sports.io";
 const HEADERS = { "x-apisports-key": process.env.API_FOOTBALL_KEY! };
 const CACHE = { next: { revalidate: 3600 } };
 
-// Promise.race timeout — Next.js fetch cache saqlanadi (AbortSignal cache ni o'chiradi)
 const SERVER_TIMEOUT_MS = 5000;
 
-const LEAGUE_ID = 1;   // FIFA World Cup
-const SEASON = 2026;   // TODO: 2026 ga o'zgartir (paid plan kerak yoki turnir boshlanganida)
+const LEAGUE_ID = 1; 
+const SEASON = 2022;   
 
 function withTimeout<T>(promise: Promise<T>): Promise<T> {
   const timeout = new Promise<never>((_, reject) =>
@@ -32,8 +31,6 @@ export async function getStandings(): Promise<StandingsResponse | null> {
     return null;
   }
 }
-
-// Live fixtures — 60 soniya kesh (tez o'zgaradi)
 export async function getLiveFixtures(): Promise<FixturesResponse | null> {
   try {
     const res = await withTimeout(

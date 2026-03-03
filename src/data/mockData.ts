@@ -210,13 +210,7 @@ export const groupStandings = [
   },
 ];
 
-export const topScorers = [
-  { pos: 1, name: "K. Mbappe", flag: "🇫🇷", goals: 4, assists: 1 },
-  { pos: 2, name: "L. Messi", flag: "🇦🇷", goals: 3, assists: 2 },
-  { pos: 3, name: "V. Junior", flag: "🇧🇷", goals: 3, assists: 0 },
-  { pos: 4, name: "E. Shomurodov", flag: "🇺🇿", goals: 2, assists: 1 },
-  { pos: 5, name: "H. Keyn", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", goals: 2, assists: 0 },
-];
+
 
 export const videoPosts = [
   { id: 1, title: "O'zbekiston — Argentina: eng yaxshi momentlar", duration: "5:32", views: "1.2M" },

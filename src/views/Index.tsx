@@ -11,16 +11,19 @@ import StadiumsSection from "@/components/StadiumsSection";
 import TeamsSection from "@/components/TeamsSection";
 import SidebarArticles from "@/components/SidebarArticles";
 
-import { StandingsResponse } from "@/hooks/queries/useStandings";
+import { StandingsResponse, ScorersResponse } from "@/hooks/queries/useStandings";
 import { NextMatchData } from "@/components/MatchCountdown";
+import TopScorers from "@/components/TopScorers";
 import Link from "next/link";
 
 const Index = ({
   standings,
   nextMatch,
+  scorers,
 }: {
   standings: StandingsResponse | null;
   nextMatch?: NextMatchData | null;
+  scorers?: ScorersResponse | null;
 }) => {
   return (
     <>
@@ -63,6 +66,7 @@ const Index = ({
           {/* Right: Standings + Scorers + Players + Articles */}
           <div className="lg:col-span-3 space-y-4">
             <GroupStandings data={standings} />
+            <TopScorers scorers={scorers ?? null} />
             {/* Banner */}
             <Link href="https://iticket.uz/" target="_blank" className="block">
               <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">

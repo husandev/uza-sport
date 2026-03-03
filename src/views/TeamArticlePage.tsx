@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Calendar, Clock, Eye, Share2, Facebook, Twitter, MessageCircle, ArrowRight } from "lucide-react";
+import { Calendar, Clock, Eye, Share2, Facebook, Twitter, MessageCircle, ArrowRight, ImageOff } from "lucide-react";
 import { groupStandings } from "@/data/mockData";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
@@ -90,9 +90,18 @@ const TeamArticlePage = ({ standings }: { standings: StandingsResponse | null })
             </div>
 
             <div className="relative mx-5 sm:mx-7 mb-6 rounded-xl overflow-hidden">
-              <div className="aspect-[2/1] sm:aspect-[21/9]">
-                <img src={article.image} alt={team.name} className="w-full h-full object-cover" />
-              </div>
+              {article.image ? (
+                <div className="aspect-[2/1] sm:aspect-[21/9]">
+                  <img src={article.image} alt={team.name} className="w-full h-full object-cover"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                  />
+                </div>
+              ) : (
+                <div className="aspect-[2/1] sm:aspect-[21/9] bg-muted flex flex-col items-center justify-center gap-2">
+                  <ImageOff size={32} className="text-muted-foreground/25" />
+                  <span className="text-[12px] text-muted-foreground/40 font-medium">Rasm yo'q</span>
+                </div>
+              )}
             </div>
 
             <div className="px-5 sm:px-7 pb-7">

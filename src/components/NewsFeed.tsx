@@ -35,11 +35,11 @@ const NewsFeed = () => {
                 <Clock size={10} />
                 {formatPublishTime(item.publish_time)}
               </span>
-              {item.category?.title && (
+              {/* {item.category?.title && (
                 <span className="text-[11px] text-primary font-medium font-body">
                   {item.category.title}
                 </span>
-              )}
+              )} */}
             </div>
           </Link>
         ))}

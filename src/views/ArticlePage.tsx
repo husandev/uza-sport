@@ -1,13 +1,12 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Clock, Share2, Facebook, Twitter, MessageCircle, Eye, ImageOff } from "lucide-react";
+import { Calendar, Clock, Share2, Eye, ImageOff, ZoomIn, ZoomOut, X as XIcon } from "lucide-react";
 import NewsFeed from "@/components/NewsFeed";
 import HeroFootballers from "@/components/HeroFootballers";
 import SidebarArticles from "@/components/SidebarArticles";
 import { useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { ZoomIn, ZoomOut, X as XIcon } from "lucide-react";
 import { usePost } from "@/hooks/queries/usePosts";
 
 const MONTHS = ["Yanvar","Fevral","Mart","Aprel","May","Iyun","Iyul","Avgust","Sentabr","Oktabr","Noyabr","Dekabr"];
@@ -54,8 +53,35 @@ const ArticlePage = () => {
     return () => window.removeEventListener("keydown", handler);
   }, [lightbox, closeLightbox]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
+  const getUrl = () => (typeof window !== "undefined" ? window.location.href : "");
+
+  const handleFacebook = () => {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getUrl())}`, "_blank");
+  };
+
+  const handleTelegram = () => {
+    const url = getUrl();
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post?.title ?? "")}`, "_blank");
+  };
+
+  const handleX = () => {
+    const url = getUrl();
+    window.open(`https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(post?.title ?? "")}`, "_blank");
+  };
+
+  const handleInstagram = async () => {
+    const url = getUrl();
+    if (navigator.share) {
+      try { await navigator.share({ title: post?.title, url }); } catch {}
+    } else {
+      navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(getUrl());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -158,14 +184,14 @@ const ArticlePage = () => {
               {/* Category + Title */}
               <div className="px-5 sm:px-7 pt-6 pb-5">
                 <div className="flex items-center gap-3 mb-4">
-                  {post.category?.title && (
+                  {/* {post.category?.title && (
                     <span
                       className="inline-block text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1 rounded-full text-primary-foreground"
                       style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}
                     >
                       {post.category.title}
                     </span>
-                  )}
+                  )} */}
                   <span className="text-[11px] text-muted-foreground flex items-center gap-1">
                     <Calendar className="w-3 h-3" />{formatDate(post.publish_time)}
                   </span>
@@ -219,21 +245,55 @@ const ArticlePage = () => {
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <button className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                      <Facebook className="w-3 h-3" />
-                    </button>
-                    <button className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                      <Twitter className="w-3 h-3" />
-                    </button>
-                    <button className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors">
-                      <MessageCircle className="w-3 h-3" />
-                    </button>
+                    {/* Facebook */}
                     <button
-                      onClick={handleShare}
+                      onClick={handleFacebook}
+                      title="Facebookda ulashish"
+                      className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </button>
+                    {/* Telegram */}
+                    <button
+                      onClick={handleTelegram}
+                      title="Telegramda ulashish"
+                      className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-[#2CA5E0] hover:text-white hover:border-[#2CA5E0] transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                      </svg>
+                    </button>
+                    {/* X */}
+                    <button
+                      onClick={handleX}
+                      title="X da ulashish"
+                      className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-colors"
+                    >
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.75l7.732-8.843-8.164-10.657H8.08l4.261 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+                      </svg>
+                    </button>
+                    {/* Instagram */}
+                    <button
+                      onClick={handleInstagram}
+                      title="Instagramda ulashish"
+                      className="w-7 h-7 rounded-full bg-muted/60 border border-border flex items-center justify-center hover:bg-gradient-to-br hover:from-[#f09433] hover:via-[#e6683c] hover:via-[#dc2743] hover:via-[#cc2366] hover:to-[#bc1888] hover:text-white hover:border-transparent transition-colors"
+                    >
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                      </svg>
+                    </button>
+                    {/* Copy link */}
+                    <button
+                      onClick={handleCopyLink}
                       className="h-7 px-2.5 rounded-full bg-muted/60 border border-border flex items-center gap-1 hover:bg-primary hover:text-primary-foreground transition-colors text-[10px] font-semibold"
                     >
                       <Share2 className="w-3 h-3" />
-                      {copied ? "✓" : "Ulashish"}
+                      {copied ? "✓ Nusxalandi" : "Ulashish"}
                     </button>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Send, Instagram, Youtube, Twitter, Facebook, Linkedin } from "lucide-react";
+import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import uzaLogo from "@/assets/uza-logo-solo.png";
@@ -30,10 +30,10 @@ const hotSearches = [
 ];
 
 const quickLinks = [
-  { label: "JCh-2026 jadval", icon: "📊" },
-  { label: "Bugungi o'yinlar", icon: "⚽" },
-  { label: "Eng yaxshi hujumchilar", icon: "🏆" },
-  { label: "Stadionlar ro'yxati", icon: "🏟️" },
+  { label: "JCh-2026 jadval", icon: "📊", href: "/standings" },
+  { label: "Bugungi o'yinlar", icon: "⚽", href: "/results" },
+  { label: "Eng yaxshi hujumchilar", icon: "🏆", href: "/standings" },
+  { label: "Stadionlar ro'yxati", icon: "🏟️", href: "/stadiums" },
 ];
 
 const Header = () => {
@@ -75,6 +75,12 @@ const Header = () => {
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
+  // Body scroll lock
+  useEffect(() => {
+    document.body.style.overflow = searchOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [searchOpen]);
+
   useEffect(() => {
     if (searchOpen && inputRef.current) inputRef.current.focus();
   }, [searchOpen]);
@@ -100,23 +106,17 @@ const Header = () => {
           <div className="flex items-center gap-2">
             {/* Social icons */}
             <div className="hidden sm:flex items-center gap-0.5">
-              {[
-                { icon: Youtube, label: "YouTube" },
-                { icon: Twitter, label: "Twitter" },
-                { icon: Facebook, label: "Facebook" },
-                { icon: Instagram, label: "Instagram" },
-                { icon: Send, label: "Telegram" },
-                { icon: Linkedin, label: "LinkedIn" },
-              ].map(({ icon: Icon, label }) => (
-                <a key={label} href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label={label}>
-                  <Icon size={13} />
-                </a>
-              ))}
-              {/* TikTok (no lucide icon, using SVG) */}
-              <a href="#" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-primary transition-colors" aria-label="TikTok">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                </svg>
+              <a href="#" aria-label="Facebook" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-[#1877F2] transition-colors">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="#" aria-label="Telegram" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-[#2CA5E0] transition-colors">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              </a>
+              <a href="#" aria-label="X" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.75l7.732-8.843-8.164-10.657H8.08l4.261 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
+              </a>
+              <a href="#" aria-label="Instagram" className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-muted text-muted-foreground hover:text-[#E1306C] transition-colors">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
               </a>
             </div>
 
@@ -136,7 +136,10 @@ const Header = () => {
               ) : (
                 <>
                   {/* Backdrop */}
-                  <div className="fixed inset-0 bg-foreground/30 backdrop-blur-md z-40" onClick={() => setSearchOpen(false)} />
+                  <div
+                    className="fixed inset-0 bg-foreground/30 backdrop-blur-md z-40"
+                    onClick={() => setSearchOpen(false)}
+                  />
 
                   {/* Search panel - centered command palette style */}
                   <div
@@ -183,15 +186,19 @@ const Header = () => {
                       {hasQuery ? (
                         <div className="max-h-[360px] overflow-y-auto px-2 py-2">
                           {/* Loading skeleton */}
-                          {searchLoading && Array.from({ length: 3 }).map((_, i) => (
-                            <div key={i} className="flex gap-3 px-3 py-2.5 animate-pulse">
-                              <div className="w-12 h-12 rounded-lg bg-muted flex-shrink-0" />
-                              <div className="flex-1 space-y-2 pt-1">
-                                <div className="h-3 bg-muted rounded w-full" />
-                                <div className="h-3 bg-muted rounded w-1/2" />
+                          {searchLoading &&
+                            Array.from({ length: 3 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className="flex gap-3 px-3 py-2.5 animate-pulse"
+                              >
+                                <div className="w-12 h-12 rounded-lg bg-muted flex-shrink-0" />
+                                <div className="flex-1 space-y-2 pt-1">
+                                  <div className="h-3 bg-muted rounded w-full" />
+                                  <div className="h-3 bg-muted rounded w-1/2" />
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
 
                           {/* Kam belgi */}
                           {!searchLoading && debouncedQ.length < 2 && (
@@ -201,40 +208,56 @@ const Header = () => {
                           )}
 
                           {/* Natija topilmadi */}
-                          {!searchLoading && debouncedQ.length >= 2 && searchResults.length === 0 && (
-                            <div className="py-10 text-center">
-                              <Search size={28} className="mx-auto mb-2 text-muted-foreground/30" />
-                              <p className="text-[13px] text-muted-foreground">Natija topilmadi</p>
-                              <p className="text-[11px] text-muted-foreground/60 mt-1">«{debouncedQ}» bo'yicha hech narsa yo'q</p>
-                            </div>
-                          )}
-
-                          {/* Natijalar */}
-                          {!searchLoading && searchResults.map((post) => (
-                            <Link
-                              key={post.id}
-                              href={`/article/${post.slug}`}
-                              onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
-                            >
-                              {post.files?.thumbnails?.small?.src && (
-                                <img
-                                  src={post.files.thumbnails.small.src}
-                                  alt={post.title}
-                                  className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                          {!searchLoading &&
+                            debouncedQ.length >= 2 &&
+                            searchResults.length === 0 && (
+                              <div className="py-10 text-center">
+                                <Search
+                                  size={28}
+                                  className="mx-auto mb-2 text-muted-foreground/30"
                                 />
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <p className="text-[13px] font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                                  {post.title}
+                                <p className="text-[13px] text-muted-foreground">
+                                  Natija topilmadi
                                 </p>
-                                <p className="text-[11px] text-muted-foreground mt-0.5">
-                                  {formatPublishTime(post.publish_time)}
+                                <p className="text-[11px] text-muted-foreground/60 mt-1">
+                                  «{debouncedQ}» bo'yicha hech narsa yo'q
                                 </p>
                               </div>
-                              <ArrowRight size={13} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
-                            </Link>
-                          ))}
+                            )}
+
+                          {/* Natijalar */}
+                          {!searchLoading &&
+                            searchResults.map((post) => (
+                              <Link
+                                key={post.id}
+                                href={`/article/${post.slug}`}
+                                onClick={() => {
+                                  setSearchOpen(false);
+                                  setSearchQuery("");
+                                }}
+                                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
+                              >
+                                {post.files?.thumbnails?.small?.src && (
+                                  <img
+                                    src={post.files.thumbnails.small.src}
+                                    alt={post.title}
+                                    className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                                  />
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-[13px] font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                                    {post.title}
+                                  </p>
+                                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                                    {formatPublishTime(post.publish_time)}
+                                  </p>
+                                </div>
+                                <ArrowRight
+                                  size={13}
+                                  className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+                                />
+                              </Link>
+                            ))}
                         </div>
                       ) : (
                         <>
@@ -267,15 +290,20 @@ const Header = () => {
                             </p>
                             <div className="space-y-0.5">
                               {quickLinks.map((item) => (
-                                <button
-                                  key={item.label}
-                                  onClick={() => setSearchQuery(item.label)}
-                                  className="flex items-center gap-3 w-full px-3 py-2.5 text-[13px] font-body text-foreground hover:bg-muted rounded-xl transition-colors text-left group"
-                                >
-                                  <span className="text-base">{item.icon}</span>
-                                  <span className="flex-1">{item.label}</span>
-                                  <ArrowRight size={13} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </button>
+                                <Link key={item.label} href={item.href} onClick={() => { setSearchOpen(false); setSearchQuery(""); }}>
+                                  <button
+                                    className="flex items-center gap-3 w-full px-3 py-2.5 text-[13px] font-body text-foreground hover:bg-muted rounded-xl transition-colors text-left group"
+                                  >
+                                    <span className="text-base">
+                                      {item.icon}
+                                    </span>
+                                    <span className="flex-1">{item.label}</span>
+                                    <ArrowRight
+                                      size={13}
+                                      className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+                                    />
+                                  </button>
+                                </Link>
                               ))}
                             </div>
                           </div>
@@ -320,7 +348,12 @@ const Header = () => {
       {mobileOpen && (
         <nav className="lg:hidden nav-bar border-t border-primary-foreground/10 pb-1">
           {navItems.map((item) => (
-            <Link key={item.label} href={item.href} className="nav-link block" onClick={() => setMobileOpen(false)}>
+            <Link
+              key={item.label}
+              href={item.href}
+              className="nav-link block"
+              onClick={() => setMobileOpen(false)}
+            >
               {item.label}
             </Link>
           ))}

@@ -29,13 +29,6 @@ const PhotoFeed = () => {
       caption: item.files.description,
     })) ?? [];
 
-  const columns: { src: string; caption: string }[][] = [[], [], [], []];
-  photos.forEach((photo, i) => {
-    columns[i % 4].push(photo);
-  });
-
-  const getFlatIndex = (colIdx: number, rowIdx: number) => rowIdx * 4 + colIdx;
-
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
   const goPrev = useCallback(
     () => setLightboxIndex((i) => (i !== null ? (i - 1 + photos.length) % photos.length : null)),
@@ -70,57 +63,38 @@ const PhotoFeed = () => {
           Xatolik yuz berdi.
         </div>
       ) : (
-        <div className="flex gap-2.5">
-          {columns.map((col, colIdx) => (
-            <div key={colIdx} className="flex-1 flex flex-col gap-2.5">
-              {col.map((photo, i) => (
-                <div
-                  key={i}
-                  className="relative rounded-xl overflow-hidden cursor-pointer group"
-                  onClick={() => setLightboxIndex(getFlatIndex(colIdx, i))}
-                >
-                  <img
-                    src={photo.src}
-                    loading="lazy"
-                    alt={photo.caption}
-                    className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    style={{
-                      aspectRatio:
-                        (colIdx + i) % 3 === 0
-                          ? "3/4"
-                          : (colIdx + i) % 3 === 1
-                          ? "1/1"
-                          : "4/3",
-                    }}
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      target.style.display = "none";
-                      const placeholder = target.nextElementSibling as HTMLElement | null;
-                      if (placeholder) placeholder.style.display = "flex";
-                    }}
-                  />
-                  <div
-                    className="w-full bg-muted items-center justify-center text-muted-foreground flex-col gap-1 text-[11px]"
-                    style={{
-                      display: "none",
-                      aspectRatio:
-                        (colIdx + i) % 3 === 0
-                          ? "3/4"
-                          : (colIdx + i) % 3 === 1
-                          ? "1/1"
-                          : "4/3",
-                    }}
-                  >
-                    <Camera size={16} className="opacity-40" />
-                    <span className="opacity-40">Surat yo'q</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                    <span className="text-[11px] font-medium text-white flex items-center gap-1.5 font-body mb-1">
-                      <Camera size={11} /> {photo.caption}
-                    </span>
-                  </div>
-                </div>
-              ))}
+        <div className="columns-2 sm:columns-3 lg:columns-4 gap-2.5">
+          {photos.map((photo, i) => (
+            <div
+              key={i}
+              className="break-inside-avoid mb-2.5 relative rounded-xl overflow-hidden cursor-pointer group"
+              onClick={() => setLightboxIndex(i)}
+            >
+              <img
+                src={photo.src}
+                loading="lazy"
+                alt={photo.caption}
+                className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                style={{ aspectRatio: i % 3 === 0 ? "3/4" : i % 3 === 1 ? "1/1" : "4/3" }}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.style.display = "none";
+                  const placeholder = target.nextElementSibling as HTMLElement | null;
+                  if (placeholder) placeholder.style.display = "flex";
+                }}
+              />
+              <div
+                className="w-full bg-muted items-center justify-center text-muted-foreground flex-col gap-1 text-[11px]"
+                style={{ display: "none", aspectRatio: i % 3 === 0 ? "3/4" : i % 3 === 1 ? "1/1" : "4/3" }}
+              >
+                <Camera size={16} className="opacity-40" />
+                <span className="opacity-40">Surat yo'q</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+                <span className="text-[11px] font-medium text-white flex items-center gap-1.5 font-body mb-1">
+                  <Camera size={11} /> {photo.caption}
+                </span>
+              </div>
             </div>
           ))}
         </div>

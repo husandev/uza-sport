@@ -24,9 +24,9 @@ export default function PostCard({
   return (
     <Link
       href={href}
-      className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
+      className="px-4 sm:px-6 py-4 sm:py-5 flex gap-3 sm:gap-5 cursor-pointer hover:bg-muted/40 transition-colors group "
     >
-      <div className={`w-[110px] sm:w-[200px] h-[80px] sm:h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted`}>
+      <div className={`w-[88px] sm:w-[160px] h-[66px] sm:h-[110px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted`}>
         {thumbnail ? (
           <img
             src={thumbnail}
@@ -52,20 +52,22 @@ export default function PostCard({
         <div>
           <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-2 font-body">
             <span>{publishTime}</span>
-            {category && (
+            {/* {category && (
               <>
                 <span className="text-muted-foreground/40">|</span>
                 <span className="text-primary font-medium">{category}</span>
               </>
-            )}
+            )} */}
           </div>
-          <h3 className="text-[15px] sm:text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+          <h3 className="text-[13px] sm:text-[18px] font-bold text-foreground leading-[1] group-hover:text-primary transition-colors line-clamp-2">
             {title}
           </h3>
           {description && description !== "_" && (
-            <p className="text-[13px] text-muted-foreground mt-1.5 line-clamp-2 font-body">
-              {description}
-            </p>
+            <div className="hidden sm:block mt-1.5">
+              <p className="text-[13px] text-muted-foreground line-clamp-2 font-body">
+                {description}
+              </p>
+            </div>
           )}
         </div>
       </div>

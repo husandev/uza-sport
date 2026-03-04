@@ -30,6 +30,12 @@ const PhotoLightbox = ({
   const activeThumbRef = useRef<HTMLButtonElement>(null);
   const photo = photos[index];
 
+  // Body scroll lock
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   useEffect(() => {
     setZoom(1);
     setImgLoaded(false);

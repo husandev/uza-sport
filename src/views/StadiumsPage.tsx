@@ -62,7 +62,7 @@ const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) =>
                   className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                 >
                   {/* Image */}
-                  <div className="w-[200px] h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted">
+                  <div className="w-[90px] sm:w-[160px] lg:w-[200px] h-[68px] sm:h-[110px] lg:h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted">
                     <img
                       src={images[(i + (page - 1) * PER_PAGE) % images.length]}
                       loading="lazy"
@@ -86,7 +86,7 @@ const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) =>
                       </div>
                       <div className="flex items-center gap-2.5 mb-1">
                         <span className="text-xl">{stadium.country}</span>
-                        <h3 className="text-[20px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                        <h3 className="text-[14px] sm:text-[18px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
                           {stadium.title}
                         </h3>
                       </div>

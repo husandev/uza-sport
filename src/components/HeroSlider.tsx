@@ -143,7 +143,7 @@ const HeroSlider = () => {
                 {String(current + 1).padStart(2, "0")}
               </motion.div>
 
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -152,13 +152,13 @@ const HeroSlider = () => {
                   <TrendingUp size={12} />
                   {slide.category?.title ?? "Yangilik"}
                 </span>
-              </motion.div>
+              </motion.div> */}
 
                 <motion.h2
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                 className="text-primary-foreground text-3xl lg:text-[44px] font-heading font-extrabold leading-[1.1] mb-4 max-w-[620px] drop-shadow-xl line-clamp-4"
+                 className="text-primary-foreground text-xl sm:text-3xl lg:text-[44px] font-heading font-extrabold leading-[1.1] mb-3 sm:mb-4 max-w-[620px] drop-shadow-xl line-clamp-3"
                 >
                   {slide.title}
                 </motion.h2>
@@ -174,7 +174,7 @@ const HeroSlider = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.5 }}
-              className="text-primary-foreground/70 text-[15px] mb-5 max-w-[520px] font-body leading-relaxed line-clamp-4"
+              className="hidden sm:block text-primary-foreground/70 text-[15px] mb-5 max-w-[520px] font-body leading-relaxed line-clamp-2"
               >
                 {slide.description}
               </motion.p>
@@ -248,9 +248,9 @@ const HeroSlider = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-foreground/20 group-hover:from-foreground/70 transition-all" />
                 <div className="absolute top-0 left-0 w-[3px] h-full bg-highlight scale-y-0 group-hover:scale-y-100 transition-transform origin-top duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-3">
-                  <span className="text-[9px] text-highlight font-heading font-bold uppercase tracking-widest">
+                  {/* <span className="text-[9px] text-highlight font-heading font-bold uppercase tracking-widest">
                     {ns.category?.title ?? ""}
-                  </span>
+                  </span> */}
                   <h4 className="text-primary-foreground text-[12px] font-heading font-bold leading-tight line-clamp-2 mt-1 group-hover:text-highlight transition-colors">
                     {ns.title}
                   </h4>

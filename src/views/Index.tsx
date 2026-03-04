@@ -34,7 +34,7 @@ const Index = ({
         {/* Main grid: left news + center content + right sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Left: News feed */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="hidden lg:block lg:col-span-3 space-y-4">
             <NewsFeed />
             {/* Banner */}
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
@@ -64,7 +64,7 @@ const Index = ({
           </div>
 
           {/* Right: Standings + Scorers + Players + Articles */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="hidden lg:block lg:col-span-3 space-y-4">
             <GroupStandings data={standings} />
             {/* <TopScorers scorers={scorers ?? null} /> */}
             {/* Banner */}

@@ -9,23 +9,26 @@ const Footer = () => {
   return (
     <footer className="bg-primary mt-6">
       <div className="container py-4">
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+
+          {/* Logo */}
           <div className="flex items-center gap-3">
             <img src={uzaLogo.src} alt="UZA.uz" className="h-4 brightness-0 invert opacity-70" />
             <div className="h-4 w-px bg-primary-foreground/20" />
             <span className="text-primary-foreground font-heading font-bold text-sm">WC2026</span>
-            <span className="text-primary-foreground/30 text-[11px] font-body hidden sm:inline">
+            <span className="text-primary-foreground/30 text-[11px] font-body hidden md:inline">
               — JCh-2026 maxsus loyihasi
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-[12px] text-primary-foreground/50 font-body">
+          {/* Links + copyright + OKS */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px] text-primary-foreground/50 font-body">
             <Link href="/news" className="hover:text-primary-foreground transition-colors">Yangiliklar</Link>
             <Link href="/results" className="hover:text-primary-foreground transition-colors">Jadval</Link>
             <a href="https://t.me" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Telegram</a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Instagram</a>
             <span className="text-primary-foreground/25">© 2026 UZA.uz</span>
-            <div className="h-4 w-px bg-primary-foreground/20" />
+            <div className="hidden sm:block h-4 w-px bg-primary-foreground/20" />
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -39,6 +42,7 @@ const Footer = () => {
               </Tooltip>
             </TooltipProvider>
           </div>
+
         </div>
       </div>
     </footer>

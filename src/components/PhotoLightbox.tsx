@@ -147,7 +147,7 @@ const PhotoLightbox = ({
         <div className="flex items-center justify-center gap-1.5 mt-3 overflow-x-auto max-w-full pb-1">
           {photos.map((p, i) => (
             <button key={i} ref={i === index ? activeThumbRef : undefined} onClick={() => setPlaying(false)} onClickCapture={() => { const event = new CustomEvent("lightbox-goto", { detail: i }); window.dispatchEvent(event); }}
-              className={`w-10 h-10 rounded-md overflow-hidden flex-shrink-0 border-2 transition-all duration-200 bg-white/10 ${i === index ? "border-white scale-110" : "border-transparent opacity-50 hover:opacity-80"}`}>
+              className={`mt-1 w-10 h-10 rounded-md overflow-hidden flex-shrink-0 border-2 transition-all duration-200 bg-white/10 ${i === index ? "border-white scale-110" : "border-transparent opacity-50 hover:opacity-80"}`}>
               <img
                 src={p.src}
                 alt=""

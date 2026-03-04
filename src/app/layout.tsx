@@ -109,7 +109,7 @@ export default async function RootLayout({
     <html lang="uz" className={inter.variable}>
       <body>
         <Providers>
-          <div className="min-h-screen bg-background">
+          <div className="min-h-screen bg-background flex flex-col">
             <ErrorBoundary>
               <Header />
             </ErrorBoundary>
@@ -117,7 +117,7 @@ export default async function RootLayout({
               <MatchTicker matches={matches} />
             </ErrorBoundary>
             <ScrollToTop />
-            <main>
+            <main className="flex-1 flex flex-col">
               <ErrorBoundary>{children}</ErrorBoundary>
             </main>
             <ErrorBoundary>

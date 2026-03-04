@@ -63,7 +63,7 @@ src/app/
 ├── team/[id]/page.tsx    → /team/:id
 ├── stadiums/page.tsx     → /stadiums
 ├── stadium/[id]/page.tsx → /stadium/:id
-└── footballer/[id]/page.tsx → /footballer/:id
+└── footballer/[slug]/page.tsx → /footballer/:slug
 ```
 
 ### Page wrapper pattern (src/app/*/page.tsx):
@@ -670,5 +670,28 @@ TanStack Query hook ishlatilmaydi (server-side SSR).
 
 ---
 
+---
+
+## 22. ATHLETES API
+
+### Endpointlar (`src/hooks/queries/useAthletes.ts`):
+- Base URL: `/api/v1` (NEXT_PUBLIC_API_URL ga qo'shiladi)
+- `GET /api/v1/athletes?include=file&filter[status]=1&sort=sort` — barcha sportchilar
+- `GET /api/v1/athletes/slug/{slug}?include=file` — slug bo'yicha
+
+### Hook'lar:
+- `useAthletes()` — ro'yxat (AthletesResponse)
+- `useAthleteBySlug(slug)` — bitta (Athlete)
+
+### Routing:
+- `/footballer/[slug]` — slug bo'yicha (ESKI `/footballer/[id]` — O'CHIRILGAN)
+- `HeroFootballers.tsx` — `"use client"`, API dan ma'lumot oladi
+- `FootballerPage.tsx` — `params.slug`, `useAthleteBySlug(slug)`, `dangerouslySetInnerHTML` bio uchun
+
+### File (rasm):
+- `athlete.file?.thumbnails?.normal?.src` — sahifada ishlatiladigan rasm
+- `?include=file` query param bilan keladi
+- Fallback: statik `portraits[]` massividan (HeroFootballers da)
+
 *Bu fayl har bir yangi task qo'shilganda yangilanishi shart.*
-*Oxirgi yangilanish: translateTeamName/translateRoundName/translateVenueName funksiyalari pattern — majburiy.*
+*Oxirgi yangilanish: Athletes API ulandi — useAthletes/useAthleteBySlug, slug routing, HeroFootballers + FootballerPage API ga o'tdi.*

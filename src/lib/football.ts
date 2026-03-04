@@ -11,7 +11,7 @@ const CACHE = { next: { revalidate: 3600 } };
 const SERVER_TIMEOUT_MS = 5000;
 
 const LEAGUE_ID = 1; 
-const SEASON = 2022;   
+const SEASON = 2026;   
 
 function withTimeout<T>(promise: Promise<T>): Promise<T> {
   const timeout = new Promise<never>((_, reject) =>

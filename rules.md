@@ -49,6 +49,7 @@ src/
 src/app/
 ├── page.tsx              → /
 ├── layout.tsx            → Root layout (Header, Footer, Providers)
+├── template.tsx          → Page transition wrapper (re-mounts on every navigation)
 ├── not-found.tsx         → 404 page
 ├── globals.css           → Global styles
 ├── news/page.tsx         → /news
@@ -318,6 +319,17 @@ import { motion, AnimatePresence } from "framer-motion";
   animate={{ x: 0, opacity: 1 }}
 />
 ```
+
+### Page transitions (template.tsx):
+`src/app/template.tsx` — Next.js template file, re-mounts on every navigation (layout.tsx does not).
+Wraps all pages with fade + slide-up animation:
+```tsx
+initial={{ opacity: 0, y: 12 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+```
+- Do NOT add page transition animations inside individual view components — template.tsx handles it globally.
+- ease: [0.22, 1, 0.36, 1] is the standard easing used across HeroSlider and other components.
 
 ### CSS animations (globals.css da aniqlangan):
 - `pulse-dot` — Live indicator pulsing

@@ -7,5 +7,6 @@ export function useVideos(page: number = 1) {
     queryKey: ["videos", page],
     queryFn: () =>
       api.get<PostsResponse>(`/posts/video?per_page=20&_f=json&_l=oz&page=${page}`),
+    staleTime: 1000 * 60 * 5,
   });
 }

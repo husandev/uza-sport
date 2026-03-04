@@ -63,15 +63,56 @@ const VideoArticlePage = ({ standings }: { standings: StandingsResponse | null }
     return (
       <div className="max-w-6xl mx-auto px-4 pt-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <div className="lg:col-span-8 animate-pulse space-y-4">
-            <div className="bg-card rounded-2xl p-7 space-y-4">
-              <div className="h-4 bg-muted rounded w-1/5" />
-              <div className="h-8 bg-muted rounded w-full" />
-              <div className="aspect-video bg-muted rounded-xl" />
+          {/* Main skeleton */}
+          <div className="lg:col-span-8">
+            <div className="bg-card rounded-2xl border border-border overflow-hidden animate-pulse">
+              {/* Header */}
+              <div className="px-5 sm:px-7 pt-6 pb-5">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-5 bg-muted rounded-full w-20" />
+                  <div className="h-3 bg-muted rounded w-24" />
+                </div>
+                <div className="space-y-2.5 mb-3">
+                  <div className="h-7 bg-muted rounded w-full" />
+                  <div className="h-7 bg-muted rounded w-[82%]" />
+                </div>
+                <div className="h-4 bg-muted rounded w-[68%]" />
+              </div>
+              {/* Video player */}
+              <div className="mx-5 sm:mx-7 mb-6">
+                <div className="aspect-video bg-muted rounded-xl" />
+              </div>
+              {/* Body */}
+              <div className="px-5 sm:px-7 pb-7">
+                <div className="flex items-center justify-between pb-5 mb-6 border-b border-border">
+                  <div className="h-3 bg-muted rounded w-24" />
+                  <div className="flex gap-1.5">
+                    {[1, 2, 3].map((i) => <div key={i} className="w-7 h-7 bg-muted rounded-full" />)}
+                    <div className="w-20 h-7 bg-muted rounded-full" />
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {[100, 90, 100, 78, 55].map((w, i) => (
+                    <div key={i} className="h-4 bg-muted rounded" style={{ width: `${w}%` }} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-          <div className="hidden lg:block lg:col-span-4">
-            <div className="bg-card rounded-2xl h-64 animate-pulse" />
+
+          {/* Sidebar skeleton */}
+          <div className="lg:col-span-4 space-y-4">
+            <div className="bg-card rounded-2xl border border-border overflow-hidden animate-pulse">
+              <div className="p-4 space-y-3">
+                <div className="h-4 bg-muted rounded w-2/5 mb-4" />
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="space-y-1.5">
+                    <div className="h-3 bg-muted rounded w-full" />
+                    <div className="h-3 bg-muted rounded w-[65%]" />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

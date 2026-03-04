@@ -58,6 +58,7 @@ export function useSportPosts(lang: string = "oz", perPage: number = SPORT_PER_P
     queryKey: ["posts", "category", "sport", lang, perPage, page],
     queryFn: () =>
       api.get<PostsResponse>(`/posts/category/sport?per_page=${perPage}&_f=json&_l=${lang}&page=${page}`),
+    staleTime: 1000 * 60 * 2,
   });
 }
 

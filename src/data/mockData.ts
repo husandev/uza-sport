@@ -1,78 +1,3 @@
-export const matchTickerData = [
-  {
-    league: "JCh-2026. 2-tur",
-    matches: [
-      { id: 1, time: "2-taym", home: "O'zbekiston", away: "Argentina", hFlag: "🇺🇿", aFlag: "🇦🇷", hScore: 1, aScore: 2, live: true, minute: "67'" },
-      { id: 5, time: "1-taym", home: "Belgiya", away: "Xorvatiya", hFlag: "🇧🇪", aFlag: "🇭🇷", hScore: 1, aScore: 0, live: true, minute: "34'" },
-      { id: 7, time: "1-taym", home: "Portugaliya", away: "Urugvay", hFlag: "🇵🇹", aFlag: "🇺🇾", hScore: 0, aScore: 0, live: true, minute: "12'" },
-      { id: 3, time: "tugadi", home: "Fransiya", away: "Ispaniya", hFlag: "🇫🇷", aFlag: "🇪🇸", hScore: 3, aScore: 1, live: false },
-      { id: 4, time: "tugadi", home: "Angliya", away: "Italiya", hFlag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", aFlag: "🇮🇹", hScore: 2, aScore: 2, live: false },
-      { id: 8, time: "tugadi", home: "Gollandiya", away: "Senegal", hFlag: "🇳🇱", aFlag: "🇸🇳", hScore: 2, aScore: 0, live: false },
-      { id: 9, time: "tugadi", home: "Yaponiya", away: "Koreya", hFlag: "🇯🇵", aFlag: "🇰🇷", hScore: 1, aScore: 1, live: false },
-      { id: 2, time: "23:00", home: "Meksika", away: "Kamerun", hFlag: "🇲🇽", aFlag: "🇨🇲", hScore: null, aScore: null, live: false },
-      { id: 6, time: "20:00", home: "Braziliya", away: "Germaniya", hFlag: "🇧🇷", aFlag: "🇩🇪", hScore: null, aScore: null, live: false },
-      { id: 10, time: "02:00", home: "AQSh", away: "Kanada", hFlag: "🇺🇸", aFlag: "🇨🇦", hScore: null, aScore: null, live: false },
-    ],
-  },
-];
-
-export const heroSlides = [
-  {
-    id: 1,
-    title: "O'zbekiston Argentinaga qarshi: tarixiy o'yin davom etmoqda!",
-    subtitle: "Shomurodov gol urdi, lekin Messi javob qaytardi. 67-daqiqa, hisob 1:2",
-    category: "JONLI",
-    comments: 156,
-    fires: 89,
-  },
-  {
-    id: 2,
-    title: "Fransiya Ispaniyani yirik hisobda mag'lub etdi — 3:1",
-    subtitle: "Mbappe dubl qildi, Dembele golga assist berdi",
-    category: "NATIJA",
-    comments: 52,
-    fires: 20,
-  },
-  {
-    id: 3,
-    title: "Abduqodir Xusanov — JCh-2026 ning eng yaxshi himoyachisi",
-    subtitle: "FIFA rasmiy statistikasi bo'yicha Xusanov barcha himoyachilar orasida birinchi",
-    category: "TAHLIL",
-    comments: 34,
-    fires: 45,
-  },
-  {
-    id: 4,
-    title: "48 jamoali format: qanday o'zgarishlar kutilmoqda?",
-    subtitle: "Yangi format JCh tarixida ilk bor qo'llanilmoqda",
-    category: "MAQOLA",
-    comments: 78,
-    fires: 30,
-  },
-  {
-    id: 5,
-    title: "MetLife Stadium — Jahon chempionati finalining mezboni",
-    subtitle: "82 ming kishilik stadion finalga tayyor",
-    category: "STADION",
-    comments: 23,
-    fires: 15,
-  },
-];
-
-export const newsFeed = [
-  { id: 1, time: "14:30", title: "O'zbekiston terma jamoasi JCh-2026 uchun to'liq tayyorgarlik ko'rmoqda", comments: 34, fires: 12 },
-  { id: 2, time: "13:15", title: "FIFA yangi qoidalarni e'lon qildi — VAR tizimi yangilandi", comments: 12, fires: 5 },
-  { id: 3, time: "12:40", title: "Chiptalar sotuvga chiqarildi — qanday xarid qilish mumkin?", comments: 89, fires: 34 },
-  { id: 4, time: "12:00", title: "Argentina terma jamoasi 26 nafar futbolchini e'lon qildi", comments: 45, fires: 18 },
-  { id: 5, time: "11:30", title: "Eldor Shomurodov: «Biz tarixni yozishga tayyormiz»", comments: 156, fires: 67 },
-  { id: 6, time: "10:45", title: "Nyu-Yorkda JCh-2026 boshlanishiga 100 kun qoldi", comments: 23, fires: 8 },
-  { id: 7, time: "10:00", title: "Guruh bosqichi taqvimi e'lon qilindi", comments: 67, fires: 21 },
-  { id: 8, time: "09:30", title: "Braziliya va Germaniya — B guruhning asosiy favoritlari", comments: 28, fires: 15 },
-  { id: 9, time: "09:00", title: "MetLife Stadium — finalning mezboni", comments: 15, fires: 9 },
-  { id: 10, time: "08:30", title: "Meksika stadionlari tayyor", comments: 11, fires: 3 },
-  { id: 11, time: "08:00", title: "O'zbekiston terma jamoasi Toshkentda ochiq mashg'ulot o'tkazdi", comments: 42, fires: 19 },
-  { id: 12, time: "kecha", title: "Abduqodir Xusanov Manchester Siti safida yangi mavsum boshlaydi", comments: 203, fires: 78 },
-];
 
 export const photoArticles = [
   { id: 1, time: "Bugun, 21:16", title: "O'zbekiston — Argentina: eng yaxshi momentlar", comments: 34 },
@@ -86,18 +11,6 @@ export const photoArticles = [
   { id: 9, time: "Bugun, 16:31", title: "Volontyorlar ishga tayyor", comments: 3 },
 ];
 
-export const sidebarArticles = [
-  { id: 1, time: "5 daqiqa oldin", category: "Tahlil", title: "O'zbekiston JCh-2026 da qanday o'ynaydi? Taktik tahlil", subtitle: "Hujum va himoya taktikalari.", fires: 24 },
-  { id: 2, time: "13 daqiqa oldin", category: "", title: "Shomurodov Argentinaga gol urdi — bu tarixiy lahza bo'ldi", subtitle: "Tarixiy natija.", fires: 89 },
-  { id: 3, time: "38 daqiqa oldin", category: "", title: "Xusanov Manchester Siti safida JCh-2026 ga tayyorgarlik ko'rmoqda", subtitle: "Transfer va tayyorgarlik.", fires: 19 },
-  { id: 4, time: "Bugun, 21:03", category: "", title: "48 jamoali format: qanday o'zgarishlar kutilmoqda? FIFA yangi qoidalari", subtitle: "Yangi format haqida.", fires: 7 },
-  { id: 5, time: "Bugun, 20:45", category: "Maqola", title: "MetLife Stadium — final mezboni. Stadion ichidan eksklyuziv reportaj", subtitle: "Stadion tayyor.", fires: 12 },
-  { id: 6, time: "Bugun, 19:30", category: "", title: "Mbappe JCh-2026 da yulduz bo'la oladimi? Fransiya terma jamoasi tahlili", subtitle: "Favoritlar haqida.", fires: 31 },
-  { id: 7, time: "Bugun, 18:15", category: "Intervyu", title: "Eldor Shomurodov: «Biz tarixni yozishga tayyormiz» — eksklyuziv suhbat", subtitle: "To'liq intervyu.", fires: 45 },
-  { id: 8, time: "Bugun, 17:00", category: "", title: "Chipta narxlari va xarid yo'llari — to'liq qo'llanma", subtitle: "Qanday xarid qilish mumkin.", fires: 5 },
-  { id: 9, time: "Bugun, 16:20", category: "", title: "Guruh bosqichi taqvimi e'lon qilindi — barcha o'yinlar sanasi", subtitle: "Taqvim tayyor.", fires: 8 },
-  { id: 10, time: "Bugun, 15:40", category: "Fentezi", title: "JCh-2026 fentezi ligasi — qanday ishtirok etish mumkin?", subtitle: "Dedlayn — juma kuni.", fires: 3 },
-];
 
 export const groupStandings = [
   {
@@ -212,26 +125,6 @@ export const groupStandings = [
 
 
 
-export const videoPosts = [
-  { id: 1, title: "O'zbekiston — Argentina: eng yaxshi momentlar", duration: "5:32", views: "1.2M" },
-  { id: 2, title: "JCh-2026: barcha gollar — 1-tur", duration: "12:45", views: "3.5M" },
-  { id: 3, title: "Stadionlar touri — MetLife Stadium", duration: "8:10", views: "890K" },
-  { id: 4, title: "Eldor Shomurodov — JCh yo'lidagi barcha gollari", duration: "6:20", views: "2.1M" },
-];
-
-export const heroFootballers = [
-  { id: 1, name: "Eldor Shomurodov", position: "Hujumchi", club: "Roma", number: 9, goals: 12, flag: "🇺🇿", headline: "Shomurodov Seriya A da yana ham gol urdi!" },
-  { id: 2, name: "Abduqodir Xusanov", position: "Himoyachi", club: "Manchester Siti", number: 4, goals: 1, flag: "🇺🇿", headline: "Xusanov APL da eng yaxshi himoyachi deb topildi" },
-  { id: 3, name: "Oston Urunov", position: "Yarim himoyachi", club: "Lans", number: 8, goals: 5, flag: "🇺🇿", headline: "Urunov Liga 1 da haftaning o'yinchisi" },
-  { id: 4, name: "Otabek Shukurov", position: "Yarim himoyachi", club: "AGMK", number: 10, goals: 3, flag: "🇺🇿", headline: "Shukurov terma jamoaga chaqirildi" },
-  { id: 5, name: "Ignatiy Nesterov", position: "Darvozabon", club: "Paxtakor", number: 1, goals: 0, flag: "🇺🇿", headline: "Nesterov Superligada eng ko'p clean sheet qildi" },
-  { id: 6, name: "Jasur Yaxshiboyev", position: "Hujumchi", club: "Nasaf", number: 11, goals: 8, flag: "🇺🇿", headline: "Yaxshiboyev mavsumning eng yaxshi golini urdi" },
-  { id: 7, name: "Xusniddin Aliqulov", position: "Himoyachi", club: "Bunyodkor", number: 3, goals: 2, flag: "🇺🇿", headline: "Aliqulov Osiyo Chempionlar Ligasida porladi" },
-  { id: 8, name: "Abbosbek Fayzullayev", position: "Yarim himoyachi", club: "Lans", number: 7, goals: 6, flag: "🇺🇿", headline: "Fayzullayev Yevropa ligasida dubl qildi" },
-  { id: 9, name: "Jamshid Iskandarov", position: "Himoyachi", club: "Paxtakor", number: 5, goals: 1, flag: "🇺🇿", headline: "Iskandarov Superligada eng yaxshi himoyachi" },
-  { id: 10, name: "Ulug'bek Xoshimov", position: "Yarim himoyachi", club: "Navbahor", number: 6, goals: 4, flag: "🇺🇿", headline: "Xoshimov o'yinda ikkita gol urdi" },
-  { id: 11, name: "Doniyor To'rsunov", position: "Hujumchi", club: "Bunyodkor", number: 17, goals: 7, flag: "🇺🇿", headline: "To'rsunov mavsumning eng tez golini urdi" },
-];
 
 export const stadiums = [
   { id: 1, name: "MetLife Stadium", city: "Nyu-Jersi", capacity: "82,500", country: "🇺🇸" },

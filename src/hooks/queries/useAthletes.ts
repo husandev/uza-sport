@@ -39,6 +39,8 @@ export interface AthletesResponse {
   };
 }
 
+const THIRTY_MIN = 1000 * 60 * 30;
+
 export function useAthletes() {
   return useQuery({
     queryKey: ["athletes"],
@@ -46,6 +48,7 @@ export function useAthletes() {
       api.get<AthletesResponse>(
         "/athletes?include=file&filter[status]=1&sort=sort"
       ),
+    staleTime: THIRTY_MIN,
   });
 }
 
@@ -54,5 +57,6 @@ export function useAthleteBySlug(slug: string) {
     queryKey: ["athlete", "slug", slug],
     queryFn: () => api.get<Athlete>(`/athletes/slug/${slug}?include=file`),
     enabled: !!slug,
+    staleTime: THIRTY_MIN,
   });
 }

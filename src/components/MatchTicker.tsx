@@ -27,9 +27,8 @@ export interface TickerMatch {
 
 const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const [atEnd, setAtEnd] = useState(false);
   const pauseAutoScrollRef = useRef(false);
 
   const checkScroll = useCallback(() => {
@@ -37,8 +36,8 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
     if (!el) return;
     const hasOverflow = el.scrollWidth > el.clientWidth + 2;
     const isAtEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+    setCanScrollLeft(el.scrollLeft > 2);
     setCanScrollRight(hasOverflow && !isAtEnd);
-    setAtEnd(isAtEnd);
   }, []);
 
   useEffect(() => {
@@ -84,17 +83,19 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
     };
   }, []);
 
-  const handleArrowClick = () => {
+  const handlePrev = () => {
     const el = scrollRef.current;
     if (!el) return;
     pauseAutoScrollRef.current = true;
-    if (atEnd) {
-      el.scrollTo({ left: 0, behavior: "smooth" });
-    } else {
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      const nextLeft = Math.min(el.scrollLeft + 300, maxScroll);
-      el.scrollTo({ left: nextLeft, behavior: "smooth" });
-    }
+    el.scrollTo({ left: Math.max(el.scrollLeft - 300, 0), behavior: "smooth" });
+  };
+
+  const handleNext = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    pauseAutoScrollRef.current = true;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    el.scrollTo({ left: Math.min(el.scrollLeft + 300, maxScroll), behavior: "smooth" });
   };
 
   if (matches.length === 0) return null;
@@ -115,15 +116,23 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
           ref={scrollRef}
           className="overflow-hidden flex-1 min-w-0"
           style={{
-            maskImage: atEnd
-              ? "none"
-              : "linear-gradient(to right, black 0%, black calc(100% - 50px), transparent 100%)",
-            WebkitMaskImage: atEnd
-              ? "none"
-              : "linear-gradient(to right, black 0%, black calc(100% - 50px), transparent 100%)",
+            maskImage: canScrollLeft && canScrollRight
+              ? "linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)"
+              : canScrollLeft
+              ? "linear-gradient(to right, transparent 0%, black 50px, black 100%)"
+              : canScrollRight
+              ? "linear-gradient(to right, black 0%, black calc(100% - 50px), transparent 100%)"
+              : "none",
+            WebkitMaskImage: canScrollLeft && canScrollRight
+              ? "linear-gradient(to right, transparent 0%, black 50px, black calc(100% - 50px), transparent 100%)"
+              : canScrollLeft
+              ? "linear-gradient(to right, transparent 0%, black 50px, black 100%)"
+              : canScrollRight
+              ? "linear-gradient(to right, black 0%, black calc(100% - 50px), transparent 100%)"
+              : "none",
           }}
         >
-          <div ref={innerRef} className="flex items-stretch gap-0 w-max">
+          <div className="flex items-stretch gap-0 w-max">
             {matches.map((match) => (
               <div
                 key={match.id}
@@ -170,19 +179,28 @@ const MatchTicker = ({ matches }: { matches: TickerMatch[] }) => {
           </div>
         </div>
 
-        {/* Right arrow */}
-        {(canScrollRight || atEnd) && (
+        {/* Left arrow */}
+        {canScrollLeft && (
           <button
-            onClick={handleArrowClick}
-            className="absolute right-0 top-0 bottom-0 z-10 flex items-center px-2 transition-opacity duration-300"
-            aria-label={atEnd ? "Boshiga qaytish" : "O'ngga scroll qilish"}
+            onClick={handlePrev}
+            className="absolute left-[96px] top-0 bottom-0 z-10 flex items-center px-2"
+            aria-label="Chapga scroll qilish"
           >
             <div className="w-8 h-8 rounded-lg bg-primary-foreground/15 hover:bg-primary-foreground/25 flex items-center justify-center transition-colors backdrop-blur-sm">
-              {atEnd ? (
-                <ChevronLeft size={16} className="text-primary-foreground" />
-              ) : (
-                <ChevronRight size={16} className="text-primary-foreground" />
-              )}
+              <ChevronLeft size={16} className="text-primary-foreground" />
+            </div>
+          </button>
+        )}
+
+        {/* Right arrow */}
+        {canScrollRight && (
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-0 bottom-0 z-10 flex items-center px-2"
+            aria-label="O'ngga scroll qilish"
+          >
+            <div className="w-8 h-8 rounded-lg bg-primary-foreground/15 hover:bg-primary-foreground/25 flex items-center justify-center transition-colors backdrop-blur-sm">
+              <ChevronRight size={16} className="text-primary-foreground" />
             </div>
           </button>
         )}

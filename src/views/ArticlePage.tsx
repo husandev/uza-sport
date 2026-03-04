@@ -64,21 +64,71 @@ const ArticlePage = () => {
     return (
       <div className="max-w-6xl mx-auto px-4 pt-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-          <div className="lg:col-span-8 animate-pulse space-y-4">
-            <div className="bg-card rounded-2xl p-7 space-y-4">
-              <div className="h-4 bg-muted rounded w-1/5" />
-              <div className="h-8 bg-muted rounded w-full" />
-              <div className="h-8 bg-muted rounded w-4/5" />
-              <div className="aspect-[2/1] bg-muted rounded-xl" />
-              <div className="space-y-2">
-                <div className="h-4 bg-muted rounded w-full" />
-                <div className="h-4 bg-muted rounded w-full" />
-                <div className="h-4 bg-muted rounded w-3/4" />
+          {/* Main skeleton */}
+          <div className="lg:col-span-8">
+            <div className="bg-card rounded-2xl border border-border overflow-hidden animate-pulse">
+              {/* Back link */}
+              <div className="px-5 sm:px-7 pt-5 pb-2">
+                <div className="h-3 bg-muted rounded w-20" />
+              </div>
+              {/* Header area */}
+              <div className="px-5 sm:px-7 pt-4 pb-5">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-5 bg-muted rounded-full w-20" />
+                  <div className="h-3 bg-muted rounded w-24" />
+                  <div className="h-3 bg-muted rounded w-16" />
+                </div>
+                <div className="space-y-2.5 mb-4">
+                  <div className="h-7 bg-muted rounded w-full" />
+                  <div className="h-7 bg-muted rounded w-[88%]" />
+                  <div className="h-7 bg-muted rounded w-[72%]" />
+                </div>
+                <div className="h-4 bg-muted rounded w-[78%]" />
+              </div>
+              {/* Hero image */}
+              <div className="mx-5 sm:mx-7 mb-6">
+                <div className="aspect-[2/1] sm:aspect-[21/9] bg-muted rounded-xl" />
+              </div>
+              {/* Body */}
+              <div className="px-5 sm:px-7 pb-7">
+                <div className="flex items-center justify-between pb-5 mb-6 border-b border-border">
+                  <div className="h-3 bg-muted rounded w-24" />
+                  <div className="flex gap-1.5">
+                    {[1, 2, 3].map((i) => <div key={i} className="w-7 h-7 bg-muted rounded-full" />)}
+                    <div className="w-20 h-7 bg-muted rounded-full" />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {[100, 88, 100, 75, 100, 92, 60].map((w, i) => (
+                    <div key={i} className="h-4 bg-muted rounded" style={{ width: `${w}%` }} />
+                  ))}
+                  <div className="my-2" />
+                  {[100, 85, 100, 70].map((w, i) => (
+                    <div key={i + 10} className="h-4 bg-muted rounded" style={{ width: `${w}%` }} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Sidebar skeleton */}
           <div className="hidden lg:block lg:col-span-4 space-y-4">
-            <div className="bg-card rounded-2xl h-64 animate-pulse" />
+            <div className="bg-card rounded-2xl border border-border overflow-hidden animate-pulse">
+              <div className="p-4 space-y-3">
+                <div className="h-4 bg-muted rounded w-2/5 mb-4" />
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="flex gap-3 items-start">
+                    <div className="w-16 h-14 bg-muted rounded-lg flex-shrink-0" />
+                    <div className="flex-1 space-y-1.5 pt-0.5">
+                      <div className="h-3 bg-muted rounded w-full" />
+                      <div className="h-3 bg-muted rounded w-[70%]" />
+                      <div className="h-3 bg-muted rounded w-[45%]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-card rounded-2xl border border-border h-28 animate-pulse" />
           </div>
         </div>
       </div>

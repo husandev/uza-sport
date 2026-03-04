@@ -66,7 +66,7 @@ const Index = ({
           {/* Right: Standings + Scorers + Players + Articles */}
           <div className="lg:col-span-3 space-y-4">
             <GroupStandings data={standings} />
-            <TopScorers scorers={scorers ?? null} />
+            {/* <TopScorers scorers={scorers ?? null} /> */}
             {/* Banner */}
             <Link href="https://iticket.uz/" target="_blank" className="block">
               <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">

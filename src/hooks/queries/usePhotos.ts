@@ -34,5 +34,6 @@ export function usePhotos() {
       lastPage.current_page < lastPage.last_page
         ? lastPage.current_page + 1
         : undefined,
+    staleTime: 1000 * 60 * 10,
   });
 }

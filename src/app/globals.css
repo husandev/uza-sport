@@ -183,7 +183,8 @@
     @apply px-4 py-2.5 text-[13px] font-bold uppercase tracking-wide;
     font-family: var(--font-inter), sans-serif;
     color: hsl(var(--primary-foreground) / 0.85);
-    transition: all 0.2s;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    border-bottom: 2px solid transparent;
   }
 
   .nav-link:hover {
@@ -194,7 +195,7 @@
   .nav-link.active {
     color: hsl(var(--primary-foreground));
     background: hsl(210 65% 28%);
-    border-bottom: 2px solid hsl(var(--highlight));
+    border-bottom-color: hsl(var(--highlight));
   }
 
   /* Fire count */

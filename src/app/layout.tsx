@@ -7,6 +7,7 @@ import MatchTicker, { TickerMatch } from "@/components/MatchTicker";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import NextTopLoader from "nextjs-toploader";
 import { getFixtures, getLiveFixtures, LIVE_STATUSES, FINISHED_STATUSES } from "@/lib/football";
 import { AFFixture } from "@/hooks/queries/useFixtures";
 import { translateTeamName } from "@/data/teamNamesUzByName";
@@ -109,6 +110,14 @@ export default async function RootLayout({
     <html lang="uz" className={inter.variable}>
       <body>
         <Providers>
+          <NextTopLoader
+            color="#22c55e"
+            height={3}
+            showSpinner={false}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #22c55e, 0 0 5px #22c55e"
+          />
           <div className="min-h-screen bg-background flex flex-col">
             <ErrorBoundary>
               <Header />

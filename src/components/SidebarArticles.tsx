@@ -56,10 +56,10 @@ const SidebarArticles = ({ title = "Maqolalar" }: { title?: string }) => {
                     </>
                   )}
                 </div>
-                <h3 className="text-[19px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="text-[19px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2 ">
                   {post.title}
                 </h3>
-                <p className="text-[12px] text-muted-foreground mt-1 line-clamp-2 font-body">
+                <p className="text-[12px] text-muted-foreground mt-1 line-clamp-2 font-body leading-snug">
                   {post.description}
                 </p>
               </div>

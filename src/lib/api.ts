@@ -9,6 +9,7 @@ async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> 
 
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
+      cache: "no-store",
       ...options,
       headers: {
         "Content-Type": "application/json",

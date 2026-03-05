@@ -146,7 +146,7 @@ const StadiumArticlePage = ({ standings }: { standings: StandingsResponse | null
           </div>
         </div>
 
-        <div className="lg:col-span-4 space-y-4">
+        <div className="lg:col-span-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-thin space-y-4">
           <GroupStandings data={standings} />
         </div>
       </div>

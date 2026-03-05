@@ -34,10 +34,10 @@ const Index = ({
         {/* Main grid: left news + center content + right sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {/* Left: News feed */}
-          <div className="hidden lg:block lg:col-span-3 space-y-4">
+          <div className="hidden lg:flex lg:flex-col lg:col-span-3 gap-4">
             <NewsFeed />
             {/* Banner */}
-            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
+            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity flex-shrink-0">
               <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">
                 Reklama
               </div>
@@ -58,17 +58,16 @@ const Index = ({
           <div className="lg:col-span-6 space-y-4">
             <MatchCountdown nextMatch={nextMatch} />
             <SidebarArticles />
-
             <VideoPosts />
             <StadiumsSection />
           </div>
 
           {/* Right: Standings + Scorers + Players + Articles */}
-          <div className="hidden lg:block lg:col-span-3 space-y-4">
+          <div className="hidden lg:block lg:col-span-3 lg:sticky lg:top-4 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-thin space-y-4">
             <GroupStandings data={standings} />
             {/* <TopScorers scorers={scorers ?? null} /> */}
             {/* Banner */}
-            <Link href="https://iticket.uz/" target="_blank" className="block">
+            <Link href="https://iticket.uz/" target="_blank" className="block flex-shrink-0">
               <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary to-secondary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
                 <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">
                   Reklama

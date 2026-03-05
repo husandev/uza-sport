@@ -2,12 +2,12 @@
 
 import { Clock } from "lucide-react";
 import Link from "next/link";
-import { useLastPosts } from "@/hooks/queries/usePosts";
+import { useThemePosts } from "@/hooks/queries/usePosts";
 import { formatPublishTime } from "@/lib/utils";
 
 const NewsFeed = () => {
-  const { data, isLoading } = useLastPosts();
-  const items = data ?? [];
+  const { data, isLoading } = useThemePosts("oz", 15, 1, 231);
+  const items = data?.data ?? [];
 
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">

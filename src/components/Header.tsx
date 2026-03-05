@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
+import { Menu, X, Search, TrendingUp, ArrowRight, Sparkles, Play } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import uzaLogo from "@/assets/uza-logo-solo.png";
@@ -17,6 +17,7 @@ const navItems = [
   { label: "Jadval", href: "/standings" },
   { label: "Jamoalar", href: "/teams" },
   { label: "Stadionlar", href: "/stadiums" },
+  { label: "Qahramonlar", href: "/heroes" },
   { label: "Video", href: "/videos" },
   { label: "Foto", href: "/photos" },
 ];
@@ -227,37 +228,55 @@ const Header = () => {
 
                           {/* Natijalar */}
                           {!searchLoading &&
-                            searchResults.map((post) => (
-                              <Link
-                                key={post.id}
-                                href={`/article/${post.slug}`}
-                                onClick={() => {
-                                  setSearchOpen(false);
-                                  setSearchQuery("");
-                                }}
-                                className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
-                              >
-                                {post.files?.thumbnails?.small?.src && (
-                                  <img
-                                    src={post.files.thumbnails.small.src}
-                                    alt={post.title}
-                                    className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                            searchResults.map((post) => {
+                              const isVideo = post.type === 3;
+                              return (
+                                <Link
+                                  key={post.id}
+                                  href={isVideo ? `/video/${post.slug}` : `/article/${post.slug}`}
+                                  onClick={() => {
+                                    setSearchOpen(false);
+                                    setSearchQuery("");
+                                  }}
+                                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
+                                >
+                                  <div className="relative w-12 h-12 flex-shrink-0">
+                                    {post.files?.thumbnails?.small?.src && (
+                                      <img
+                                        src={post.files.thumbnails.small.src}
+                                        alt={post.title}
+                                        className="w-12 h-12 object-cover rounded-lg"
+                                      />
+                                    )}
+                                    {isVideo && (
+                                      <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-foreground/40">
+                                        <Play size={14} className="text-white ml-0.5" fill="white" />
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-1.5 mb-0.5">
+                                      {isVideo && (
+                                        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[9px] font-bold uppercase tracking-wide font-heading">
+                                          <Play size={7} fill="currentColor" />
+                                          Video
+                                        </span>
+                                      )}
+                                    </div>
+                                    <p className="text-[13px] font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                                      {post.title}
+                                    </p>
+                                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                                      {formatPublishTime(post.publish_time)}
+                                    </p>
+                                  </div>
+                                  <ArrowRight
+                                    size={13}
+                                    className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
                                   />
-                                )}
-                                <div className="flex-1 min-w-0">
-                                  <p className="text-[13px] font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                                    {post.title}
-                                  </p>
-                                  <p className="text-[11px] text-muted-foreground mt-0.5">
-                                    {formatPublishTime(post.publish_time)}
-                                  </p>
-                                </div>
-                                <ArrowRight
-                                  size={13}
-                                  className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
-                                />
-                              </Link>
-                            ))}
+                                </Link>
+                              );
+                            })}
                         </div>
                       ) : (
                         <>

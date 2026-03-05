@@ -3,45 +3,18 @@ import { useState } from "react";
 import Link from "next/link";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
-import { stadiums } from "@/data/mockData";
+import { useThemePosts } from "@/hooks/queries";
+import { formatPublishTime } from "@/lib/utils";
 import Pagination from "@/components/Pagination";
-import { ImageOff } from "lucide-react";
-import stadium1 from "@/assets/stadium-1.jpg";
-import stadium2 from "@/assets/stadium-2.jpg";
-import stadium3 from "@/assets/stadium-3.jpg";
+import PostListSkeleton from "@/components/PostListSkeleton";
 
-const images = [stadium1.src, stadium2.src, stadium3.src];
-
-const stadiumArticles = stadiums.map((s, i) => ({
-  id: s.id,
-  name: s.name,
-  city: s.city,
-  capacity: s.capacity,
-  country: s.country,
-  title: [
-    `${s.name}: JCh-2026 ning eng yirik maydonchasi`,
-    `${s.name} stadioni – tarix va zamonaviylik`,
-    `${s.name}: ${s.city} shahridagi futbol maskani`,
-    `${s.name} – JCh-2026 o'yinlariga tayyor`,
-  ][i % 4],
-  subtitle: [
-    `${s.city} shahridagi ushbu stadion ${s.capacity} tomoshabin sig'adi.`,
-    `Stadion modernizatsiya qilindi va JCh talablariga javob beradi.`,
-    `Eng muhim guruh va pleyoff o'yinlari shu yerda o'tkaziladi.`,
-    `Zamonaviy infratuzilma va qulay joylashuv.`,
-  ][i % 4],
-  time: [
-    "Bugun, 14:00", "Bugun, 12:30", "Kecha, 19:00", "Kecha, 16:45",
-    "2 kun oldin", "2 kun oldin", "3 kun oldin", "3 kun oldin",
-  ][i % 8],
-}));
-
-const PER_PAGE = 12;
+const PER_PAGE = 20;
 
 const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) => {
   const [page, setPage] = useState(1);
-  const totalPages = Math.ceil(stadiumArticles.length / PER_PAGE);
-  const paginated = stadiumArticles.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const { data, isLoading } = useThemePosts("oz", PER_PAGE, page, 227, "tags");
+  const posts = data?.data ?? [];
+  const totalPages = data?.last_page ?? 1;
 
   return (
     <div className="container pt-4 pb-8">
@@ -55,63 +28,62 @@ const StadiumsPage = ({ standings }: { standings: StandingsResponse | null }) =>
         <div className="lg:col-span-8">
           <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
             <div className="divide-y divide-border">
-              {paginated.map((stadium, i) => (
+              {isLoading && <PostListSkeleton />}
+              {posts.map((post) => (
                 <Link
-                  key={stadium.id}
-                  href={`/stadium/${stadium.id}`}
+                  key={post.id}
+                  href={`/article/${post.slug}`}
                   className="px-5 sm:px-6 py-5 flex gap-5 cursor-pointer hover:bg-muted/40 transition-colors group block"
                 >
                   {/* Image */}
-                  <div className="w-[90px] sm:w-[160px] lg:w-[200px] h-[68px] sm:h-[110px] lg:h-[130px] flex-shrink-0 rounded-xl overflow-hidden relative bg-muted">
+                  <div className="w-[90px] sm:w-[160px] lg:w-[200px] h-[68px] sm:h-[110px] lg:h-[130px] flex-shrink-0 rounded-xl overflow-hidden bg-muted">
                     <img
-                      src={images[(i + (page - 1) * PER_PAGE) % images.length]}
+                      src={post.files?.thumbnails?.normal?.src}
                       loading="lazy"
-                      alt={stadium.name}
+                      alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => { e.currentTarget.style.display = "none"; }}
                     />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 pointer-events-none">
-                      <ImageOff size={20} className="text-muted-foreground/30" />
-                      <span className="text-[10px] text-muted-foreground/30 font-medium">Rasm yo'q</span>
-                    </div>
                   </div>
 
                   {/* Text */}
                   <div className="flex-1 min-w-0 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center gap-2 text-[11px] text-muted-foreground mb-2 font-body">
-                        <span>{stadium.time}</span>
-                        <span className="text-muted-foreground/40">|</span>
-                        <span className="text-primary font-medium">Stadion</span>
+                        <span>{formatPublishTime(post.publish_time)}</span>
+                        {post.category?.title && (
+                          <>
+                            <span className="text-muted-foreground/40">|</span>
+                            <span className="text-primary font-medium">{post.category.title}</span>
+                          </>
+                        )}
                       </div>
-                      <div className="flex items-center gap-2.5 mb-1">
-                        <span className="text-xl">{stadium.country}</span>
-                        <h3 className="text-[14px] sm:text-[18px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                          {stadium.title}
-                        </h3>
-                      </div>
+                      <h3 className="text-[14px] sm:text-[18px] font-bold text-foreground leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
                       <p className="text-[13px] text-muted-foreground mt-1 line-clamp-2 font-body">
-                        {stadium.subtitle}
+                        {post.description}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 mt-2 text-[11px] text-muted-foreground font-body">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted text-[10px] font-semibold">
-                        🏟️ {stadium.capacity} o'rin
-                      </span>
-                      <span className="text-muted-foreground/40">•</span>
-                      <span>{stadium.country} {stadium.city}</span>
-                    </div>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex items-center gap-2 mt-2 text-[11px] text-muted-foreground font-body">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted text-[10px] font-semibold">
+                          {post.tags[1]?.title}
+                        </span>
+                        <span className="text-muted-foreground/40">•</span>
+                        <span>{post.tags[0]?.title}</span>
+                      </div>
+                    )}
                   </div>
                 </Link>
               ))}
             </div>
           </div>
 
-          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} isLoading={isLoading} />
         </div>
 
         {/* Right sidebar */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className="lg:col-span-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-thin space-y-4">
           <GroupStandings data={standings} />
         </div>
       </div>

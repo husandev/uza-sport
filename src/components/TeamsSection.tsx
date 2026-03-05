@@ -38,10 +38,9 @@ const TeamsSection = ({ standings }: Props) => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         {apiTeams
           ? apiTeams.map((team) => (
-              <Link
+              <div
                 key={team.id}
-                href={`/team/${team.id}`}
-                className={`flex items-center gap-2.5 p-3 rounded-xl border border-border cursor-pointer hover:bg-muted transition-colors ${
+                className={`flex items-center gap-2.5 p-3 rounded-xl border border-border  ${
                   team.isUzb ? "border-primary bg-primary/5" : ""
                 }`}
               >
@@ -60,7 +59,7 @@ const TeamsSection = ({ standings }: Props) => {
                     {team.group} · #{team.rank}
                   </span>
                 </div>
-              </Link>
+              </div>
             ))
           : mockTeams.map((team, i) => (
               <Link

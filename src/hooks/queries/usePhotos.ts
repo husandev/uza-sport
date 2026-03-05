@@ -27,7 +27,7 @@ export function usePhotos() {
     queryKey: ["photos"],
     queryFn: ({ pageParam }) =>
       api.get<PhotosResponse>(
-        `/photo-bank?category_id=36&per_page=32&sort=-photo_bank.id%20&_f=json&_l=oz&page=${pageParam}`
+        `/photo-bank?category_id=48&per_page=32&sort=-photo_bank.id%20&_f=json&_l=oz&page=${pageParam}`
       ),
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>

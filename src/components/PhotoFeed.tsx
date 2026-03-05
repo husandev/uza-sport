@@ -9,7 +9,7 @@ import type { PhotosResponse } from "@/hooks/queries/usePhotos";
 
 async function fetchPhotos(): Promise<PhotosResponse> {
   const res = await fetch(
-    "https://api.uza.uz/api/v1/photo-bank?category_id=36&per_page=24&sort=-photo_bank.id%20&_f=json&_l=oz&page=1"
+    "https://api.uza.uz/api/v1/photo-bank?category_id=48&per_page=24&sort=-photo_bank.id%20&_f=json&_l=oz&page=1"
   );
   if (!res.ok) throw new Error(`API Error: ${res.status}`);
   return res.json();

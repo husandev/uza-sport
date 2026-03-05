@@ -69,6 +69,13 @@ function formatReadTime(body?: string) {
   return `${Math.max(1, Math.round(words / 200))} daqiqa`;
 }
 
+const THEME_RELATED: Record<number, { themeId: number; title: string; moreHref: string }> = {
+  231: { themeId: 231, title: "Boshqa yangiliklar", moreHref: "/news" },
+  232: { themeId: 232, title: "Boshqa maqolalar",  moreHref: "/articles" },
+  229: { themeId: 229, title: "Boshqa jamoalar",   moreHref: "/teams" },
+  227: { themeId: 227, title: "Boshqa stadionlar", moreHref: "/stadiums" },
+};
+
 const ArticlePage = () => {
   const params = useParams();
   const slug = params.slug as string;
@@ -451,7 +458,10 @@ const ArticlePage = () => {
 
             {/* Related Posts */}
             <div className="mt-6">
-              <SidebarArticles title="O'xshash maqolalar" />
+              {(() => {
+                const r = post?.theme_id ? THEME_RELATED[post.theme_id] : undefined;
+                return <SidebarArticles title={r?.title ?? "O'xshash maqolalar"} themeId={r?.themeId ?? 232} moreHref={r?.moreHref ?? "/articles"} excludeSlug={slug} />;
+              })()}
             </div>
           </div>
 

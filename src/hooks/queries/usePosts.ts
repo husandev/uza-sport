@@ -103,6 +103,7 @@ export interface PostDetail extends Post {
   body?: string;
   content?: string;
   viewed?: number;
+  theme_id?: number;
 }
 
 export function usePost(slug: string, include?: string) {

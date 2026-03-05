@@ -3,16 +3,26 @@ import Link from "next/link";
 import { useThemePosts } from "@/hooks/queries";
 import { formatPublishTime } from "@/lib/utils";
 
-const SidebarArticles = ({ title = "Maqolalar" }: { title?: string }) => {
-  const { data, isLoading } = useThemePosts("oz", 10, 1, 232);
-  const posts = data?.data ?? [];
+const SidebarArticles = ({
+  title = "Maqolalar",
+  themeId = 232,
+  moreHref = "/articles",
+  excludeSlug,
+}: {
+  title?: string;
+  themeId?: number;
+  moreHref?: string;
+  excludeSlug?: string;
+}) => {
+  const { data, isLoading } = useThemePosts("oz", 11, 1, themeId);
+  const posts = (data?.data ?? []).filter((p) => p.slug !== excludeSlug).slice(0, 10);
 
   return (
     <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 pt-2 pb-2">
         <div className="section-title">
           <span>{title}</span>
-          <Link href="/articles" className="more-link">
+          <Link href={moreHref} className="more-link">
             Barchasi →
           </Link>
         </div>

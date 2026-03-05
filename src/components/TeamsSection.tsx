@@ -16,8 +16,8 @@ const TeamsSection = ({ standings }: Props) => {
     ? standings.response[0]?.league.standings
         .flat()
         .slice(0, DISPLAY_COUNT)
-        .map((t, i) => ({
-          id: i,
+        .map((t) => ({
+          id: t.team.id,
           name: translateTeamName(t.team.name),
           logo: t.team.logo,
           group: translateRoundName(t.group),
@@ -38,9 +38,10 @@ const TeamsSection = ({ standings }: Props) => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         {apiTeams
           ? apiTeams.map((team) => (
-              <div
+              <Link
                 key={team.id}
-                className={`flex items-center gap-2.5 p-3 rounded-xl border border-border  ${
+                href={`/wc-team/${team.id}`}
+                className={`flex items-center gap-2.5 p-3 rounded-xl border border-border hover:bg-muted/50 transition-colors cursor-pointer ${
                   team.isUzb ? "border-primary bg-primary/5" : ""
                 }`}
               >
@@ -59,7 +60,7 @@ const TeamsSection = ({ standings }: Props) => {
                     {team.group} · #{team.rank}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))
           : mockTeams.map((team, i) => (
               <Link

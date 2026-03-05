@@ -108,7 +108,7 @@ export interface PostDetail extends Post {
 
 export function usePost(slug: string, include?: string) {
   return useQuery({
-    queryKey: ["post", slug],
+    queryKey: ["post", slug, include],
     queryFn: () =>
       api.get<PostDetail>(
         `/posts/${slug}?_f=json&_l=oz${include ? `&include=${include}` : ""}`,

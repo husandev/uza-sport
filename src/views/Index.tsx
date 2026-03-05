@@ -60,6 +60,10 @@ const Index = ({
             <SidebarArticles />
             <VideoPosts />
             <StadiumsSection />
+            {/* Mobile only: show standings since right sidebar is hidden on mobile */}
+            <div className="lg:hidden">
+              <GroupStandings data={standings} />
+            </div>
           </div>
 
           {/* Right: Standings + Scorers + Players + Articles */}

@@ -37,6 +37,8 @@ export default async function HomePage() {
         awayName: translateTeamName(nextFixture.teams.away.name),
         homeLogo: nextFixture.teams.home.logo,
         awayLogo: nextFixture.teams.away.logo,
+        homeId: nextFixture.teams.home.id,
+        awayId: nextFixture.teams.away.id,
         venue: nextFixture.fixture.venue.name,
         round: nextFixture.league.round,
       }

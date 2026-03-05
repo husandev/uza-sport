@@ -30,10 +30,9 @@ const HeroFootballers = () => {
 
   if (athletes.length === 0) return null;
 
-  const sorted = [...athletes].sort(
-    (a, b) =>
-      Number(b.national_team_goals ?? 0) - Number(a.national_team_goals ?? 0),
-  );
+  const sorted = [...athletes]
+    .sort((a, b) => Number(b.national_team_goals ?? 0) - Number(a.national_team_goals ?? 0))
+    .slice(0, 8);
   const featured = sorted[0];
   const rest = sorted.slice(1);
 
@@ -119,7 +118,7 @@ const HeroFootballers = () => {
 
       {/* Button */}
       <Link
-        href="/teams"
+        href="/heroes"
         className="mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-background border border-border text-foreground text-[13px] font-heading font-bold hover:bg-muted transition-colors"
       >
         Barchasi <ArrowRight size={14} />

@@ -2,26 +2,35 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Flame, Clock, TrendingUp } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Flame,
+  Clock,
+  TrendingUp,
+} from "lucide-react";
 import Link from "next/link";
 import { useTopPosts } from "@/hooks/queries/usePosts";
 
 const SLIDE_DURATION = 6000;
 
 const HeroSlider = () => {
-  const { data: posts, isLoading } = useTopPosts();
-  const slides = posts ?? [];
+  const { data, isLoading } = useTopPosts();
+  const slides = data?.data ?? [];
 
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const goTo = useCallback((index: number) => {
-    setDirection(index > current ? 1 : -1);
-    setCurrent(index);
-    setProgress(0);
-  }, [current]);
+  const goTo = useCallback(
+    (index: number) => {
+      setDirection(index > current ? 1 : -1);
+      setCurrent(index);
+      setProgress(0);
+    },
+    [current],
+  );
 
   const next = useCallback(() => {
     if (slides.length === 0) return;
@@ -71,7 +80,8 @@ const HeroSlider = () => {
   if (slides.length === 0) return null;
 
   const slide = slides[current];
-  const heroImage = slide.files?.thumbnails?.front?.src ?? slide.files?.thumbnails?.normal?.src;
+  const heroImage =
+    slide.files?.thumbnails?.front?.src ?? slide.files?.thumbnails?.normal?.src;
 
   const nextSlides = [1, 2, 3].map((offset) => {
     const idx = (current + offset) % slides.length;
@@ -91,9 +101,10 @@ const HeroSlider = () => {
             custom={direction}
             variants={{
               enter: (d: number) => ({
-                clipPath: d > 0
-                  ? "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)"
-                  : "polygon(0 0, 0 0, 0 100%, 0 100%)",
+                clipPath:
+                  d > 0
+                    ? "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)"
+                    : "polygon(0 0, 0 0, 0 100%, 0 100%)",
                 scale: 1.15,
                 filter: "brightness(0.5)",
               }),
@@ -103,9 +114,10 @@ const HeroSlider = () => {
                 filter: "brightness(1)",
               },
               exit: (d: number) => ({
-                clipPath: d > 0
-                  ? "polygon(0 0, 0 0, 0 100%, 0 100%)"
-                  : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
+                clipPath:
+                  d > 0
+                    ? "polygon(0 0, 0 0, 0 100%, 0 100%)"
+                    : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
                 scale: 1.05,
                 filter: "brightness(0.3)",
               }),
@@ -154,14 +166,18 @@ const HeroSlider = () => {
                 </span>
               </motion.div> */}
 
-                <motion.h2
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35, duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                 className="text-primary-foreground text-xl sm:text-3xl lg:text-[44px] font-heading font-extrabold leading-[1.1] mb-3 sm:mb-4 max-w-[620px] drop-shadow-xl line-clamp-3"
-                >
-                  {slide.title}
-                </motion.h2>
+              <motion.h2
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.35,
+                  duration: 0.7,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                className="text-primary-foreground text-xl sm:text-3xl lg:text-[44px] font-heading font-extrabold leading-[1.] mb-3 sm:mb-4 max-w-[620px] drop-shadow-xl line-clamp-3 pb-2"
+              >
+                {slide.title}
+              </motion.h2>
 
               <motion.div
                 initial={{ width: 0 }}
@@ -174,7 +190,7 @@ const HeroSlider = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.5 }}
-              className="hidden sm:block text-primary-foreground/70 text-[15px] mb-5 max-w-[520px] font-body leading-relaxed line-clamp-2"
+                className="hidden sm:block text-primary-foreground/70 text-[15px] mb-5 max-w-[520px] font-body leading-relaxed line-clamp-2"
               >
                 {slide.description}
               </motion.p>
@@ -205,7 +221,10 @@ const HeroSlider = () => {
                     <ChevronRight size={20} />
                   </motion.button>
                 </div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Link
                     href={`/article/${slide.slug}`}
                     className="inline-block px-5 py-2.5 bg-highlight text-foreground font-heading font-bold text-[13px] uppercase tracking-wide rounded-xl shadow-lg shadow-highlight/30 hover:shadow-highlight/50 transition-shadow"
@@ -216,7 +235,9 @@ const HeroSlider = () => {
                 <div className="flex items-center gap-4 text-primary-foreground/50 text-[13px] font-body">
                   <span className="flex items-center gap-1.5">
                     <Clock size={13} />
-                    <span className="hidden sm:inline">{slide.publish_time?.slice(0, 10)}</span>
+                    <span className="hidden sm:inline">
+                      {slide.publish_time?.slice(0, 10)}
+                    </span>
                   </span>
                 </div>
               </motion.div>
@@ -227,7 +248,9 @@ const HeroSlider = () => {
         {/* Right side — vertical thumbnail strip */}
         <div className="absolute right-0 top-0 bottom-0 hidden lg:flex flex-col w-[220px] z-20 bg-foreground/40 backdrop-blur-lg border-l border-primary-foreground/10">
           {nextSlides.map((ns, i) => {
-            const nsImage = ns.files?.thumbnails?.normal?.src ?? ns.files?.thumbnails?.small?.src;
+            const nsImage =
+              ns.files?.thumbnails?.normal?.src ??
+              ns.files?.thumbnails?.small?.src;
             return (
               <motion.div
                 key={`thumb-${current}-${ns.index}`}
@@ -276,17 +299,27 @@ const HeroSlider = () => {
           <div className="flex items-center justify-between px-4 sm:px-6 lg:px-10 py-3 bg-foreground/70 backdrop-blur-xl">
             <div className="flex items-center gap-2">
               {slides.map((_, i) => (
-                <button key={i} onClick={() => goTo(i)} className="relative group/dot">
-                  <div className={`rounded-full transition-all duration-500 ${
-                    i === current
-                      ? "w-10 h-2.5 bg-highlight shadow-lg shadow-highlight/40"
-                      : "w-2.5 h-2.5 bg-primary-foreground/25 hover:bg-primary-foreground/50"
-                  }`} />
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className="relative group/dot"
+                >
+                  <div
+                    className={`rounded-full transition-all duration-500 ${
+                      i === current
+                        ? "w-10 h-2.5 bg-highlight shadow-lg shadow-highlight/40"
+                        : "w-2.5 h-2.5 bg-primary-foreground/25 hover:bg-primary-foreground/50"
+                    }`}
+                  />
                   {i === current && (
                     <motion.div
                       layoutId="activeDot"
                       className="absolute inset-0 rounded-full ring-2 ring-highlight/30"
-                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25,
+                      }}
                     />
                   )}
                 </button>

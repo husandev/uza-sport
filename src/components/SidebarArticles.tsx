@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useSportPosts } from "@/hooks/queries";
+import { useThemePosts } from "@/hooks/queries";
 import { formatPublishTime } from "@/lib/utils";
 
 const SidebarArticles = ({ title = "Maqolalar" }: { title?: string }) => {
-  const { data, isLoading } = useSportPosts("oz", 10);
+  const { data, isLoading } = useThemePosts("oz", 10, 1, 232);
   const posts = data?.data ?? [];
 
   return (

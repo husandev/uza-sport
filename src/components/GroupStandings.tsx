@@ -40,7 +40,7 @@ const GroupStandings = ({ data = null }: Props) => {
       )}
 
       {data && (
-        <div className="space-y-4 overflow-y-auto pr-1 scrollbar-thin">
+        <div className="space-y-4">
           {groups.map((g) => (
             <div key={g.group}>
               <div className="flex items-center gap-2 mb-1.5">

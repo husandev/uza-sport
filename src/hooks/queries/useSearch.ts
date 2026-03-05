@@ -7,7 +7,7 @@ export function useSearch(q: string) {
     queryKey: ["search", q],
     queryFn: () =>
       api.get<PostsResponse>(
-        `/posts/search?q=${encodeURIComponent(q)}&per_page=8&_f=json&_l=oz`
+        `/posts/search?q=${encodeURIComponent(q)}&platform=0&per_page=8&slug=/category/2026-yilgi-fifa-jahon-chempionati&_f=json&_l=oz`
       ),
     enabled: q.trim().length >= 2,
     staleTime: 1000 * 60 * 2,

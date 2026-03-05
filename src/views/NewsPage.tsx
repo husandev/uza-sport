@@ -2,7 +2,7 @@
 import { useState } from "react";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
-import { useSportPosts } from "@/hooks/queries";
+import { useThemePosts } from "@/hooks/queries";
 import { formatPublishTime } from "@/lib/utils";
 import PostCard from "@/components/PostCard";
 import PostListSkeleton from "@/components/PostListSkeleton";
@@ -12,7 +12,7 @@ const PER_PAGE = 20;
 
 const NewsPage = ({ standings }: { standings: StandingsResponse | null }) => {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useSportPosts("oz", PER_PAGE, page);
+  const { data, isLoading } = useThemePosts("oz", PER_PAGE, page, 231);
   const posts = data?.data ?? [];
   const totalPages = data?.last_page ?? 1;
 
@@ -47,7 +47,7 @@ const NewsPage = ({ standings }: { standings: StandingsResponse | null }) => {
         </div>
 
         {/* Right: Tournament standings */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className="lg:col-span-4 lg:sticky lg:top-4 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-thin space-y-4">
           <GroupStandings data={standings} />
         </div>
       </div>

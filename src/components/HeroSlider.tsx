@@ -302,7 +302,8 @@ const HeroSlider = () => {
                 <button
                   key={i}
                   onClick={() => goTo(i)}
-                  className="relative group/dot"
+                  className="relative group/dot p-2"
+                  aria-label={`${i + 1}-slayd`}
                 >
                   <div
                     className={`rounded-full transition-all duration-500 ${

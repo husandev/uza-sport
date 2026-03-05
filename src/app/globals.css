@@ -214,6 +214,16 @@
     border-bottom: 2px solid transparent;
   }
 
+  /* Bigger tap targets on mobile */
+  @media (max-width: 1024px) {
+    .nav-link {
+      @apply py-3.5;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
   .nav-link:hover {
     color: hsl(var(--primary-foreground));
     background: hsl(210 65% 28%);
@@ -285,6 +295,13 @@
   border-radius: 0.75rem;
   margin: 1.5rem auto;
   display: block;
+}
+
+@media (max-width: 640px) {
+  .article-body img {
+    max-width: 100%;
+    border-radius: 0.5rem;
+  }
 }
 
 .article-body blockquote {

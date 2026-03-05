@@ -21,15 +21,12 @@ const HeroesPage = ({ standings }: { standings: StandingsResponse | null }) => {
   const [activePos, setActivePos] = useState("Barchasi");
 
   const all = data?.data ?? [];
-  const sorted = [...all].sort(
-    (a, b) => Number(b.national_team_goals ?? 0) - Number(a.national_team_goals ?? 0),
-  );
 
-  const featured = sorted[0];
+  const featured = all[0];
   const filtered =
     activePos === "Barchasi"
-      ? sorted
-      : sorted.filter((p) => p.position === activePos);
+      ? all
+      : all.filter((p) => p.position === activePos);
 
   const gridPlayers = featured
     ? filtered.filter((p) => p.id !== featured.id)
@@ -147,12 +144,12 @@ const HeroesPage = ({ standings }: { standings: StandingsResponse | null }) => {
           )}
 
           {/* Filter bar */}
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {POSITIONS.map((pos) => (
               <button
                 key={pos}
                 onClick={() => setActivePos(pos)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[12px] font-heading font-bold transition-all ${
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[12px] font-heading font-bold transition-all whitespace-nowrap flex-shrink-0 ${
                   activePos === pos
                     ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
                     : "bg-card text-muted-foreground hover:bg-muted border border-border"
@@ -234,8 +231,13 @@ const HeroesPage = ({ standings }: { standings: StandingsResponse | null }) => {
           )}
         </div>
 
-        {/* Right sidebar */}
+        {/* Right sidebar — desktop */}
         <div className="hidden lg:block lg:col-span-3 lg:sticky lg:top-4 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto scrollbar-thin">
+          <GroupStandings data={standings} />
+        </div>
+
+        {/* Mobile only standings */}
+        <div className="lg:hidden lg:col-span-12">
           <GroupStandings data={standings} />
         </div>
       </div>

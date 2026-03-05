@@ -1,11 +1,102 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Shirt, Target, ArrowRight, Calendar, Award, Flag } from "lucide-react";
-import NewsFeed from "@/components/NewsFeed";
+import TopScorers from "@/components/TopScorers";
+import { ScorersResponse } from "@/hooks/queries/useStandings";
 import { useAthleteBySlug, useAthletes } from "@/hooks/queries";
 import { formatMatchDate } from "@/lib/utils";
+
+type BodySegment =
+  | { type: "html"; content: string }
+  | { type: "telegram"; url: string }
+  | { type: "x"; url: string };
+
+function parseEmbeds(html: string): BodySegment[] {
+  const pattern = /\[(telegram|x)-(https?:\/\/[^\]]+)\]/g;
+  const parts: BodySegment[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = pattern.exec(html)) !== null) {
+    if (m.index > last) parts.push({ type: "html", content: html.slice(last, m.index) });
+    parts.push({ type: m[1] as "telegram" | "x", url: m[2] });
+    last = m.index + m[0].length;
+  }
+  if (last < html.length) parts.push({ type: "html", content: html.slice(last) });
+  return parts.length ? parts : [{ type: "html", content: html }];
+}
+
+function TelegramEmbed({ url }: { url: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const match = url.match(/https:\/\/t\.me\/([^/]+)\/(\d+)/);
+
+  useEffect(() => {
+    if (!match || !containerRef.current) return;
+    const postPath = `${match[1]}/${match[2]}`;
+    const script = document.createElement("script");
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.setAttribute("data-telegram-post", postPath);
+    script.setAttribute("data-width", "100%");
+    script.async = true;
+    containerRef.current.innerHTML = "";
+    containerRef.current.appendChild(script);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+
+  if (!match) return null;
+  return <div ref={containerRef} className="my-4" />;
+}
+
+function XEmbed({ url }: { url: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tweetId = url.match(/\/status\/(\d+)/)?.[1];
+
+  useEffect(() => {
+    if (!tweetId || !containerRef.current) return;
+    const container = containerRef.current;
+    container.innerHTML = "";
+
+    const observer = new MutationObserver(() => {
+      while (container.children.length > 1) {
+        container.removeChild(container.firstChild!);
+      }
+    });
+    observer.observe(container, { childList: true });
+
+    const embed = () => {
+      if (!container.isConnected) return;
+      (window as any).twttr?.widgets?.createTweet(tweetId, container, { align: "center" });
+    };
+
+    if ((window as any).twttr?.widgets) {
+      embed();
+    } else {
+      const existing = document.querySelector('script[src*="platform.twitter.com/widgets.js"]');
+      if (!existing) {
+        const script = document.createElement("script");
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.async = true;
+        script.onload = embed;
+        document.head.appendChild(script);
+      } else {
+        const timer = setInterval(() => {
+          if ((window as any).twttr?.widgets) {
+            clearInterval(timer);
+            embed();
+          }
+        }, 50);
+        return () => { observer.disconnect(); clearInterval(timer); container.innerHTML = ""; };
+      }
+    }
+
+    return () => { observer.disconnect(); container.innerHTML = ""; };
+  }, [tweetId]);
+
+  if (!tweetId) return null;
+  return <div ref={containerRef} className="my-4 flex justify-center" />;
+}
 
 function decodeEncodedIframes(html: string): string {
   return html.replace(
@@ -32,7 +123,7 @@ function extractIframe(html: string): { iframeSrc: string | null; cleanHtml: str
   return { iframeSrc: null, cleanHtml: decodeEncodedIframes(html) };
 }
 
-const FootballerPage = () => {
+const FootballerPage = ({ scorers }: { scorers: ScorersResponse | null }) => {
   const params = useParams();
   const slug = params.slug as string;
 
@@ -199,10 +290,19 @@ const FootballerPage = () => {
                   </div>
                 )}
 
-                <div
-                  className="article-body"
-                  dangerouslySetInnerHTML={{ __html: cleanHtml }}
-                />
+                {parseEmbeds(cleanHtml).map((seg, i) =>
+                  seg.type === "telegram" ? (
+                    <TelegramEmbed key={i} url={seg.url} />
+                  ) : seg.type === "x" ? (
+                    <XEmbed key={i} url={seg.url} />
+                  ) : (
+                    <div
+                      key={i}
+                      className="article-body"
+                      dangerouslySetInnerHTML={{ __html: seg.content }}
+                    />
+                  )
+                )}
               </div>
             </article>
 
@@ -253,9 +353,14 @@ const FootballerPage = () => {
             )}
           </div>
 
+          {/* Mobile only: TopScorers */}
+          <div className="lg:hidden mt-6">
+            <TopScorers scorers={scorers} />
+          </div>
+
           {/* Right Sidebar */}
           <div className="hidden lg:block lg:col-span-4 space-y-4">
-            <NewsFeed />
+            <TopScorers scorers={scorers} />
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-accent to-primary p-6 py-8 text-primary-foreground cursor-pointer hover:opacity-90 transition-opacity">
               <div className="text-[10px] uppercase font-heading font-bold tracking-wider opacity-80 mb-1">Reklama</div>
               <h3 className="font-heading font-extrabold text-base leading-tight mb-2">

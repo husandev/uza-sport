@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Calendar, Share2, Play, Eye, ZoomIn, ZoomOut, X as XIcon } from "lucide-react";
 import GroupStandings from "@/components/GroupStandings";
 import { StandingsResponse } from "@/hooks/queries/useStandings";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { usePost } from "@/hooks/queries/usePosts";
 import { useVideos } from "@/hooks/queries";
@@ -23,6 +23,95 @@ const MONTHS = [
   "Noyabr",
   "Dekabr",
 ];
+
+type BodySegment =
+  | { type: "html"; content: string }
+  | { type: "telegram"; url: string }
+  | { type: "x"; url: string };
+
+function parseEmbeds(html: string): BodySegment[] {
+  const pattern = /\[(telegram|x)-(https?:\/\/[^\]]+)\]/g;
+  const parts: BodySegment[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = pattern.exec(html)) !== null) {
+    if (m.index > last) parts.push({ type: "html", content: html.slice(last, m.index) });
+    parts.push({ type: m[1] as "telegram" | "x", url: m[2] });
+    last = m.index + m[0].length;
+  }
+  if (last < html.length) parts.push({ type: "html", content: html.slice(last) });
+  return parts.length ? parts : [{ type: "html", content: html }];
+}
+
+function TelegramEmbed({ url }: { url: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const match = url.match(/https:\/\/t\.me\/([^/]+)\/(\d+)/);
+
+  useEffect(() => {
+    if (!match || !containerRef.current) return;
+    const postPath = `${match[1]}/${match[2]}`;
+    const script = document.createElement("script");
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.setAttribute("data-telegram-post", postPath);
+    script.setAttribute("data-width", "100%");
+    script.async = true;
+    containerRef.current.innerHTML = "";
+    containerRef.current.appendChild(script);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+
+  if (!match) return null;
+  return <div ref={containerRef} className="my-4" />;
+}
+
+function XEmbed({ url }: { url: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tweetId = url.match(/\/status\/(\d+)/)?.[1];
+
+  useEffect(() => {
+    if (!tweetId || !containerRef.current) return;
+    const container = containerRef.current;
+    container.innerHTML = "";
+
+    const observer = new MutationObserver(() => {
+      while (container.children.length > 1) {
+        container.removeChild(container.firstChild!);
+      }
+    });
+    observer.observe(container, { childList: true });
+
+    const embed = () => {
+      if (!container.isConnected) return;
+      (window as any).twttr?.widgets?.createTweet(tweetId, container, { align: "center" });
+    };
+
+    if ((window as any).twttr?.widgets) {
+      embed();
+    } else {
+      const existing = document.querySelector('script[src*="platform.twitter.com/widgets.js"]');
+      if (!existing) {
+        const script = document.createElement("script");
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.async = true;
+        script.onload = embed;
+        document.head.appendChild(script);
+      } else {
+        const timer = setInterval(() => {
+          if ((window as any).twttr?.widgets) {
+            clearInterval(timer);
+            embed();
+          }
+        }, 50);
+        return () => { observer.disconnect(); clearInterval(timer); container.innerHTML = ""; };
+      }
+    }
+
+    return () => { observer.disconnect(); container.innerHTML = ""; };
+  }, [tweetId]);
+
+  if (!tweetId) return null;
+  return <div ref={containerRef} className="my-4 flex justify-center" />;
+}
 
 function formatDate(iso: string) {
   const d = new Date(iso);
@@ -407,10 +496,21 @@ const VideoArticlePage = ({
 
               {/* Body */}
               {bodyHtml ? (
-                <div
-                  className="article-body"
-                  dangerouslySetInnerHTML={{ __html: bodyHtml }}
-                />
+                <>
+                  {parseEmbeds(bodyHtml).map((seg, i) =>
+                    seg.type === "telegram" ? (
+                      <TelegramEmbed key={i} url={seg.url} />
+                    ) : seg.type === "x" ? (
+                      <XEmbed key={i} url={seg.url} />
+                    ) : (
+                      <div
+                        key={i}
+                        className="article-body"
+                        dangerouslySetInnerHTML={{ __html: seg.content }}
+                      />
+                    )
+                  )}
+                </>
               ) : (
                 post.description && (
                   <p className="text-[14px] sm:text-[15px] leading-[1.85] text-foreground/85">

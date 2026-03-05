@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
-import { Trophy, Target, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Trophy, Users } from "lucide-react";
 import {
   StandingsResponse,
   ScorersResponse,
 } from "@/hooks/queries/useStandings";
 import { translateTeamName } from "@/data/teamNamesUzByName";
 import { translateRoundName } from "@/data/GroupNameUzTranslate";
+import TopScorers from "@/components/TopScorers";
 
 interface Props {
   data: StandingsResponse | null;
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const StandingsPage = ({ data, scorers }: Props) => {
+  const router = useRouter();
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   const groups =
@@ -22,6 +25,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
       teams: groupArr
         .filter((t) => t.team.name !== null)
         .map((t) => ({
+          id: t.team.id,
           pos: t.rank,
           crest: t.team.logo,
           name: translateTeamName(t.team.name),
@@ -41,8 +45,6 @@ const StandingsPage = ({ data, scorers }: Props) => {
   const filtered = selectedGroup
     ? groups.filter((g) => g.group === selectedGroup)
     : groups;
-
-  const scorerList = scorers?.response.slice(0, 10) ?? [];
 
   const league = data?.response[0]?.league;
   const totalTeams = league?.standings.flat().length ?? 48;
@@ -69,10 +71,10 @@ const StandingsPage = ({ data, scorers }: Props) => {
           {data && (
             <>
               {/* Group filter */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
                 <button
                   onClick={() => setSelectedGroup(null)}
-                  className={`px-4 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap transition-colors ${
+                  className={`px-4 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap flex-shrink-0 transition-colors ${
                     selectedGroup === null
                       ? "bg-primary text-primary-foreground"
                       : "bg-card text-muted-foreground hover:bg-muted border border-border"
@@ -84,7 +86,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
                   <button
                     key={g}
                     onClick={() => setSelectedGroup(g)}
-                    className={`px-3.5 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap transition-colors ${
+                    className={`px-3.5 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap flex-shrink-0 transition-colors ${
                       selectedGroup === g
                         ? "bg-primary text-primary-foreground"
                         : "bg-card text-muted-foreground hover:bg-muted border border-border"
@@ -149,10 +151,10 @@ const StandingsPage = ({ data, scorers }: Props) => {
                             Gollar
                           </th>
                           <th
-                            title="Farq tafsiloti"
+                            title="Gol farqi"
                             className="text-center py-2.5 font-semibold w-10 cursor-help"
                           >
-                            FT
+                            +/-
                           </th>
                           <th
                             title="Ochkolar"
@@ -168,6 +170,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
                           return (
                             <tr
                               key={`${g.group}-${team.pos}-${team.teamName}`}
+                              onClick={() => router.push(`/wc-team/${team.id}`)}
                               className={`border-t border-border/30 hover:bg-muted/40 transition-colors cursor-pointer ${
                                 team.isUzb ? "bg-primary/5" : ""
                               }`}
@@ -254,73 +257,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
         {/* Right sidebar */}
         <div className="lg:col-span-4 space-y-4">
           {/* Top scorers */}
-          <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
-            <div className="px-5 py-3 border-b border-border flex items-center gap-2">
-              <Target size={14} className="text-primary" />
-              <span className="text-[14px] font-bold text-foreground">
-                Eng yaxshi hujumchilar
-              </span>
-            </div>
-            <div className="divide-y divide-border/30">
-              {scorerList.length === 0 ? (
-                <div className="px-5 py-6 text-center text-[13px] text-muted-foreground">
-                  Turnir boshlanmagan — gollar yo'q
-                </div>
-              ) : (
-                scorerList.map((scorer, i) => {
-                  const stat = scorer.statistics[0];
-                  const isUzb = stat?.team.name === "Uzbekistan";
-                  return (
-                    <div
-                      key={scorer.player.id}
-                      className={`px-5 py-3 flex items-center gap-3 hover:bg-muted/40 transition-colors ${
-                        isUzb ? "bg-primary/5" : ""
-                      }`}
-                    >
-                      <span
-                        className={`text-[12px] w-5 text-center font-bold ${
-                          i < 3 ? "text-primary" : "text-muted-foreground"
-                        }`}
-                      >
-                        {i + 1}
-                      </span>
-                      {stat?.team.logo && (
-                        <img
-                          src={stat.team.logo}
-                          loading="lazy"
-                          alt={stat.team.name}
-                          className="w-5 h-5 object-contain"
-                        />
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <div
-                          className={`text-[13px] font-semibold truncate ${isUzb ? "text-primary" : "text-foreground"}`}
-                        >
-                          {scorer.player.name}
-                        </div>
-                        <div className="text-[11px] text-muted-foreground">
-                          {stat
-                            ? (translateTeamName(stat.team.name) ?? stat.team.name)
-                            : ""}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 text-[12px]">
-                        <span className="font-bold text-foreground">
-                          {stat?.goals.total ?? 0} ⚽
-                        </span>
-                        {stat?.goals.assists !== null &&
-                          stat?.goals.assists !== undefined && (
-                            <span className="text-muted-foreground">
-                              {stat.goals.assists} 🅰️
-                            </span>
-                          )}
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
+          <TopScorers scorers={scorers} />
 
           {/* Tournament info */}
           <div className="bg-card rounded-2xl shadow-sm overflow-hidden">
@@ -391,8 +328,7 @@ const StandingsPage = ({ data, scorers }: Props) => {
                 Gol nisbati (uchun:qarshi)
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-foreground">FT</span> — Farq
-                tafsiloti
+                <span className="font-semibold text-foreground">+/-</span> — Gol farqi
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-foreground">O</span> —

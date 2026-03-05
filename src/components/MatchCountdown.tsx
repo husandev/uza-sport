@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import flagUzb from "@/assets/flag-uzbekistan.webp";
 import flagCol from "@/assets/flag-colombia.png";
 import { translateRoundName } from "@/data/GroupNameUzTranslate";
@@ -13,6 +14,8 @@ export interface NextMatchData {
   awayName: string;
   homeLogo: string;
   awayLogo: string;
+  homeId?: number;
+  awayId?: number;
   venue: string | null;
   round: string;
 }
@@ -118,6 +121,8 @@ const MatchCountdown = ({
   const awayName = nextMatch?.awayName ?? "Kolumbiya";
   const homeLogo = nextMatch?.homeLogo ?? null;
   const awayLogo = nextMatch?.awayLogo ?? null;
+  const homeId = nextMatch?.homeId;
+  const awayId = nextMatch?.awayId;
   const dayLabel = nextMatch ? formatDay(nextMatch.date) : "14 Iyun";
   const footerLabel = nextMatch
     ? formatFooter(nextMatch.date, nextMatch.round)
@@ -168,44 +173,75 @@ const MatchCountdown = ({
         {/* Teams row */}
         <div className="px-4 pb-3 flex items-center justify-between">
           {/* Home */}
-          <motion.div
-            className="flex flex-col items-center gap-1.5 flex-1"
-            initial={{ opacity: 0, x: -15 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.div
-              className="w-11 h-11 rounded-full overflow-hidden"
-              style={{
-                boxShadow:
-                  "0 3px 12px hsl(210 60% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
-              }}
-              whileHover={{ scale: 1.08 }}
-              transition={{ type: "spring", stiffness: 300 }}
+          {homeId ? (
+            <Link
+              href={`/wc-team/${homeId}`}
+              className="flex-1 flex flex-col items-center hover:opacity-80 transition-opacity"
             >
-              {homeLogo ? (
-                <img
-                  src={homeLogo}
-                  alt={homeName}
-                  className="w-full h-full object-contain p-0.5"
-                />
-              ) : (
-                <img
-                  src={flagUzb.src}
-                  alt={homeName}
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </motion.div>
-            <div className="text-center">
-              <p
-                className="text-[11px] font-bold leading-tight"
-                style={{ color: "hsl(var(--foreground))" }}
+              <motion.div
+                className="flex flex-col items-center gap-1.5 w-full"
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
               >
-                {homeName}
-              </p>
+                <motion.div
+                  className="w-11 h-11 rounded-full overflow-hidden"
+                  style={{
+                    boxShadow:
+                      "0 3px 12px hsl(210 60% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
+                  }}
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {homeLogo ? (
+                    <img
+                      src={homeLogo}
+                      alt={homeName}
+                      className="w-full h-full object-contain p-0.5"
+                    />
+                  ) : (
+                    <img
+                      src={flagUzb.src}
+                      alt={homeName}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </motion.div>
+                <div className="text-center">
+                  <p
+                    className="text-[11px] font-bold leading-tight"
+                    style={{ color: "hsl(var(--foreground))" }}
+                  >
+                    {homeName}
+                  </p>
+                </div>
+              </motion.div>
+            </Link>
+          ) : (
+            <div className="flex-1 flex flex-col items-center">
+              <motion.div
+                className="flex flex-col items-center gap-1.5 w-full"
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.div
+                  className="w-11 h-11 rounded-full overflow-hidden"
+                  style={{
+                    boxShadow:
+                      "0 3px 12px hsl(210 60% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
+                  }}
+                >
+                  <img src={flagUzb.src} alt={homeName} className="w-full h-full object-cover" />
+                </motion.div>
+                <div className="text-center">
+                  <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>
+                    {homeName}
+                  </p>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          )}
 
           <motion.div
             className="w-8 h-8 rounded-full flex items-center justify-center mx-1 shrink-0"
@@ -225,44 +261,75 @@ const MatchCountdown = ({
           </motion.div>
 
           {/* Away */}
-          <motion.div
-            className="flex flex-col items-center gap-1.5 flex-1"
-            initial={{ opacity: 0, x: 15 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <motion.div
-              className="w-11 h-11 rounded-full overflow-hidden"
-              style={{
-                boxShadow:
-                  "0 3px 12px hsl(45 80% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
-              }}
-              whileHover={{ scale: 1.08 }}
-              transition={{ type: "spring", stiffness: 300 }}
+          {awayId ? (
+            <Link
+              href={`/wc-team/${awayId}`}
+              className="flex-1 flex flex-col items-center hover:opacity-80 transition-opacity"
             >
-              {awayLogo ? (
-                <img
-                  src={awayLogo}
-                  alt={awayName}
-                  className="w-full h-full object-contain p-0.5"
-                />
-              ) : (
-                <img
-                  src={flagCol.src}
-                  alt={awayName}
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </motion.div>
-            <div className="text-center">
-              <p
-                className="text-[11px] font-bold leading-tight"
-                style={{ color: "hsl(var(--foreground))" }}
+              <motion.div
+                className="flex flex-col items-center gap-1.5 w-full"
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                {awayName}
-              </p>
+                <motion.div
+                  className="w-11 h-11 rounded-full overflow-hidden"
+                  style={{
+                    boxShadow:
+                      "0 3px 12px hsl(45 80% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
+                  }}
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {awayLogo ? (
+                    <img
+                      src={awayLogo}
+                      alt={awayName}
+                      className="w-full h-full object-contain p-0.5"
+                    />
+                  ) : (
+                    <img
+                      src={flagCol.src}
+                      alt={awayName}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </motion.div>
+                <div className="text-center">
+                  <p
+                    className="text-[11px] font-bold leading-tight"
+                    style={{ color: "hsl(var(--foreground))" }}
+                  >
+                    {awayName}
+                  </p>
+                </div>
+              </motion.div>
+            </Link>
+          ) : (
+            <div className="flex-1 flex flex-col items-center">
+              <motion.div
+                className="flex flex-col items-center gap-1.5 w-full"
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <motion.div
+                  className="w-11 h-11 rounded-full overflow-hidden"
+                  style={{
+                    boxShadow:
+                      "0 3px 12px hsl(45 80% 50% / 0.15), 0 0 0 2px hsl(var(--card)), 0 0 0 3px hsl(var(--border))",
+                  }}
+                >
+                  <img src={flagCol.src} alt={awayName} className="w-full h-full object-cover" />
+                </motion.div>
+                <div className="text-center">
+                  <p className="text-[11px] font-bold leading-tight" style={{ color: "hsl(var(--foreground))" }}>
+                    {awayName}
+                  </p>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+          )}
         </div>
 
         {/* Countdown bar */}

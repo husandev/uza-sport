@@ -85,12 +85,12 @@ const ResultsPage = ({ standings, fixtures }: Props) => {
 
       {/* Round filter tabs */}
       {roundOrder.length > 0 && (
-        <div className="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1">
+        <div className="flex items-center gap-1.5 mb-5 overflow-x-auto pb-1 scrollbar-hide">
           {roundOrder.map((r) => (
             <button
               key={r}
               onClick={() => setSelectedRound(r)}
-              className={`px-4 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap transition-colors ${
+              className={`px-4 py-2 rounded-lg text-[13px] font-bold whitespace-nowrap flex-shrink-0 transition-colors ${
                 r === activeRound
                   ? "bg-primary text-primary-foreground"
                   : "bg-card text-muted-foreground hover:bg-muted border border-border"

@@ -30,11 +30,9 @@ const HeroFootballers = () => {
 
   if (athletes.length === 0) return null;
 
-  const sorted = [...athletes]
-    .sort((a, b) => Number(b.national_team_goals ?? 0) - Number(a.national_team_goals ?? 0))
-    .slice(0, 8);
-  const featured = sorted[0];
-  const rest = sorted.slice(1);
+  const sliced = athletes.slice(0, 8);
+  const featured = sliced[0];
+  const rest = sliced.slice(1);
 
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">

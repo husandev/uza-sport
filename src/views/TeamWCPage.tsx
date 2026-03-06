@@ -224,7 +224,7 @@ const TeamWCPage = ({
                       <th className="text-left pl-5 py-2.5 font-semibold w-8">
                         #
                       </th>
-                      <th className="text-left py-2.5 font-semibold">Jamoa</th>
+                      <th className="text-left py-2.5 font-semibold min-w-[110px]">Jamoa</th>
                       <th className="text-center py-2.5 font-semibold w-10">
                         O'
                       </th>
@@ -296,7 +296,7 @@ const TeamWCPage = ({
 
                               <span
                                 className={cn(
-                                  "text-[13px]",
+                                  "text-[13px] whitespace-nowrap",
                                   isThis
                                     ? "font-bold text-primary"
                                     : "font-medium text-foreground",

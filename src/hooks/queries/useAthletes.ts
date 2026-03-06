@@ -41,12 +41,12 @@ export interface AthletesResponse {
 
 const THIRTY_MIN = 1000 * 60 * 30;
 
-export function useAthletes() {
+export function useAthletes(perPage?: number) {
   return useQuery({
-    queryKey: ["athletes"],
+    queryKey: ["athletes", perPage ?? "all"],
     queryFn: () =>
       api.get<AthletesResponse>(
-        "/athletes?include=file&filter[status]=1&sort=sort"
+        `/athletes?include=file&filter[status]=1&sort=sort${perPage ? `&per_page=${perPage}` : ""}`
       ),
     staleTime: THIRTY_MIN,
   });

@@ -5,7 +5,7 @@ import { Trophy, ArrowRight } from "lucide-react";
 import { useAthletes } from "@/hooks/queries";
 
 const HeroFootballers = () => {
-  const { data, isLoading } = useAthletes();
+  const { data, isLoading } = useAthletes(7);
   const athletes = data?.data ?? [];
 
   if (isLoading) {
@@ -30,9 +30,8 @@ const HeroFootballers = () => {
 
   if (athletes.length === 0) return null;
 
-  const sliced = athletes.slice(0, 8);
-  const featured = sliced[0];
-  const rest = sliced.slice(1);
+  const featured = athletes[0];
+  const rest = athletes.slice(1);
 
   return (
     <div className="bg-card rounded-2xl px-4 pt-2 pb-4 shadow-sm">

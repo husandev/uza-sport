@@ -128,7 +128,7 @@ const FootballerPage = ({ scorers }: { scorers: ScorersResponse | null }) => {
   const slug = params.slug as string;
 
   const { data: athlete, isLoading, isError } = useAthleteBySlug(slug);
-  const { data: athletesData } = useAthletes();
+  const { data: athletesData } = useAthletes(9);
   const otherPlayers = (athletesData?.data ?? []).filter((p) => p.slug !== slug).slice(0, 8);
 
   if (isLoading) {
